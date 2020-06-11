@@ -36,19 +36,19 @@ TRPGオンラインセッション用のチャットツールで、ブラウザ�
 
 Webサーバにオンセンルームを設置して利用することができます。  
 
-- オンセンルームの設置についてはこちら（https://trpgsession.click/onsenroom.php）を参照ください。
+- オンセンルームの設置についてはこちら（ https://trpgsession.click/onsenroom.php ）を参照ください。
 
 ## 開発言語
 
-PHP、JAVASCRIT（jQuery）
+PHP、JavaScript（jQuery）
 
 ## バグの報告・要望について
 
 オンセンルームの問題点の報告や機能などの要望がある場合の問い合わせ先などは以下のようなものがあります。
 
-- TRPGオンラインセッションSNSのTRPGトピックにある要望・不具合（https://trpgsession.click/topic-list.php）に投稿する。
-- Eメール（trpg_session@yahoo.co.jp）で送る。
-- Twitter（https://twitter.com/ponta_banto）で送る。
+- TRPGオンラインセッションSNSのTRPGトピックにある要望・不具合（ https://trpgsession.click/topic-list.php ）に投稿する。
+- Eメール（ trpg_session@yahoo.co.jp ）で送る。
+- Twitter（ https://twitter.com/ponta_banto ）で送る。
 - GitHubの issue/Pull Request を作成する。
 
 ## License
