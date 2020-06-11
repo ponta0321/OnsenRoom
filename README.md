@@ -1,5 +1,7 @@
 # オンセンルーム
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ponta0321/OnsenRoom/LICENSE)
+
 ![OnsenRoom](images/ss.jpg "スクリーンショット")
 
 TRPGオンラインセッション用のチャットツールで、ブラウザだけで全ての操作が可能です。
