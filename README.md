@@ -41,14 +41,14 @@ Webサーバにオンセンルームを設置して利用することができ�
 
 PHP、JavaScript（jQuery）
 
-## バグの報告・要望について
+## 開発寄与・バグの報告・要望について
 
-オンセンルームの問題点の報告や機能などの要望がある場合の問い合わせ先などは以下のようなものがあります。
+オンセンルームの問題点の報告や機能などの要望またバグフィックスなどの開発寄与については、以下の方法があります。
 
+- GitHubの issue/Pull Request を作成する。
 - TRPGオンラインセッションSNSのTRPGトピックにある要望・不具合（ https://trpgsession.click/topic-list.php ）に投稿する。
 - Eメール（ trpg_session@yahoo.co.jp ）で送る。
 - Twitter（ https://twitter.com/ponta_banto ）で送る。
-- GitHubの issue/Pull Request を作成する。
 
 ## License
 
