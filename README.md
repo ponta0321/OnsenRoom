@@ -45,10 +45,10 @@ PHP、JavaScript（jQuery）
 
 オンセンルームの問題点の報告や機能などの要望またバグフィックスなどの開発寄与については、以下の方法があります。
 
-- GitHubの issue/Pull Request を作成する。
-- TRPGオンラインセッションSNSのTRPGトピックにある要望・不具合（ https://trpgsession.click/topic-list.php ）に投稿する。
-- Eメール（ trpg_session@yahoo.co.jp ）で送る。
-- Twitter（ https://twitter.com/ponta_banto ）で送る。
+- GitHubの issue/Pull Request を作成。
+- TRPGオンラインセッションSNSのトピックにある要望・不具合（ https://trpgsession.click/topic-list.php ）に投稿。
+- Eメール（ trpg_session@yahoo.co.jp ）に送信。
+- Twitter（ https://twitter.com/ponta_banto ）に送信。
 
 ## License
 
