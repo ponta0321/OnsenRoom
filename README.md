@@ -2,7 +2,7 @@
 
 ブラウザだけで全ての操作が可能なTRPGオンラインセッション用のチャットツールです。
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ponta0321/OnsenRoom/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ponta0321/OnsenRoom/blob/master/LICENSE)
 
 ![OnsenRoom](images/ss.jpg "スクリーンショット")
 
