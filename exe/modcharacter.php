@@ -1,0 +1,86 @@
+<?php
+    require('../s/common/core.php');
+    require(DIR_ROOT.'s/common/exefunction.php');
+    
+    $comment='';
+    
+    $principal='';
+    if(!empty($_POST['principal'])){
+        $principal=$_POST['principal'];
+    }else{
+        exit;
+    }
+    $nick_name='';
+    if(!empty($_POST['nick_name'])){
+        $nick_name=$_POST['nick_name'];
+    }else{
+        $nick_name=$principal;
+    }
+    $room_id='';
+    $room_dir='';
+    $room_file='';
+    $room_mirror_file='';
+    if(!empty($_POST['xml'])){
+        $room_id=basename($_POST['xml']);
+        $room_dir=DIR_ROOT.'r/n/'.$room_id.'/';
+        $room_file=$room_dir.'data.xml';
+        $room_mirror_file=$room_dir.'data-mirror.xml';
+        if(!file_exists($room_file)){
+            exit;
+        }
+    }else{
+        exit;
+    }
+    $char_id='';
+    if(!empty($_POST['char_id'])){
+        $char_id=$_POST['char_id'];
+    }
+    $char_hp='';
+    if(!empty($_POST['char_hp'])){
+        $char_hp=replaceObWord($_POST['char_hp']);
+    }
+    $char_mhp='';
+    if(!empty($_POST['char_mhp'])){
+        $char_mhp=replaceObWord($_POST['char_mhp']);
+    }
+    $char_mp='';
+    if(!empty($_POST['char_mp'])){
+        $char_mp=replaceObWord($_POST['char_mp']);
+    }
+    $char_mmp='';
+    if(!empty($_POST['char_mmp'])){
+        $char_mmp=replaceObWord($_POST['char_mmp']);
+    }
+    $char_memo='';
+    if(!empty($_POST['char_memo'])){
+        $char_memo=replaceObWord($_POST['char_memo']);
+    }
+    $exfilelock=new classFileLock($room_dir,$room_id.'_lockfile',5);
+    if($exfilelock->flock($room_dir)){
+        // ルームファイルの読み込み
+        if(($room_xml=autoloadXmlFile($room_file,$room_mirror_file))===false){
+            $exfilelock->unflock($room_dir);
+            exit;
+        }
+        if(isset($room_xml->body->character)){
+            $count_character_in_room=count($room_xml->body->character);
+            for($i=0;$i<$count_character_in_room;$i++){
+                if((string)$room_xml->body->character[$i]->char_id==$char_id){
+                    $room_xml->body->character[$i]->char_hp=$char_hp;
+                    $room_xml->body->character[$i]->char_mhp=$char_mhp;
+                    $room_xml->body->character[$i]->char_mp=$char_mp;
+                    $room_xml->body->character[$i]->char_mmp=$char_mmp;
+                    $room_xml->body->character[$i]->char_memo=$char_memo;
+                    break;
+                }
+            }
+        }
+        // ルームの保存
+        if(!saveRoomXmlFile($room_xml,$room_file,$principal,$nick_name,0)){
+            echo 'ERR=情報を更新できませんでした。';
+        }
+    }else{
+        echo 'ERR=アクセスが集中したため送信に失敗しました。';
+    }
+    $exfilelock->unflock($room_dir);
+    exit;

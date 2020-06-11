@@ -1,0 +1,407 @@
+<?php
+    require('../s/common/core.php');
+    require(DIR_ROOT.'s/common/exefunction.php');
+    $ob_word_list=array(array('<','＜'),array('>','＞'),array('&','＆'));
+    // 送信者
+    $principal='';
+    if(!empty($_POST['principal'])){
+        $principal=$_POST['principal'];
+    }else{
+        exit;
+    }
+    $nick_name='';
+    if(!empty($_POST['nick_name'])){
+        $nick_name=$_POST['nick_name'];
+    }else{
+        $nick_name=$principal;
+    }
+	$now_time=time();
+    // ファイルロード
+    $room_id='';
+    $room_dir='';
+    $room_file='';
+    $room_mirror_file='';
+    if(!empty($_POST['xml'])){
+        $room_id=basename($_POST['xml']);
+        $room_dir=DIR_ROOT.'r/n/'.$room_id.'/';
+        $room_file=$room_dir.'data.xml';
+        $room_mirror_file=$room_dir.'data-mirror.xml';
+        if(!file_exists($room_file)){
+            exit;
+        }
+    }
+    $exfilelock=new classFileLock($room_dir,$room_id.'_lockfile',5);
+    if($exfilelock->flock($room_dir)){
+        // ルームファイルの読み込み
+        if(($room_xml=autoloadXmlFile($room_file,$room_mirror_file))===false){
+            $exfilelock->unflock($room_dir);
+            exit;
+        }
+        // メモ更新
+        $game_memo_key=1;
+        if(isset($_POST['game_memo_key'])){
+			$game_memo_key=(int)$_POST['game_memo_key'];
+		}
+        $popup_flag=false;
+        if(isset($_POST['popup_flag'])){
+			$popup_flag=true;
+		}
+		$puw_limit_time=0; // 表示時間の取得
+		if(isset($_POST['puw_limit_time'])){
+			$puw_limit_time=$_POST['puw_limit_time'];
+			if(is_numeric($puw_limit_time)){
+				$puw_limit_time=floor($puw_limit_time);
+				if($puw_limit_time<0){
+					$puw_limit_time=10;
+				}
+			}else{
+				$puw_limit_time=0;
+			}
+		}
+        $game_memo='';
+        if(isset($_POST['game_memo'])){
+            $game_memo=$_POST['game_memo'];
+            foreach($ob_word_list as $owl_value){
+                $game_memo=str_replace($owl_value[0],$owl_value[1],$game_memo);
+            }
+            $game_memo=preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '',$game_memo); // add. 2016.10.22
+			$node_memo=$room_xml->head->memo;
+			$write_flag=false;
+			if($node_memo){
+				for($i=0;$i<count($node_memo);$i++){
+					if($node_memo[$i]['id']==$game_memo_key){
+						$node_memo[$i]->txt=$game_memo;
+						if($popup_flag){
+							$node_memo[$i]->flag=$now_time;
+							$node_memo[$i]->limit=$puw_limit_time;
+						}
+						$write_flag=true;
+						break;
+					}
+				}
+			}
+			if($write_flag===false){
+				$memo_node=$room_xml->head->addChild('memo');
+				$memo_node->addAttribute('id',$game_memo_key);
+				$memo_node->addChild('txt',$game_memo);
+				$memo_node->addChild('flag',($popup_flag?$now_time:0));
+				$memo_node->addChild('limit',($popup_flag?$puw_limit_time:30));
+			}
+        }
+        // メモ-イベント
+        if(isset($_POST['event_memo'])){
+			if($_POST['event_memo']=='add'){
+				$node_memo=$room_xml->head->memo;
+				$last_memo_key=1;
+				if($node_memo){
+					for($i=0;$i<count($node_memo);$i++){
+						if((int)$node_memo[$i]['id']>$last_memo_key){
+							$last_memo_key=(int)$node_memo[$i]['id'];
+						}
+					}
+				}
+				$last_memo_key++;
+				if(!isset($node_memo[$i])){
+					$memo_node=$room_xml->head->addChild('memo');
+					$memo_node->addAttribute('id',$last_memo_key);
+					$memo_node->addChild('txt','');
+					$memo_node->addChild('flag',0);
+					$memo_node->addChild('limit',30);
+				}
+			}elseif($_POST['event_memo']=='delete'){
+				if($game_memo_key>5){
+					$node_memo=$room_xml->head->memo;
+					$write_flag=false;
+					if($node_memo){
+						for($i=0;$i<count($node_memo);$i++){
+							if($node_memo[$i]['id']==$game_memo_key){
+								unset($node_memo[$i]);
+								$write_flag=true;
+								break;
+							}
+						}
+					}
+					if($write_flag===false){
+						$exfilelock->unflock($room_dir);
+						echo 'ERR=共通メモ'.$game_memo_key.'はありません。';
+						exit;
+					}
+				}else{
+					$exfilelock->unflock($room_dir);
+					echo 'ERR=共通メモ'.$game_memo_key.'は削除できません。';
+					exit;
+				}
+			}
+		}
+        // ボード幅更新
+        $game_boardwidth='17';
+        if(isset($_POST['game_boardwidth'])){
+            if(is_numeric($_POST['game_boardwidth'])){
+                if($_POST['game_boardwidth']<17){
+                    $game_boardwidth=17;
+                }elseif($_POST['game_boardwidth']>100){
+                    $game_boardwidth=100;
+                }else{
+                    $game_boardwidth=(int)$_POST['game_boardwidth'];
+                }
+            }
+            $room_xml->head->game_boardwidth=$game_boardwidth;
+        }
+        // ボード高さ更新
+        $game_boardheight='20';
+        if(isset($_POST['game_boardheight'])){
+            if(is_numeric($_POST['game_boardheight'])){
+                if($_POST['game_boardheight']<20){
+                    $game_boardheight=20;
+                }elseif($_POST['game_boardheight']>100){
+                    $game_boardheight=100;
+                }else{
+                    $game_boardheight=(int)$_POST['game_boardheight'];
+                }
+            }
+            $room_xml->head->game_boardheight=$game_boardheight;
+        }
+        // 画像サイズシンク設定の更新 add.2017.01.08
+        $game_syncboardsize=0;
+        if(isset($_POST['game_syncboardsize'])){
+            if($_POST['game_syncboardsize']==1){
+                $game_syncboardsize=1;
+            }
+            if(isset($room_xml->head->game_syncboardsize)){
+                $room_xml->head->game_syncboardsize=$game_syncboardsize;
+            }else{
+                $room_xml->head->addChild('game_syncboardsize',$game_syncboardsize);
+            }
+        }
+        // グリッド更新
+        $game_grid='5';
+        if(isset($_POST['game_grid'])){
+            if(is_numeric($_POST['game_grid'])){
+                if($_POST['game_grid']<0){
+                    $game_grid=0;
+                }elseif($_POST['game_grid']>10){
+                    $game_grid=10;
+                }else{
+                    $game_grid=(int)$_POST['game_grid'];
+                }
+            }
+            $room_xml->head->game_grid=$game_grid;
+        }
+        // 背景画像更新
+        $game_backimage='';
+        if(isset($_POST['game_backimage'])){
+            if(empty($_POST['game_backimage'])){
+                $room_xml->head->game_backimage='';
+            }else{
+                //$game_backimage=preg_replace('/^(|https?:)'.preg_quote(URL_ROOT,'/').'/',URL_ROOT,$_POST['game_backimage']);
+                //$game_backimage_path=preg_replace('/^(|https?:)'.preg_quote(URL_ROOT,'/').'/',DIR_ROOT,$_POST['game_backimage']);
+                if($game_backimage=checkImgUrl($_POST['game_backimage'])){
+                    $room_xml->head->game_backimage=$game_backimage;
+                }
+            }
+        }
+        // 背景画像の濃さ更新
+        $game_imagestrength='10';
+        if(isset($_POST['game_imagestrength'])){
+            if(is_numeric($_POST['game_imagestrength'])){
+                if($_POST['game_imagestrength']<0){
+                    $game_imagestrength=0;
+                }elseif($_POST['game_imagestrength']>10){
+                    $game_imagestrength=10;
+                }else{
+                    $game_imagestrength=$_POST['game_imagestrength'];
+                }
+            }
+            $room_xml->head->game_imagestrength=$game_imagestrength;
+        }
+        // ダイスボット更新
+        $game_dicebot='g1';
+        if(isset($_POST['game_dicebot'])){
+            $game_dicebot=$_POST['game_dicebot'];
+            $room_xml->head->game_dicebot=$game_dicebot;
+        }
+        // 楽曲の更新 2016.6.29 要素追加
+        $game_music='';
+        if(isset($_POST['game_music'])){
+            if(empty($_POST['game_music'])){
+                if(isset($room_xml->head->game_music)){
+                    $room_xml->head->game_music='';
+                }else{
+                    $room_xml->head->addChild('game_music','');
+                }
+            }else{
+                if($game_music=checkMusicUrl($_POST['game_music'])){
+                    if(isset($room_xml->head->game_music)){
+                        $room_xml->head->game_music=$game_music;
+                    }else{
+                        $room_xml->head->addChild('game_music',$game_music);
+                    }
+                }
+            }
+        }
+        // オーディオ状態の更新 2016.6.29 要素追加
+        $game_music_state='stop';
+        if(isset($_POST['game_music_state'])){
+            $game_music_state=$_POST['game_music_state'];
+            if(isset($room_xml->head->game_music_state)){
+                $room_xml->head->game_music_state=$game_music_state;
+            }else{
+                $room_xml->head->addChild('game_music_state',$game_music_state);
+            }
+        }
+        // カードセットの更新 2016.12.14 要素追加
+        for($i=1;$i<5;$i++){
+            $game_cardset='';
+            if(isset($_POST['game_cardset'.$i])){
+                $game_cardset=$_POST['game_cardset'.$i];
+                if($game_cardset!=''){
+                    $file_cardset=str_replace(URL_ROOT,DIR_ROOT,$game_cardset);
+                    // カードセットファイルのロード
+					$context=["ssl"=>["verify_peer"=>false,"verify_peer_name"=>false]];
+					libxml_set_streams_context(stream_context_create($context));
+                    if($cardset_xml=simplexml_load_file($file_cardset)){
+                        // 必要データのチェック
+                        loadCardset($msg,$i,$room_xml,$cardset_xml,$game_cardset);
+                    }
+                    unset($cardset_xml);
+                }else{
+                    if(isset($room_xml->head->{'cardset'.$i}->id)){
+                        // カードセットの解放
+                        unset($room_xml->head->{'cardset'.$i});
+                        $comment='カードセット'.$i.'を解放しました。';
+                        $BContent=$room_xml->body->addChild('content');
+                        $BContent->addAttribute('id',creatChatMsgId());
+                        $BContent->addChild('date',time());
+                        $BContent->addChild('text',htmlentities($comment,ENT_XML1));
+                        $BContent->addChild('chat_color','#000000');
+                        $BContent->addChild('ctyp',1);
+                        $BContent->addChild('author','システム');
+                        // 100を超えたコメントを削除
+                        $overflow_comment=count($room_xml->body->content)-100;
+                        if($overflow_comment>0){
+                            for($k=0;$k<$overflow_comment;$k++){
+                                unset($room_xml->body->content[$k]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // タイマーの更新 add.2017.01.17
+        $game_timer_exe_flag=false;
+        $game_timer_event='';
+        if(isset($_POST['game_timer_event'])){
+            $game_timer_event=$_POST['game_timer_event'];
+            $game_timer_exe_flag=true;
+        }
+        $game_timer_array=array();
+        if(isset($room_xml->head->game_timer)){
+            $i=0;
+            $game_timer_record=explode('^',(string)$room_xml->head->game_timer);
+            foreach($game_timer_record as $gtr_value){
+                $game_timer_column=explode('|',$gtr_value);
+                $j=0;
+                foreach($game_timer_column as $gtr_c){
+                    $game_timer_array[$i][$j]=$gtr_c;
+                    $j++;
+                }
+                $i++;
+            }
+        }else{
+            for($i=0;$i<30;$i++){
+                $game_timer_array[$i]=array('',0,1);
+            }
+        }
+        if(isset($_POST['game_timer_no'])){
+            $game_timer_no=$_POST['game_timer_no'];
+            if((0>$game_timer_no)||(29<$game_timer_no)){
+                // 有効でない範囲 （処理しない）
+            }elseif(isset($_POST['game_timer_name'])){
+                if(isset($_POST['game_timer_value'])){
+                    if(isset($_POST['game_timer_step'])){
+                        foreach($ob_word_list as $owl_value){
+                            $game_timer_array[$game_timer_no][0]=str_replace($owl_value[0],$owl_value[1],$_POST['game_timer_name']);
+                        }
+                        $game_timer_array[$game_timer_no][0]=preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','',$game_timer_array[$game_timer_no][0]);
+                        foreach($ob_word_list as $owl_value){
+                            $game_timer_array[$game_timer_no][1]=str_replace($owl_value[0],$owl_value[1],$_POST['game_timer_value']);
+                        }
+                        $game_timer_array[$game_timer_no][1]=preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','',$game_timer_array[$game_timer_no][1]);
+                        foreach($ob_word_list as $owl_value){
+                            $game_timer_array[$game_timer_no][2]=str_replace($owl_value[0],$owl_value[1],$_POST['game_timer_step']);
+                        }
+                        $game_timer_array[$game_timer_no][2]=preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','',$game_timer_array[$game_timer_no][2]);
+                        $game_timer_exe_flag=true;
+                    }
+                }
+            }
+        }
+        if($game_timer_exe_flag==true){
+            $game_timer='';
+            for($i=0;$i<30;$i++){
+                $game_timer_name='';
+                if(isset($game_timer_array[$i][0])){
+                    $game_timer_name=$game_timer_array[$i][0];
+                }
+                $game_timer_value=0;
+                if(isset($game_timer_array[$i][1])){
+                    $game_timer_value=intval($game_timer_array[$i][1]);
+                }
+                $game_timer_step=1;
+                if(isset($game_timer_array[$i][2])){
+                    $game_timer_step=intval($game_timer_array[$i][2]);
+                }
+                if(!empty($game_timer_name)){
+                    if($game_timer_event=='up'){
+                        $game_timer_value=$game_timer_value+$game_timer_step;
+                    }elseif($game_timer_event=='down'){
+                        $game_timer_value=$game_timer_value-$game_timer_step;
+                    }
+                }
+                if($i!=0){
+                    $game_timer.='^';
+                }
+                $game_timer.=$game_timer_name.'|'.$game_timer_value.'|'.$game_timer_step;
+            }
+            if(isset($room_xml->head->game_timer)){
+                $room_xml->head->game_timer=$game_timer;
+            }else{
+                $room_xml->head->addChild('game_timer',$game_timer);
+            }
+        }
+        // マッピングデータの更新 add. 2017.01.10
+        $game_mapping='';
+        if(isset($_POST['game_mapping'])){
+            $game_mapping=$_POST['game_mapping'];
+            if(isset($room_xml->head->game_mapping)){
+                $room_xml->head->game_mapping=$game_mapping;
+            }else{
+                $room_xml->head->addChild('game_mapping',$game_mapping);
+            }
+        }
+        // コマ情報の更新 add. 2017.03.29
+        $map_data='';
+        if(isset($_POST['map_data'])){
+            $map_data=$_POST['map_data'];
+            $room_xml->head->map_data=$map_data;
+        }
+        // マッピングデータエリアの調整 add. 2017.01.12
+        adjustMappingData($room_xml);
+        // マップチップの更新 add. 2018.02.03
+        $game_mapchip='';
+        if(isset($_POST['game_mapchip'])){
+            $game_mapchip=$_POST['game_mapchip'];
+            if(isset($room_xml->head->game_mapchip)){
+                $room_xml->head->game_mapchip=$game_mapchip;
+            }else{
+                $room_xml->head->addChild('game_mapchip',$game_mapchip);
+            }
+        }
+        // ルームの保存
+        if(!saveRoomXmlFile($room_xml,$room_file,$principal,$nick_name,0)){
+            echo 'ERR=情報を更新できませんでした。';
+        }
+    }else{
+        echo 'ERR=アクセスが集中したため送信に失敗しました。';
+    }
+    $exfilelock->unflock($room_dir);

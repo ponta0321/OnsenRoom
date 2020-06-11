@@ -1,0 +1,149 @@
+<?php
+    require('../s/common/core.php');
+    require(DIR_ROOT.'s/common/function.php');
+    require(DIR_ROOT.'s/common/exefunction.php');
+    $result=false;
+    $room_id='';
+    $room_file='';
+    if(!empty($_GET['i'])){
+        $room_id=basename($_GET['i']);
+        $room_url=URL_ROOT.'r/n/'.$room_id.'/';
+        $room_dir=DIR_ROOT.'r/n/'.$room_id.'/';
+        $room_file=$room_dir.'data.xml';
+        $room_mirror_file=$room_dir.'data-mirror.xml';
+        if(!file_exists($room_file)){
+            echo '<p>指定されたルームは存在しません。</p>';
+            exit;
+        }
+    }else{
+        echo '<p>ルームが指定されていません。</p>';
+        exit;
+    }
+    if(($room_xml=autoloadXmlFile($room_file,$room_mirror_file))!==false){
+        $board_file=$room_dir.'board.xml';
+        // room　情報
+        $dom=new DomDocument('1.0');  // DOMを作成
+        $dom->encoding="UTF-8"; // 文字コードをUTF-8に
+        $dom->formatOutput=true; // 出力XMLを整形(改行,タブ)する
+        $ExportData=$dom->appendChild($dom->createElement('data'));
+        $Base64Data=$ExportData->appendChild($dom->createElement('base64'));
+        if(!empty($room_xml->head->map_data)){
+			$encoded_images=array();
+            $str_room_data='';
+            $md_records=explode('^',(string)$room_xml->head->map_data);
+            for($i=0;$i<count($md_records);$i++){
+                $md_columns=explode('|',$md_records[$i]);
+                $md_columns[1]=preg_replace('/^(|https?:)\/\/'.preg_quote(THIS_DOMAIN,'/').'/',TRANSFER_PROTOCOL.'//'.THIS_DOMAIN,$md_columns[1]);
+                if(!isset($encoded_images[basename($md_columns[1])])){
+                    $loc_image=str_replace(TRANSFER_PROTOCOL.preg_replace('/^https?:/','',URL_ROOT),DIR_ROOT,$md_columns[1]);
+					if(file_exists($loc_image)){
+						$image_data=base64_encode(file_get_contents($loc_image));
+						$ImageData=$Base64Data->appendChild($dom->createElement('image'));
+						$GameSetting=$ImageData->appendChild($dom->createElement('file'));
+						$GameSetting->appendChild($dom->createTextNode(basename($md_columns[1])));
+						$GameSetting=$ImageData->appendChild($dom->createElement('data'));
+						$GameSetting->appendChild($dom->createTextNode($image_data));
+						$encoded_images[basename($md_columns[1])]=1;
+					}
+                }
+                if($str_room_data!=''){
+                    $str_room_data.='^';
+                }
+                $str_column_data='';
+                foreach($md_columns as $md_value){
+                    if($str_column_data!=''){
+                        $str_column_data.='|';
+                    }
+                    $str_column_data.=$md_value;
+                }
+                $str_room_data.=$str_column_data;
+            }
+            $GameSetting=$ExportData->appendChild($dom->createElement('map_data'));
+            $GameSetting->appendChild($dom->createTextNode($str_room_data));
+        }
+        if(!empty($room_xml->head->game_mapping)){
+            $GameSetting=$ExportData->appendChild($dom->createElement('game_mapping'));
+            $GameSetting->appendChild($dom->createTextNode((string)$room_xml->head->game_mapping));
+        }
+        $GameSetting=$ExportData->appendChild($dom->createElement('game_grid'));
+        if(isset($room_xml->head->game_grid)){
+            $GameSetting->appendChild($dom->createTextNode((string)$room_xml->head->game_grid));
+        }else{
+            $GameSetting->appendChild($dom->createTextNode('5'));
+        }
+        $GameSetting=$ExportData->appendChild($dom->createElement('game_boardwidth'));
+        if(isset($room_xml->head->game_boardwidth)){
+            $GameSetting->appendChild($dom->createTextNode((string)$room_xml->head->game_boardwidth));
+        }else{
+            $GameSetting->appendChild($dom->createTextNode('17'));
+        }
+        $GameSetting=$ExportData->appendChild($dom->createElement('game_boardheight'));
+        if(isset($room_xml->head->game_boardheight)){
+            $GameSetting->appendChild($dom->createTextNode((string)$room_xml->head->game_boardheight));
+        }else{
+            $GameSetting->appendChild($dom->createTextNode('20'));
+        }
+        $GameSetting=$ExportData->appendChild($dom->createElement('game_syncboardsize'));
+        if(isset($room_xml->head->game_syncboardsize)){
+            $GameSetting->appendChild($dom->createTextNode((string)$room_xml->head->game_syncboardsize));
+        }else{
+            $GameSetting->appendChild($dom->createTextNode('0'));
+        }
+        $GameSetting=$ExportData->appendChild($dom->createElement('game_backimage'));
+        if(!empty($room_xml->head->game_backimage)){
+            $str_room_data=preg_replace('/^(|https?:)\/\/'.preg_quote(THIS_DOMAIN,'/').'/',TRANSFER_PROTOCOL.'//'.THIS_DOMAIN,(string)$room_xml->head->game_backimage);
+            $GameSetting->appendChild($dom->createTextNode($str_room_data));
+            if(strpos($str_room_data,URL_ROOT.'r/n/')!==false){ // アップロード画像の場合
+                $loc_image=str_replace(TRANSFER_PROTOCOL.preg_replace('/^https?:/','',URL_ROOT),DIR_ROOT,$str_room_data);
+                if(!isset($download_image_name_list[basename($str_room_data)])){
+                    $download_image_name_list[basename($str_room_data)]=1;
+                    if(file_exists($loc_image)){
+                        $image_data=base64_encode(file_get_contents($loc_image));
+                        $ImageData=$Base64Data->appendChild($dom->createElement('image'));
+                        $GameSetting=$ImageData->appendChild($dom->createElement('file'));
+                        $GameSetting->appendChild($dom->createTextNode(basename($str_room_data)));
+                        $GameSetting=$ImageData->appendChild($dom->createElement('data'));
+                        $GameSetting->appendChild($dom->createTextNode($image_data));
+                    }
+                }
+            }
+        }
+        $GameSetting=$ExportData->appendChild($dom->createElement('game_imagestrength'));
+        if(isset($room_xml->head->game_imagestrength)){
+            $GameSetting->appendChild($dom->createTextNode((string)$room_xml->head->game_imagestrength));
+        }else{
+            $GameSetting->appendChild($dom->createTextNode('10'));
+        }
+        $GameSetting=$ExportData->appendChild($dom->createElement('game_mapchip'));
+        if(!empty($room_xml->head->game_mapchip)){
+            $str_room_data=preg_replace('/^(|https?:)\/\/'.preg_quote(THIS_DOMAIN,'/').'/',TRANSFER_PROTOCOL.'//'.THIS_DOMAIN,(string)$room_xml->head->game_mapchip);
+            $GameSetting->appendChild($dom->createTextNode($str_room_data));
+            if(strpos($str_room_data,URL_ROOT.'r/n/')!==false){ // アップロード画像の場合
+                $loc_image=str_replace(TRANSFER_PROTOCOL.preg_replace('/^https?:/','',URL_ROOT),DIR_ROOT,$str_room_data);
+                if(!isset($download_image_name_list[basename($str_room_data)])){
+                    $download_image_name_list[basename($str_room_data)]=1;
+                    if(file_exists($loc_image)){
+                        $image_data=base64_encode(file_get_contents($loc_image));
+                        $ImageData=$Base64Data->appendChild($dom->createElement('image'));
+                        $GameSetting=$ImageData->appendChild($dom->createElement('file'));
+                        $GameSetting->appendChild($dom->createTextNode(basename($str_room_data)));
+                        $GameSetting=$ImageData->appendChild($dom->createElement('data'));
+                        $GameSetting->appendChild($dom->createTextNode($image_data));
+                    }
+                }
+            }
+        }
+        $dom->save($board_file);
+        sleep(1);
+        if(file_exists($board_file)){
+            header('Content-Description: File Transfer');
+            header('Content-Disposition: attachment; filename='.date('Y-m-d-H-i-s',time()).'.xml');
+            header('Content-Type:text/xml; charset=UTF-8',true);
+            readfile($board_file);
+        }else{
+            echo '<p>ボード情報のダウンロードは失敗しました。</p>';
+        }
+    }else{
+        echo '<p>指定されたルームを読み込めませんでした。</p>';
+    }
+exit;
