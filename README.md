@@ -47,7 +47,7 @@ PHP、JavaScript（jQuery）
 
 - GitHubの issue/Pull Request を作成。
 - TRPGオンラインセッションSNSの[要望・不具合トピック](https://trpgsession.click/topic-list.php)に投稿。
-- [Eメール](trpg_session@yahoo.co.jp)に送信。
+- Eメール（ trpg_session@yahoo.co.jp ）に送信。
 - [Twitter](https://twitter.com/ponta_banto)に送信。
 
 ## 変更履歴
