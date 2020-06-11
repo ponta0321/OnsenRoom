@@ -31,6 +31,10 @@
 
   - DISCODEのルームを自動生成し、ボイスチャットが行える（TRPGオンラインセッションSNSからルームを作成した場合のみ）
 
+## 変更履歴
+
+- [ChangeLog](https://github.com/ponta0321/OnsenRoom/blob/master/CHANGELOG.md)
+
 ## オンセンルームの設置
 
 Webサーバにオンセンルームを設置して利用することができます。  
