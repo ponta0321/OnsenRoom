@@ -1,0 +1,209 @@
+@charset "utf-8";
+/*////////////////////////////////////////////////////////////////
+initialization
+////////////////////////////////////////////////////////////////*/
+*{
+    font-family:"Lucida Grande","Hiragino Kaku Gothic ProN","Meiryo","sans-serif";
+    margin:0;
+    padding:0;
+	position:relative;
+}
+/*////////////////////////////////////////////////////////////////
+common
+////////////////////////////////////////////////////////////////*/
+.clearfix{
+    min-height:1px;
+    overflow:hidden;
+}
+.clearfix:after{
+    display:block;
+    clear:both;
+    height:0px;
+    visibility:hidden;
+    content:" ";
+}
+.float_left{
+    float:left;
+}
+.float_right{
+    float:right;
+}
+.font_xsmall{
+    font-size:x-small;
+}
+.font_small{
+    font-size:small;
+}
+.font_black{
+    color:#000000;
+}
+.font_gray{
+    color:#606060;
+}
+.font_lightgray{
+    color:#C0C0C0;
+}
+.font_deepred{
+    color:#CC0000;
+}
+.font_red{
+    color:#F06060;
+}
+.font_deepblue{
+    color:#0000CC;
+}
+.font_blue{
+    color:#6060F0;
+}
+.font_skyblue{
+    color:#80A0F0;
+}
+.font_deepgreen{
+    color:#00A000;
+}
+.font_thickgreen{
+    color:#00CC00;
+}
+.font_green{
+    color:#60FF60;
+}
+.font_litegray{
+    color:#C0C0C0;
+}
+.font_yellow{
+    color:#E0B000;
+}
+.font_orange{
+    color:#FF5E19;
+}
+.font_citrus{
+    color:#FF8119;
+}
+.font_purple{
+    color:#C400CC;
+}
+.font_indigo{
+    color:#272672;
+}
+.font_gag{
+    color:#E54500;
+}
+.font_ingale{
+    color:#6D9A4A;
+}
+.font_brown{
+    color:#7C6035;
+}
+.font_bubbly{
+    color:#4E2F4F;
+}
+.font_pink{
+    color:#EF7585;
+}
+.font_bold{
+    font-weight:bold;
+}
+.text_left{
+    text-align:left;
+}
+.text_center{
+    text-align:center;
+}
+.text_right{
+    text-align:right;
+}
+.m_top_05em{
+    margin-top:.5em;
+}
+.m_top_1em{
+    margin-top:1em;
+}
+.m_top_10{
+    margin-top:10px;
+}
+.m_bottom_05em{
+    margin-bottom:.5em;
+}
+.centering{
+    margin-left:auto;
+    margin-right:auto;
+}
+.equal_interval_font{
+    font-family:"Osaka−等幅","ＭＳ ゴシック","Consolas","Courier New","Monaco","Courier","monospace";
+    letter-spacing:0;
+    line-height:1.3em;
+}
+/*////////////////////////////////////////////////////////////////
+Discordボタン
+////////////////////////////////////////////////////////////////*/
+.discord_button{
+    width:200px;
+    max-width:90%;
+    height:50px;
+    overflow:hidden;
+    margin:5px auto;
+}
+.discord_button>a>img{
+    position:absolute;
+    top:0;
+}
+.discord_button>a>img:hover{
+    top:-50px;
+}
+/*////////////////////////////////////////////////////////////////
+color square buttom
+////////////////////////////////////////////////////////////////*/
+.m_b_buttom{
+    display:block;
+    color:#FFF;
+    font-weight:bold;
+    text-align:center;
+    background:-webkit-gradient(linear,left top,left bottom,from(#3060FF),to(#0000FF));
+    background:-moz-linear-gradient(top,#3060FF 0%,#0000FF);
+    background:  -o-linear-gradient(top,#3060FF 0%,#0000FF);
+    background: -ms-linear-gradient(top,#3060FF 0%,#0000FF);
+    background:     linear-gradient(top,#3060FF 0%,#0000FF);
+    border:1px solid #DDD;
+    padding:10px 15px;
+    z-index:2;
+}
+.m_b_buttom.hover{
+    border:1px solid #000;
+    cursor:pointer;
+}
+.m_o_buttom{
+    display:block;
+    color:#FFF;
+    font-weight:bold;
+    text-align:center;
+    background:-webkit-gradient(linear,left top,left bottom,from(#FF8119),to(#FF5E19));
+    background:-moz-linear-gradient(top,#FF8119 0%,#FF5E19);
+    background:  -o-linear-gradient(top,#FF8119 0%,#FF5E19);
+    background: -ms-linear-gradient(top,#FF8119 0%,#FF5E19);
+    background:     linear-gradient(top,#FF8119 0%,#FF5E19);
+    border:1px solid #DDD;
+    padding:10px 15px;
+    z-index:2;
+}
+.m_o_buttom.hover{
+    border:1px solid #000;
+    cursor:pointer;
+}
+.m_g_buttom{
+    display:block;
+    color:#FFF;
+    font-weight:bold;
+    text-align:center;
+    background:-webkit-gradient(linear,left top,left bottom,from(#C0C0C0),to(#909090));
+    background:-moz-linear-gradient(top,#C0C0C0 0%,#909090);
+    background:  -o-linear-gradient(top,#C0C0C0 0%,#909090);
+    background: -ms-linear-gradient(top,#C0C0C0 0%,#909090);
+    background:     linear-gradient(top,#C0C0C0 0%,#909090);
+    border:1px solid #DDD;
+    padding:10px 15px;
+    z-index:2;
+}
+.m_g_buttom.hover{
+    border:1px solid #000;
+    cursor:pointer;
+}

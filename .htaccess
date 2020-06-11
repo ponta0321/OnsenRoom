@@ -1,0 +1,3 @@
+Options -Indexes
+RewriteRule ^roomout\.php$ /index.php
+ErrorDocument 404 /index.php

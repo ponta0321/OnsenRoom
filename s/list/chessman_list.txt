@@ -1,0 +1,15 @@
+images/range/range32r1x1.png,rangeNtB000,マーキング,32,32,0,0,marking,正1ﾏｽ
+images/range/range32r1x1r.png,rangeNtB001,マーキング,32,32,0,0,marking,丸1ﾏｽ
+images/range/range32r1x1t.png,rangeNtB002,マーキング,32,32,0,0,marking,三1ﾏｽ
+images/range/range32r3x3b.png,rangeNtB003,マーキング,96,96,-32,0,marking,長3ﾏｽ
+images/range/range32b1x1.png,rangeNtB004,マーキング,32,32,0,0,marking,正1ﾏｽ
+images/range/range32b1x1r.png,rangeNtB005,マーキング,32,32,0,0,marking,丸1ﾏｽ
+images/range/range32b1x1t.png,rangeNtB006,マーキング,32,32,0,0,marking,三1ﾏｽ
+images/range/range32b3x3b.png,rangeNtB007,マーキング,96,96,-32,0,marking,長3ﾏｽ
+images/range/range32g1x1.png,rangeNtB008,マーキング,32,32,0,0,marking,正1ﾏｽ
+images/range/range32g1x1r.png,rangeNtB009,マーキング,32,32,0,0,marking,丸1ﾏｽ
+images/range/range32g1x1t.png,rangeNtB010,マーキング,32,32,0,0,marking,三1ﾏｽ
+images/range/range32g3x3b.png,rangeNtB011,マーキング,96,96,-32,0,marking,長3ﾏｽ
+images/mask/char_mk01.png,chessmanNtB901,マスク,32,32,0,0,,黒
+images/mask/char_mk02.png,chessmanNtB902,マスク,32,32,0,0,,白
+images/mask/char_mk03.png,chessmanNtB903,マスク,32,32,0,0,,赤
