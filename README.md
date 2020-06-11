@@ -1,13 +1,10 @@
 # オンセンルーム
 
+ブラウザだけで全ての操作が可能なTRPGオンラインセッション用のチャットツールです。
+
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ponta0321/OnsenRoom/LICENSE)
 
 ![OnsenRoom](images/ss.jpg "スクリーンショット")
-
-TRPGオンラインセッション用のチャットツールで、ブラウザだけで全ての操作が可能です。
-背景の表示、マップの作製、キャラクターの配置、ダイスロール、BGMの演奏も行えます。
-また、TRPG総合SNSサイト「TRPGオンラインセッションSNS」と連携し、そこをロビーとしてキャラクターを呼び出したり、
-プレイログをリプレイとして、アップロードすることができます。
 
 ## 機能
 
