@@ -49,7 +49,3 @@ PHP、JavaScript（jQuery）
 - TRPGオンラインセッションSNSのトピックにある要望・不具合（ https://trpgsession.click/topic-list.php ）に投稿。
 - Eメール（ trpg_session@yahoo.co.jp ）に送信。
 - Twitter（ https://twitter.com/ponta_banto ）に送信。
-
-## License
-
-MIT
