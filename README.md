@@ -35,7 +35,7 @@
 
 Webサーバにオンセンルームを設置して利用することができます。  
 
-- オンセンルームの設置についてはこちら（ https://trpgsession.click/onsenroom.php ）を参照ください。
+- オンセンルームの設置については[こちら](https://trpgsession.click/onsenroom.php)を参照ください。
 
 ## 開発言語
 
@@ -46,9 +46,9 @@ PHP、JavaScript（jQuery）
 問題点の報告や機能要望、またドキュメントの改善やバグの修正などの開発寄与については、以下の方法があります。
 
 - GitHubの issue/Pull Request を作成。
-- TRPGオンラインセッションSNSのトピックにある要望・不具合（ https://trpgsession.click/topic-list.php ）に投稿。
-- Eメール（ trpg_session@yahoo.co.jp ）に送信。
-- Twitter（ https://twitter.com/ponta_banto ）に送信。
+- TRPGオンラインセッションSNSの[要望・不具合トピック](https://trpgsession.click/topic-list.php)に投稿。
+- [Eメール](trpg_session@yahoo.co.jp)に送信。
+- [Twitter](https://twitter.com/ponta_banto)に送信。
 
 ## 変更履歴
 
