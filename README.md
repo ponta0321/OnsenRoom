@@ -31,10 +31,6 @@
 
   - DISCODEのルームを自動生成し、ボイスチャットが行える（TRPGオンラインセッションSNSからルームを作成した場合のみ）
 
-## 変更履歴
-
-- [ChangeLog](https://github.com/ponta0321/OnsenRoom/blob/master/CHANGELOG.md)
-
 ## オンセンルームの設置
 
 Webサーバにオンセンルームを設置して利用することができます。  
@@ -53,3 +49,7 @@ PHP、JavaScript（jQuery）
 - TRPGオンラインセッションSNSのトピックにある要望・不具合（ https://trpgsession.click/topic-list.php ）に投稿。
 - Eメール（ trpg_session@yahoo.co.jp ）に送信。
 - Twitter（ https://twitter.com/ponta_banto ）に送信。
+
+## 変更履歴
+
+- [ChangeLog](https://github.com/ponta0321/OnsenRoom/blob/master/CHANGELOG.md)
