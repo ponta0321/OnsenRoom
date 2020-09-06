@@ -16,15 +16,15 @@
 <div id="wdf" class="room_bg">
     <ul id="main_menu">
         <li class="mm_l"><span id="mm_00" class="mm_ck" onClick="pushMainMenu('00');">メモ</span></li>
-        <li class="mm_l"><span id="mm_20" class="<?=$observer_flag!=1?'mm_ck':'mm_no';?>" onClick="pushMainMenu('20');">カウンター</span></li>
+        <li class="mm_l"><span id="mm_20" class="<?=$observer_flag!=1?'mm_ck':'mm_no';?>"<?=$observer_flag!=1?' onClick="pushMainMenu(\'20\');"':'';?>>カウンター</span></li>
         <li class="mm_l"><span id="mm_05" class="mm_ck" onClick="pushMainMenu('05');">ダイス</span></li>
         <li class="mm_l"><span id="mm_06" class="mm_ck" onClick="pushMainMenu('06');">チャット</span></li>
         <li class="mm_l"><span id="mm_07" class="mm_ck" onClick="pushMainMenu('07');">ボード</span></li>
-        <li class="mm_l"><span id="mm_01" class="<?=$observer_flag!=1?'mm_ck':'mm_no';?>" onClick="pushMainMenu('01');">コマ</span></li>
+        <li class="mm_l"><span id="mm_01" class="<?=$observer_flag!=1?'mm_ck':'mm_no';?>"<?=$observer_flag!=1?' onClick="pushMainMenu(\'01\');"':'';?>>コマ</span></li>
         <li class="mm_l"><span id="mm_11" class="mm_ck" onClick="pushMainMenu('11');">カード</span></li>
-        <li class="mm_l"><span id="mm_08" class="<?=$observer_flag!=1?'mm_ck':'mm_no';?>" onClick="pushMainMenu('08');">キャラシート</span></li>
+        <li class="mm_l"><span id="mm_08" class="<?=$observer_flag!=1?'mm_ck':'mm_no';?>"<?=$observer_flag!=1?' onClick="pushMainMenu(\'08\');"':'';?>>キャラシート</span></li>
         <li class="mm_l"<?=$voice_invite_code==-1?' style="display:none;"':'';?>><span id="mm_04" class="mm_ck" onClick="pushMainMenu('04');">ボイス</span></li>
-        <li class="mm_l"><span id="mm_02" class="<?=$observer_flag!=1?'mm_ck':'mm_no';?>" onClick="pushMainMenu('02');">設定</span></li>
+        <li class="mm_l"><span id="mm_02" class="<?=$observer_flag!=1?'mm_ck':'mm_no';?>"<?=$observer_flag!=1?' onClick="pushMainMenu(\'02\');"':'';?>>設定</span></li>
         <li class="mm_l"><span id="mm_09" class="mm_ck" onClick="pushMainMenu('09');">キャラ一覧</span></li>
         <li class="mm_l"><span id="mm_10" class="mm_ck" onClick="pushMainMenu('10');">参加者一覧</span></li>
         <li class="mm_l"><div class="ab_roomname">参:<span id="id_c_participant"><?=$count_participant;?></span>見:<span id="id_c_observer"><?=$count_observer;?></span><span id="id_c_roomname"><?=$room_name;?></span></div></li>
