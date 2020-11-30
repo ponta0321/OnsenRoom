@@ -345,10 +345,10 @@
                     }
                     $room_xml->head->dice->d_surface=$str_surface;
                     $room_xml->head->dice->d_number=$str_daice;
-                    $room_xml->head->dice_roll->dr_count=$say_time+3;
+                    $room_xml->head->dice_roll->dr_count=$say_time+2;
                     $room_xml->head->dice_roll->dr_surface=0; //2016.7.8 未使用
                     $room_xml->head->dice->d_result=$dice_result;
-                    $BContent->addChild('date',$say_time+3);
+                    $BContent->addChild('date',$say_time+2);
                 }else{
                     echo 'ERR=現在ロール中のため、'.$call_name.'さんのロールは行われませんでした。';
                     $save_xml_flag=false;
