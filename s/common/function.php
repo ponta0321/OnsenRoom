@@ -563,7 +563,7 @@ v1.00
     }
     return $html_v;
 }
-function getTrpgSystemInfoFromLobbyServer($last_time_gtn,&$global_trpg_name,$last_time_tc,&$template_chara,$lobby_gettrpgsyslist_url=LOBBY_URL_ROOT.'exe/gettrpgsyslist.php'){
+function getTrpgSystemInfoFromLobbyServer($last_time_gtn,&$global_trpg_name,$lobby_gettrpgsyslist_url=LOBBY_URL_ROOT.'exe/gettrpgsyslist.php'){
 /*-------------------------------------------------------------------
 -- 機能 --
 1.TRPGシステムリスト及びキャラシテンプレリストをSNSサーバーから取得する。
@@ -576,11 +576,15 @@ v1.00
 -- 更新履歴 --
 2017.09.28 制作
 -------------------------------------------------------------------*/
+	$last_update_template_chara=0;
+	$template_chara=array();
+	$file=DIR_ROOT.'s/list/templatechar.php';
+	if($file) @include($file);
     $ch=curl_init();
     curl_setopt($ch,CURLOPT_URL,$lobby_gettrpgsyslist_url);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
     $post_fields ='lt_gtn='.$last_time_gtn;
-    $post_fields.='&lt_tc='.$last_time_tc;
+    $post_fields.='&lt_tc='.$last_update_template_chara;
     curl_setopt($ch,CURLOPT_POST,2);
     curl_setopt($ch,CURLOPT_POSTFIELDS,$post_fields);
     curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
