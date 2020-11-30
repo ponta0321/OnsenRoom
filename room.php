@@ -307,7 +307,7 @@
 /*////////////////////////////////////////////////////////////////
 variable
 ////////////////////////////////////////////////////////////////*/
-var now_utsp=Math.floor(server_access_end_time.getTime()/1000);
+var now_utsp=Math.floor(original_client_time/1000);
 var obj_character_list=convertJsonTextToObject('<?=$c_character->convertCharListJsonFromArray($characterlist_array);?>');
 listStandData=[[(now_utsp-10),'',0,0,''],[(now_utsp-10),'',0,0,''],[(now_utsp-10),'',0,0,'']];
 var countPopInWindow=0; // ポップアップウィンドウの初期位置設定
