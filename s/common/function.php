@@ -635,10 +635,11 @@ CSV形式で2カラムのファイルを読み込んで返す
 返す配列の最初は [0]=空 [1]=なし を含む
 
 -- バージョン --
-v1.00
+v1.01
 
 -- 更新履歴 --
-2017.09.30 制作
+17.09.30
+20.11.30
 -------------------------------------------------------------------*/
     if($nothing_array_flag==true){
         $list_array=array(array('','なし'));
@@ -667,20 +668,16 @@ v1.00
         $loaded_data=str_replace(array("\r\n","\r"),"\n",$loaded_data);
         $records=explode("\n",$loaded_data);
         foreach((array)$records as $record_value){
-            $columns=explode(',',$record_value);
-            if((preg_match($file_format_needle,$columns[0]))&&
-               (!empty($columns[1]))){
-                if(!preg_match('/(^\/\/|^https?:\/\/)/',$columns[0])){
-                    $columns[0]=$url_root.ltrim($columns[0],'/');
-                }
-                /*
-                $header_array=get_headers($columns[0]);
-                if(strpos($header_array[0],'OK')!==false){
-                    $list_array[]=array($columns[0],$columns[1]);
-                }
-                */
-                $list_array[]=array($columns[0],$columns[1]);
-            }
+			if(!preg_match('/^(\/\/|#)/',$record_value)){
+				$columns=explode(',',$record_value);
+				if((preg_match($file_format_needle,$columns[0]))&&
+				   (!empty($columns[1]))){
+					if(!preg_match('/(^\/\/|^https?:\/\/)/',$columns[0])){
+						$columns[0]=$url_root.ltrim($columns[0],'/');
+					}
+					$list_array[]=array($columns[0],$columns[1]);
+				}
+			}
         }
     }
     return $list_array;
