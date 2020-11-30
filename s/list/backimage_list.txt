@@ -25,13 +25,13 @@ https://trpgsession.click/images/back/map_20.png,□ 廃墟5
 https://trpgsession.click/images/back/map_21.png,□ 廃墟6
 https://trpgsession.click/images/back/map_24.png,□ 工場1
 https://trpgsession.click/images/back/map_25.png,□ 工場2
-
-# The following image files of copyright shall belong to きまぐれアフター
-# The following image files is prohibited from being used for anything other than this program.
 https://trpgsession.click/images/back/map_23.png,□ 工場3
 https://trpgsession.click/images/back/map_26.png,□ 木床1
 https://trpgsession.click/images/back/map_27.png,□ 木床2
 https://trpgsession.click/images/back/map_11.png,□ 海
+
+# The following image files of copyright shall belong to きまぐれアフター
+# The following image files is prohibited from being used for anything other than this program.
 https://trpgsession.click/images/back/back08.jpg,○ 公園
 https://trpgsession.click/images/back/back10.jpg,○ 学校
 https://trpgsession.click/images/back/back12.jpg,○ 民家
