@@ -11,15 +11,8 @@
 <script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>js/const.js?2020060901"></script>
 <script>
-    var server_access_start_time=new Date();
-</script>
-<script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>exe/synctime.php?2020112901"></script>
-<script>
-    var server_access_end_time=new Date();
-    if(typeof(original_saver_time)!="undefined"){
-        var time_revised_value=original_saver_time-Math.floor((server_access_end_time-server_access_start_time)/2)-server_access_end_time;
-    }else{
-        var time_revised_value=-Math.floor((server_access_end_time-server_access_start_time)/2);
-    }
+<?='var original_saver_time='.(time()*1000).';';?>
+var original_client_time=new Date().getTime();
+var time_revised_value=original_saver_time-original_client_time;
 </script>
 </head>
