@@ -77,12 +77,12 @@
                     $i++;
                 }
                 $comment.=$str_daice.')';
-                $room_xml->head->dice_roll->dr_count=$say_time+3;
+                $room_xml->head->dice_roll->dr_count=$say_time+2;
                 $room_xml->head->dice_roll->dr_surface=$dice_surface;
                 $room_xml->head->dice->d_surface=$str_surface;
                 $room_xml->head->dice->d_number=$str_daice;
                 $room_xml->head->dice->d_result=$total_roll;
-                $BContent->addChild('date',$say_time+3);
+                $BContent->addChild('date',$say_time+2);
                 $BContent->addChild('text',htmlentities($comment,ENT_XML1));
                 $BContent->addChild('chat_color',$chat_color);
                 $BContent->addChild('ctyp',$chat_type);
