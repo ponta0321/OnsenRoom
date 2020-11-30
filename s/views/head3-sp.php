@@ -13,7 +13,7 @@
 <script>
     var server_access_start_time=new Date();
 </script>
-<script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>exe/synctime.php?2017012001"></script>
+<script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>exe/synctime.php?2020112901"></script>
 <script>
     var server_access_end_time=new Date();
     if(typeof(original_saver_time)!="undefined"){
