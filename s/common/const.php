@@ -1,8 +1,8 @@
 <?php 
 /* common */
-  define('SITE_TITLE','オンセンルーム'); // サイト名 ※サイト名はデフォルト「オンセンルーム」から必ず変更してください。例：オンセンルーム＠たぬき鯖 など
+  define('SITE_TITLE','オンセンルーム'); // サイト名 ※サイト名はデフォルト「オンセンルーム」から必ず変更する
   define('SITE_DESCRIPTION','ブラウザで遊べるTRPGオンラインセッションルームです。'); // サイト説明
-  define('CPU_CORE',4); // CPUのコア数
+  define('CPU_CORE',8); // サーバのCPUコア数を入力する
   define('APP_VERSION','1.03.00'); // バージョン
 /* password */
   define('ADMINISTRATOR_PASSWORD','1234'); // 管理者ページ用パスワード
@@ -14,7 +14,7 @@
   define('DICE_SURFACE_LIMIT',100); // ダイス面の上限
   define('ADDITION_VALUE_LIMIT',10000); // 加算できる値の上限
 /* 各種上限値 */
-  define('ALLOWABLE_LOAD_LIMIT',100); // サーバー負荷によって入場を制限する 設定値範囲 : 0～100 , 0=負荷がない場合のみ入場できる 100=最大負荷でも入場できる
+  define('ALLOWABLE_LOAD_LIMIT',100); // サーバ負荷によって入場を制限する 設定値範囲(%) : 0～100 , 0=負荷がない場合のみ入場できる 100=最大負荷でも入場できる
   define('PLAYER_CAPACITY',100); // 参加者(見学者含む)を収容できる上限値
   define('PLAYER_ALIVE_TIME',3600); // 参加者が更新をしなくなってから一覧に表示される限界時間(秒)
   define('UPLOAD_BI_LIMIT_SIZE',1048576); // 画像ファイルアップロード上限サイズ
@@ -27,11 +27,11 @@
 // Bone&Carsをサーバに導入している場合のみ、値を入力する
   define('BAC_ROOT',DIR_ROOT.'BCDice/'); // Bone&Carsのロケーションルートをフルパスで入力する、この値が空もしくはコメントアウトしている場合は導入していないと判断する
   // BAC_FRONT_CMD および BAC_REAR_CMD に値を入れている場合
-  // Bone&Cars(ルビー)の呼び出しはシェルコマンドで実行されます。
+  // Bone&Cars(ルビー)の呼び出しはシェルコマンドで実行される
   // 実行形式 `RUBY_FRONT_CMD [ruby_file_location command]RUBY_REAR_CMD`
   // 例： RUBY_FRONT_CMD がruby 、 RUBY_REAR_CMD が空
   // 例でBone&Carsを実行するシェルコマンド `ruby ./rb/plug.rb id6`
-  // Bone&Cars(ルビー)をshebangで動作させる場合、BAC_FRONT_CMD および BAC_REAR_CMD の値を''空にしてください
+  // Bone&Cars(ルビー)をshebangで動作させる場合、BAC_FRONT_CMD および BAC_REAR_CMD の値を''空にする
   define('BAC_FRONT_CMD','ruby'); // シェルコマンド(前)
   define('BAC_REAR_CMD',''); // シェルコマンド(後)
 /* TRPGオンラインセッションSNSサーバー(ロビーサーバ) */
