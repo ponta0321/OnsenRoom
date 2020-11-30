@@ -39,7 +39,7 @@ define('BAC_REAR_CMD',''); // 外部コマンド(後) [例]CentOS6でRuby1.9.3�
 define('LOBBY_TRANSFER_PROTOCOL','https:'); // デフォルト http:
 define('LOBBY_DOMAIN','trpgsession.click'); // ロビーサイトのドメイン デフォルト trpgsession.click
 /* 以下、変更禁止 */
-define('APP_VERSION','1.02.04'); // バージョン
+define('APP_VERSION','1.02.05'); // バージョン
 define('TRANSFER_PROTOCOL',(isset($_SERVER['HTTPS'])&&($_SERVER['HTTPS']==='on'))?'https:':'http:'); // 自サバがSSLならhttps:、そうでない場合はhttp:と設定する
 define('THIS_DOMAIN',$_SERVER["HTTP_HOST"]); // サイトのドメインを入力する
 define('URL_ROOT',TRANSFER_PROTOCOL.'//'.THIS_DOMAIN.'/'); // URLルート
