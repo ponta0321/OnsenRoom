@@ -1,10 +1,9 @@
 <?php 
 /* common */
-  define('CPU_CORE',4); // CPUのコア数
-  define('CHAR_SET','UTF-8'); // 内部文字エンコーディング
-  // サイト名はデフォルト「オンセンルーム」から必ず変更してください。例：オンセンルーム＠たぬき鯖 など
-  define('SITE_TITLE','オンセンルーム'); // サイト名
+  define('SITE_TITLE','オンセンルーム'); // サイト名 ※サイト名はデフォルト「オンセンルーム」から必ず変更してください。例：オンセンルーム＠たぬき鯖 など
   define('SITE_DESCRIPTION','ブラウザで遊べるTRPGオンラインセッションルームです。'); // サイト説明
+  define('CPU_CORE',4); // CPUのコア数
+  define('APP_VERSION','1.03.00'); // バージョン
 /* password */
   define('ADMINISTRATOR_PASSWORD','1234'); // 管理者ページ用パスワード
   define('AUTHENTICATION_CODE','12345678abcd'); // ロビーサーバから要求があった際の認証用パスワード（ロビーサーバから渡されるコードとこれが一致したら情報を提供する）
@@ -25,7 +24,7 @@
 /* path */
   define('DIR_ROOT',$_SERVER['DOCUMENT_ROOT'].'/'); // ルートとなるファイルロケーションのフルパスを入力する
 /* ダイスボット（Bone&Cars専用） */
-  // （Bone&Carsをサーバに導入している場合のみ、値を入力する）
+// Bone&Carsをサーバに導入している場合のみ、値を入力する
   define('BAC_ROOT',DIR_ROOT.'BCDice/'); // Bone&Carsのロケーションルートをフルパスで入力する、この値が空もしくはコメントアウトしている場合は導入していないと判断する
   // BAC_FRONT_CMD および BAC_REAR_CMD に値を入れている場合
   // Bone&Cars(ルビー)の呼び出しはシェルコマンドで実行されます。
@@ -36,11 +35,11 @@
   define('BAC_FRONT_CMD','ruby'); // シェルコマンド(前)
   define('BAC_REAR_CMD',''); // シェルコマンド(後)
 /* TRPGオンラインセッションSNSサーバー(ロビーサーバ) */
-  // （基本的には変更しない、ロビーサーバを自設する場合のみ変更）
-  define('LOBBY_TRANSFER_PROTOCOL','https:'); // デフォルト http:
+// 基本的には変更しない、ロビーサーバを自設する場合のみ変更
+  define('LOBBY_TRANSFER_PROTOCOL','https:'); // デフォルト https:
   define('LOBBY_DOMAIN','trpgsession.click'); // ロビーサイトのドメイン デフォルト trpgsession.click
 /* 以下、変更禁止 */
-  define('APP_VERSION','1.03.00'); // バージョン
+  define('CHAR_SET','UTF-8'); // 内部文字エンコーディング
   define('TRANSFER_PROTOCOL',(isset($_SERVER['HTTPS'])&&($_SERVER['HTTPS']==='on'))?'https:':'http:'); // 自サバがSSLならhttps:、そうでない場合はhttp:と設定する
   define('THIS_DOMAIN',$_SERVER["HTTP_HOST"]); // サイトのドメインを入力する
   define('URL_ROOT',TRANSFER_PROTOCOL.'//'.THIS_DOMAIN.'/'); // URLルート
