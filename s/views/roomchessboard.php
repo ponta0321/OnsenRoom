@@ -359,7 +359,7 @@ after load process
         if(mouse.flg==1){
             mouse.go=eventinit.src;
             mouse.at=eventinit.alt;
-            e.dataTransfer.setDragImage(drag_image,16,16);
+            e.dataTransfer.setDragImage(eventinit,eventinit.width/2,eventinit.height/2);
         }
     });
     document.addEventListener("dragover",function(e){
