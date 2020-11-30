@@ -1713,9 +1713,7 @@ v1.01
 -------------------------------------------------------------------*/
     $permission_url_list=array();
     $permission_url_list_file=DIR_ROOT.'s/list/permission_url_list.php';
-    if(file_exists($permission_url_list_file)){
-        include($permission_url_list_file);
-    }
+    if(file_exists($permission_url_list_file)) include($permission_url_list_file);
     $permission_url_list[]=THIS_DOMAIN;
     $str_candidate_music=str_replace('＆','&',$target_url);
     if(preg_match('/(https?:\/\/[0-9a-z_.,:;+*=@#&$%?\/!()\'-]+\.(mp3|mpeg|ogg|wav))/i',$str_candidate_music,$match_result)){

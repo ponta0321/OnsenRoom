@@ -2,9 +2,7 @@
 /* timezone */
 date_default_timezone_set('Asia/Tokyo');
 require('const.php');
-if(!empty(CHAR_SET)){
-	mb_internal_encoding(CHAR_SET);
-}
+if(!empty(CHAR_SET)) mb_internal_encoding(CHAR_SET);
 /*========================================================================
 GLOBAL VARIABLE
 ========================================================================*/
