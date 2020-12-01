@@ -931,7 +931,6 @@ function displayCardSpace(resHTTP){
 			}
 		}
 		if(((loadedimgsheet_flag[cardset_no][1]==image_src)&&
-			(loadedimgsheet_flag[cardset_no][1]!='about:blank')&&
 			(loadedimgsheet_flag[cardset_no][2]==1))||(loadedimgsheet_flag[cardset_no][2]==2)){
 			if((loadedimgsheet_flag[cardset_no][0]==1)||(loadedimgsheet_flag[cardset_no][2]==2)){
 				mCardSetCards=mCardSet[0].getElementsByTagName('card');
