@@ -267,12 +267,12 @@ $music_list_array=load2ColumsCsvFile(DIR_ROOT.'s/list/music_list.txt',array('wav
 $chessman_list=loadChessmanFile();
 ?>
 <script>
-    const CONST_URL_ROOT='<?=rtrim(URL_ROOT,'/').'/';?>'; // 各ページ参照用URL
-    const CONST_ROBBY_URL_ROOT='<?=rtrim(LOBBY_URL_ROOT,'/').'/';?>'; // ホーム参照用URL
-    const CONST_DEFAULT_URL_MAPCHIP='<?=URL_DEFAULT_MAPCHIP;?>'; // マップチップ参照用URL
-    const CONST_ROOM_ID='<?=$base_room_file;?>'; // ルームID
-    const CONST_PRINCIPAL_ID='<?=$principal_id;?>'; // プレイヤーID
-    const CONST_NICKNAME='<?=$nick_name;?>'; // プレイヤーニックネーム
-    const CONST_ROOM_TYPE='<?=$room_type;?>'; // ルームタイプ
-    const CONST_VOICE_CODE='<?=$voice_invite_code;?>'; // ボイスコード
+const CONST_URL_ROOT='<?=rtrim(URL_ROOT,'/').'/';?>'; // 各ページ参照用URL
+const CONST_ROBBY_URL_ROOT='<?=rtrim(LOBBY_URL_ROOT,'/').'/';?>'; // ホーム参照用URL
+const CONST_DEFAULT_URL_MAPCHIP='<?=URL_DEFAULT_MAPCHIP;?>'; // マップチップ参照用URL
+const CONST_ROOM_ID='<?=$base_room_file;?>'; // ルームID
+const CONST_PRINCIPAL_ID='<?=$principal_id;?>'; // プレイヤーID
+const CONST_NICKNAME='<?=$nick_name;?>'; // プレイヤーニックネーム
+const CONST_ROOM_TYPE='<?=$room_type;?>'; // ルームタイプ
+const CONST_VOICE_CODE='<?=$voice_invite_code;?>'; // ボイスコード
 </script>
