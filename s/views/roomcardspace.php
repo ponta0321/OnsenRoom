@@ -70,16 +70,18 @@
     <li id="cdrm_reverse" class="operate">逆向きにする</li>
 </ul>
 <script>
-var default_card_position=[0,0,
-                       110,0,
-                       275,0,
-                       0,180,
-                       275,180,
-                       20,0,
-                       20,0,
-                       20,0,
-                       0,50,
-                       30,30];
+var default_card_position=[
+	0,0,
+	110,0,
+	275,0,
+	0,180,
+	275,180,
+	20,0,
+	20,0,
+	20,0,
+	0,50,
+	30,30
+];
 /*
 0=山札（初期位置）X    1=山札（初期位置）Y
 2=捨て札（初期位置）X   3=捨て札（初期位置）Y
@@ -437,7 +439,6 @@ eventCardRightMenu=function(e){
 }
 // プレイヤー選択用 右クリックメニュー オープン処理
 function openSelectPlayerRightMenu(e){
-    var eventinit=e.target;
     var html_v='';
     html_v+='<ul id="select_player_right_menu" class="right_menu" style="position:absolute;top:0;left:0;width:250px;visibility:hidden;z-index:9999;">';
     html_v+='<li id="sprmt_title">誰にカードを渡しますか？</li>';
@@ -448,7 +449,7 @@ function openSelectPlayerRightMenu(e){
         }
     }
     html_v+='</ul>';
-    $('#puw_inbody_11').append(html_v);
+	document.getElementById('puw_inbody_11').insertAdjacentHTML('beforebegin',html_v);
     var mouseX=e.pageX;
     var mouseY=e.pageY;
     var card_r_menu_w=document.getElementById('select_player_right_menu').offsetWidth;
@@ -487,11 +488,6 @@ function eventSelectPlayerRightMenu(target_id,player_id){
 function openSelectCardRightMenu(e,event_id,target_id){
     //event_id  cdrm_draw_c1=選んで引く  cdrm_put_c1=選んで場に出す  cdrm_drop_c1=選んで捨て札に置く
     var cardset_no=target_id.substr(7,1);
-    /*
-    if((cardset_no!=1)||(cardset_no!=2)||(cardset_no!=3)||(cardset_no!=4)){
-        cardset_no=1;
-    }
-    */
     var location_flag=target_id.substr(9);
     var eventinit=e.target;
     var html_v='';
@@ -518,7 +514,7 @@ function openSelectCardRightMenu(e,event_id,target_id){
         });
     }
     html_v+='</ul>';
-    $('#puw_inbody_11').append(html_v);
+	document.getElementById('puw_inbody_11').insertAdjacentHTML('beforebegin',html_v);
     var mouseX=e.pageX;
     var mouseY=e.pageY;
     var card_r_menu_w=document.getElementById('select_card_right_menu').offsetWidth;
@@ -664,7 +660,6 @@ function createCard(int_left,int_top,int_zindex,id,nm,sx,sy,sw,sh,dw,dh,dt,l,d,v
         int_top=int_top_b;
         int_left=int_left_b;
     }
-    //html_v+='<div id="'+element_id+'" class="card" style="top:'+int_top+'px;left:'+int_left+'px;">';
     html_v+='<div id="'+element_id+'" class="card" style="top:'+int_top+'px;left:'+int_left+'px;z-index:'+int_zindex+';">';
     html_v+='<p id="ic_b-'+id+'" class="card_head">';
     if(l=='_0'){
@@ -749,19 +744,13 @@ function createCard(int_left,int_top,int_zindex,id,nm,sx,sy,sw,sh,dw,dh,dt,l,d,v
         }
     }
     html_v+='"></canvas></div>';
-    $('#cardboard').append(html_v);
+	document.getElementById('cardboard').insertAdjacentHTML('beforebegin',html_v);
     if((v=='_1')||(v=='<?=$principal_id;?>')){
         if(sx<0){
             canvasTextTrim(ui_id,nm,dt,sx,sy,sw,sh,dw,dh,d);
         }else{
-            if(cardset_no==1){
-                canvasImageTrim(ui_id,card_imagesheet1,sx,sy,sw,sh,dw,dh,d);
-            }else if(cardset_no==2){
-                canvasImageTrim(ui_id,card_imagesheet2,sx,sy,sw,sh,dw,dh,d);
-            }else if(cardset_no==3){
-                canvasImageTrim(ui_id,card_imagesheet3,sx,sy,sw,sh,dw,dh,d);
-            }else{
-                canvasImageTrim(ui_id,card_imagesheet4,sx,sy,sw,sh,dw,dh,d);
+            if(card_imagesheet[cardset_no]){
+                canvasImageTrim(ui_id,card_imagesheet[cardset_no],sx,sy,sw,sh,dw,dh,d);
             }
         }
     }else{
@@ -770,35 +759,6 @@ function createCard(int_left,int_top,int_zindex,id,nm,sx,sy,sw,sh,dw,dh,dt,l,d,v
     $('#'+element_id).draggable({containment:"#cardboard"});
     document.getElementById(ui_id).addEventListener("contextmenu",openCardRightMenu);
 }
-/*
-// 画像リサイズ／回転処理 トリミング版
-function imageTrim(image_obj,sx,sy,sw,sh,dw,dh,r){
-    var canvas=document.createElement('canvas');
-    if(r==90||r==270){
-        // swap w <==> h
-        canvas.width=dh;
-        canvas.height=dw;
-    }else{
-        canvas.width=dw;
-        canvas.height=dh;
-    }
-    // Draw (Resize)
-    var ctx=canvas.getContext('2d');
-    if(r && r>0){
-        ctx.rotate(r*Math.PI/180);
-        if(r==90){
-            ctx.translate(0,-dh);
-        }else if(r==180){
-            ctx.translate(-dw, -dh);
-        }else if(r == 270){
-            ctx.translate(-dw, 0);
-        }
-    }
-    ctx.drawImage(image_obj,sx,sy,sw,sh,0,0,dw,dh);
-    // Image Base64
-    return canvas.toDataURL('image/png');
-}
-*/
 // 回転計算
 function tranformContext(ctx,sc,dw,dh,r){
     ctx.setTransform(sc,0,0,sc,0,0);
@@ -905,308 +865,226 @@ var cardback_image=new Image();
 cardback_image.onload=function(){
     loadedimgsheet_flag[0][0]=1;
 };
-var card_imagesheet1=new Image();
-card_imagesheet1.onload=function(){
-    loadedimgsheet_flag[1][0]=1;
-};
-var card_imagesheet2=new Image();
-card_imagesheet2.onload=function(){
-    loadedimgsheet_flag[2][0]=1;
-};
-var card_imagesheet3=new Image();
-card_imagesheet3.onload=function(){
-    loadedimgsheet_flag[3][0]=1;
-};
-var card_imagesheet4=new Image();
-card_imagesheet4.onload=function(){
-    loadedimgsheet_flag[4][0]=1;
-};
-<?php 
-    // カードセット1の存在チェック
-    if(!empty($xml->head->cardset1->id)){
-        if(!empty($xml->head->cardset1->imagesheet)){
-            echo 'loadedimgsheet_flag[1][1]=\''.(string)$xml->head->cardset1->imagesheet.'\';';
-            echo 'loadedimgsheet_flag[1][2]=1;';
-        }else{
-            echo 'loadedimgsheet_flag[1][2]=2;';
-        }
-    }
-    if(!empty($xml->head->cardset2->id)){
-        // カードセット2の存在チェック
-        if(!empty($xml->head->cardset2->imagesheet)){
-            echo 'loadedimgsheet_flag[2][1]=\''.(string)$xml->head->cardset1->imagesheet.'\';';
-            echo 'loadedimgsheet_flag[2][2]=1;';
-        }else{
-            echo 'loadedimgsheet_flag[2][2]=2;';
-        }
-    }
-    if(!empty($xml->head->cardset3->id)){
-        // カードセット3の存在チェック
-        if(!empty($xml->head->cardset3->imagesheet)){
-            echo 'loadedimgsheet_flag[3][1]=\''.(string)$xml->head->cardset1->imagesheet.'\';';
-            echo 'loadedimgsheet_flag[3][2]=1;';
-        }else{
-            echo 'loadedimgsheet_flag[3][2]=2;';
-        }
-    }
-    if(!empty($xml->head->cardset4->id)){
-        // カードセット4の存在チェック
-        if(!empty($xml->head->cardset4->imagesheet)){
-            echo 'loadedimgsheet_flag[4][1]=\''.(string)$xml->head->cardset1->imagesheet.'\';';
-            echo 'loadedimgsheet_flag[4][2]=1;';
-        }else{
-            echo 'loadedimgsheet_flag[4][2]=2;';
-        }
-    }
-?>
+var card_imagesheet={};
+for(let ci_no=1;ci_no<5;ci_no++){
+	card_imagesheet[ci_no]=new Image();
+	card_imagesheet[ci_no].onload=function(){
+		loadedimgsheet_flag[ci_no][0]=1;
+	};
+}
 if(loadedimgsheet_flag[0][1]!=''){
     cardback_image.src=loadedimgsheet_flag[0][1];
-}else{
-    cardback_image.src='about:blank';
 }
-if(loadedimgsheet_flag[1][1]!=''){
-    card_imagesheet1.src=loadedimgsheet_flag[1][1];
-}else{
-    card_imagesheet1.src='about:blank';
-}
-if(loadedimgsheet_flag[2][1]!=''){
-    card_imagesheet2.src=loadedimgsheet_flag[2][1];
-}else{
-    card_imagesheet2.src='about:blank';
-}
-if(loadedimgsheet_flag[3][1]!=''){
-    card_imagesheet3.src=loadedimgsheet_flag[3][1];
-}else{
-    card_imagesheet3.src='about:blank';
-}
-if(loadedimgsheet_flag[4][1]!=''){
-    card_imagesheet4.src=loadedimgsheet_flag[4][1];
-}else{
-    card_imagesheet4.src='about:blank';
+for(let ci_no=1;ci_no<5;ci_no++){
+	if(loadedimgsheet_flag[1][1]!=''){
+		card_imagesheet[ci_no].src=loadedimgsheet_flag[ci_no][1];
+	}
 }
 // カードスペース表示処理 add.2016.12.19
 function displayCardSpace(resHTTP){
-    if(loadedimgsheet_flag[0][1].replace(/https?:/,'')==cardback_image.src.replace(/https?:/,'')){
-        if(loadedimgsheet_flag[0][0]==1){
-            var card_element='';
-            var card_position=[0,0,0];
-            var card_stock=[0,'',99999]; // 山札の初期化
-            var discard_stock=[0,'',99999]; // 捨て札の初期化
-            var displayCardArray=[]; // [x,y,id,nm,sx,sy,sw,sh,dw,dh,dt,l,d,v,z]
-            var mCardId='';
-            var mCard_L=''; // 0=山札 _1=捨て札 _2=場 プレイヤーID=手札
-            var mCard_N='';
-            var mCard_Sx='';
-            var mCard_Sy='';
-            var mCard_Dt='';
-            var mCard_D='';
-            var mCard_V='';
-            var mCard_Z='';
-            var mCardSet;
-            var mCardSetCardSheet;
-            var mCardSetCards;
-            var image_src='';
-            listCardStock={0:{},1:{},2:{},3:{},4:{}};
-            listDiscardStock={0:{},1:{},2:{},3:{},4:{}};
-            for(var cardset_no=1;cardset_no<5;cardset_no++){
-                card_stock=[0,'',99999]; // 山札の初期化
-                discard_stock=[0,'',99999]; // 捨て札の初期化
-                mCardSet=resHTTP.getElementsByTagName('cardset'+cardset_no);
-                if(typeof mCardSet[0]!='undefined'){
-                    mCardSetCardSheet=mCardSet[0].getElementsByTagName('imagesheet');
-                    if(typeof mCardSetCardSheet[0]!='undefined'){
-                        if(mCardSetCardSheet[0].textContent.length>0){
-                            loadedimgsheet_flag[cardset_no][1]=mCardSetCardSheet[0].textContent;
-                            loadedimgsheet_flag[cardset_no][2]=1;
-                        }else{
-                            loadedimgsheet_flag[cardset_no][1]='about:blank';
-                            loadedimgsheet_flag[cardset_no][2]=2;
-                        }
-                    }else{
-                        loadedimgsheet_flag[cardset_no][1]='about:blank';
-                        loadedimgsheet_flag[cardset_no][2]=2;
-                    }
-                }else{
-                    loadedimgsheet_flag[cardset_no][1]='about:blank';
-                    loadedimgsheet_flag[cardset_no][2]=0;
-                }
-                if(cardset_no==1){
-                    image_src=card_imagesheet1.src;
-                }else if(cardset_no==2){
-                    image_src=card_imagesheet2.src;
-                }else if(cardset_no==3){
-                    image_src=card_imagesheet3.src;
-                }else if(cardset_no==4){
-                    image_src=card_imagesheet4.src;
-                }
-                if(((loadedimgsheet_flag[cardset_no][1]==image_src)&&
-                    (loadedimgsheet_flag[cardset_no][1]!='about:blank')&&
-                    (loadedimgsheet_flag[cardset_no][2]==1))||(loadedimgsheet_flag[cardset_no][2]==2)){
-                    if((loadedimgsheet_flag[cardset_no][0]==1)||(loadedimgsheet_flag[cardset_no][2]==2)){
-                        mCardSetCards=mCardSet[0].getElementsByTagName('card');
-                        for(var k=0;k<(mCardSetCards.length);k++){
-                            if((typeof mCardSetCards[k].getElementsByTagName('l')[0].textContent)!='undefined'){
-                                mCardId='sc'+cardset_no+'-'+mCardSetCards[k].getAttributeNode('id').value;
-                                mCard_L=mCardSetCards[k].getElementsByTagName('l')[0].textContent;
-                                mCard_N=mCardSetCards[k].getElementsByTagName('nm')[0].textContent;
-                                mCard_Sx=mCardSetCards[k].getElementsByTagName('sx')[0].textContent;
-                                mCard_Sy=mCardSetCards[k].getElementsByTagName('sy')[0].textContent;
-                                mCard_Dt=mCardSetCards[k].getElementsByTagName('dt')[0].textContent;
-                                mCard_D=mCardSetCards[k].getElementsByTagName('d')[0].textContent;
-                                mCard_V=mCardSetCards[k].getElementsByTagName('v')[0].textContent;
-                                mCard_Z=mCardSetCards[k].getElementsByTagName('z')[0].textContent;
-                                if(mCard_L=='_0'){ //山札
-                                    card_stock[0]=card_stock[0]+1;
-                                    if(card_stock[2]>parseInt(mCard_Z)){
-                                        card_stock[1]=k;
-                                        card_stock[2]=parseInt(mCard_Z);
-                                    }
-                                    listCardStock[cardset_no][mCardId]={0:mCard_N};
-                                }else if(mCard_L=='_1'){ //捨て札
-                                    discard_stock[0]=discard_stock[0]+1;
-                                    if(discard_stock[2]>parseInt(mCard_Z)){
-                                        discard_stock[1]=k;
-                                        discard_stock[2]=parseInt(mCard_Z);
-                                    }
-                                    listDiscardStock[cardset_no][mCardId]={0:mCard_N};
-                                }else if(mCard_L=='_2'){ //場
-                                    card_position=initCardPosition(mCardId,mCard_L,mCard_Z);
-                                    displayCardArray.push([card_position[0],
-                                                           card_position[1],
-                                                           card_position[2],
-                                                           mCardId,
-                                                           mCard_N,
-                                                           mCard_Sx,
-                                                           mCard_Sy,
-                                                           100,150,100,150,
-                                                           mCard_Dt,
-                                                           mCard_L,
-                                                           mCard_D,
-                                                           mCard_V,
-                                                           mCard_Z]);
-                                }else{ //手札
-                                    card_position=initCardPosition(mCardId,mCard_L,mCard_Z);
-                                    displayCardArray.push([card_position[0],
-                                                           card_position[1],
-                                                           card_position[2],
-                                                           mCardId,
-                                                           mCard_N,
-                                                           mCard_Sx,
-                                                           mCard_Sy,
-                                                           100,150,100,150,
-                                                           mCard_Dt,
-                                                           mCard_L,
-                                                           mCard_D,
-                                                           mCard_V,
-                                                           mCard_Z]);
-                                }
-                            }
-                        }
-                        if(card_stock[0]>0){
-                            mCard_L=mCardSetCards[card_stock[1]].getElementsByTagName('l')[0].textContent;
-                            mCard_N=mCardSetCards[card_stock[1]].getElementsByTagName('nm')[0].textContent;
-                            mCard_Sx=mCardSetCards[card_stock[1]].getElementsByTagName('sx')[0].textContent;
-                            mCard_Sy=mCardSetCards[card_stock[1]].getElementsByTagName('sy')[0].textContent;
-                            mCard_Dt=mCardSetCards[card_stock[1]].getElementsByTagName('dt')[0].textContent;
-                            mCard_D=mCardSetCards[card_stock[1]].getElementsByTagName('d')[0].textContent;
-                            mCard_V=mCardSetCards[card_stock[1]].getElementsByTagName('v')[0].textContent;
-                            mCard_Z=mCardSetCards[card_stock[1]].getElementsByTagName('z')[0].textContent;
-                            card_position=initCardPosition('sc'+cardset_no+'-card_stock',mCard_L,mCard_Z);
-                            displayCardArray.push([card_position[0],
-                                                   card_position[1],
-                                                   card_position[2],
-                                                   'sc'+cardset_no+'-card_stock',
-                                                   mCard_N,
-                                                   mCard_Sx,
-                                                   mCard_Sy,
-                                                   100,150,100,150,
-                                                   mCard_Dt,
-                                                   mCard_L,
-                                                   mCard_D,
-                                                   mCard_V,
-                                                   mCard_Z]);
-                        }
-                        if(discard_stock[0]>0){
-                            mCard_L=mCardSetCards[discard_stock[1]].getElementsByTagName('l')[0].textContent;
-                            mCard_N=mCardSetCards[discard_stock[1]].getElementsByTagName('nm')[0].textContent;
-                            mCard_Sx=mCardSetCards[discard_stock[1]].getElementsByTagName('sx')[0].textContent;
-                            mCard_Sy=mCardSetCards[discard_stock[1]].getElementsByTagName('sy')[0].textContent;
-                            mCard_Dt=mCardSetCards[discard_stock[1]].getElementsByTagName('dt')[0].textContent;
-                            mCard_D=mCardSetCards[discard_stock[1]].getElementsByTagName('d')[0].textContent;
-                            mCard_V=mCardSetCards[discard_stock[1]].getElementsByTagName('v')[0].textContent;
-                            mCard_Z=mCardSetCards[discard_stock[1]].getElementsByTagName('z')[0].textContent;
-                            card_position=initCardPosition('sc'+cardset_no+'-discard_stock',mCard_L,mCard_Z);
-                            displayCardArray.push([card_position[0],
-                                                   card_position[1],
-                                                   card_position[2],
-                                                   'sc'+cardset_no+'-discard_stock',
-                                                   mCard_N,
-                                                   mCard_Sx,
-                                                   mCard_Sy,
-                                                   100,150,100,150,
-                                                   mCard_Dt,
-                                                   mCard_L,
-                                                   mCard_D,
-                                                   mCard_V,
-                                                   mCard_Z]);
-                        }
-                    }
-                }else{
-                    if(cardset_no==1){
-                        card_imagesheet1.src=loadedimgsheet_flag[cardset_no][1];
-                    }else if(cardset_no==2){
-                        card_imagesheet2.src=loadedimgsheet_flag[cardset_no][1];
-                    }else if(cardset_no==3){
-                        card_imagesheet3.src=loadedimgsheet_flag[cardset_no][1];
-                    }else if(cardset_no==4){
-                        card_imagesheet4.src=loadedimgsheet_flag[cardset_no][1];
-                    }
-                }
-            }
-            displayCardArray.sort(function(a,b){
-                if(a[1]<b[1]){return -1;}
-                if(a[1]>b[1]){return 1;}
-                if(a[0]<b[0]){return -1;}
-                if(a[0]>b[0]){return 1;}
-                return 0;
-            });
-            for(var i in displayCardArray){
-                createCard(displayCardArray[i][0],
-                           displayCardArray[i][1],
-                           displayCardArray[i][2],
-                           displayCardArray[i][3],
-                           displayCardArray[i][4],
-                           displayCardArray[i][5],
-                           displayCardArray[i][6],
-                           displayCardArray[i][7],
-                           displayCardArray[i][8],
-                           displayCardArray[i][9],
-                           displayCardArray[i][10],
-                           displayCardArray[i][11],
-                           displayCardArray[i][12],
-                           displayCardArray[i][13],
-                           displayCardArray[i][14],
-                           displayCardArray[i][15]);
-            }
-            var delete_card_array=[];
-            displayedCardElements=document.getElementsByClassName('card');
-            for(var i=0;i<(displayedCardElements.length);i++){
-                $exist_flag=false;
-                for(var k=0;k<(displayCardArray.length);k++){
-                    if('ic_a-'+displayCardArray[k][3]==displayedCardElements[i].id){
-                        $exist_flag=true;
-                        break;
-                    }
-                }
-                if($exist_flag==false){
-                    delete_card_array.push(displayedCardElements[i].id);
-                }
-            }
-            deleteElements(delete_card_array);
-        }
-    }else{
-        cardback_image.src=loadedimgsheet_flag[0][1];
-    }
+	if(loadedimgsheet_flag[0][0]!=1){
+		return false;
+	}
+	var card_element='';
+	var card_position=[0,0,0];
+	var card_stock=[0,'',99999]; // 山札の初期化
+	var discard_stock=[0,'',99999]; // 捨て札の初期化
+	var displayCardArray=[]; // [x,y,id,nm,sx,sy,sw,sh,dw,dh,dt,l,d,v,z]
+	var mCardId='';
+	var mCard_L=''; // 0=山札 _1=捨て札 _2=場 プレイヤーID=手札
+	var mCard_N='';
+	var mCard_Sx='';
+	var mCard_Sy='';
+	var mCard_Dt='';
+	var mCard_D='';
+	var mCard_V='';
+	var mCard_Z='';
+	var mCardSet;
+	var mCardSetCardSheet;
+	var mCardSetCards;
+	var image_src='';
+	listCardStock={0:{},1:{},2:{},3:{},4:{}};
+	listDiscardStock={0:{},1:{},2:{},3:{},4:{}};
+	for(var cardset_no=1;cardset_no<5;cardset_no++){
+		card_stock=[0,'',99999]; // 山札の初期化
+		discard_stock=[0,'',99999]; // 捨て札の初期化
+		mCardSet=resHTTP.getElementsByTagName('cardset'+cardset_no);
+		if(typeof mCardSet[0]!='undefined'){
+			mCardSetCardSheet=mCardSet[0].getElementsByTagName('imagesheet');
+			if(typeof mCardSetCardSheet[0]!='undefined'){
+				if(mCardSetCardSheet[0].textContent.length>0){
+					loadedimgsheet_flag[cardset_no][1]=mCardSetCardSheet[0].textContent;
+					loadedimgsheet_flag[cardset_no][2]=1;
+				}else{
+					loadedimgsheet_flag[cardset_no][2]=2;
+				}
+			}else{
+				loadedimgsheet_flag[cardset_no][2]=2;
+			}
+		}else{
+			loadedimgsheet_flag[cardset_no][2]=0;
+		}
+		if(card_imagesheet[cardset_no]){
+			image_src=card_imagesheet[cardset_no].src;
+			if(card_imagesheet[cardset_no].src!=loadedimgsheet_flag[cardset_no][1]){
+				card_imagesheet[cardset_no].src=loadedimgsheet_flag[cardset_no][1];
+			}
+		}
+		if(((loadedimgsheet_flag[cardset_no][1]==image_src)&&
+			(loadedimgsheet_flag[cardset_no][1]!='about:blank')&&
+			(loadedimgsheet_flag[cardset_no][2]==1))||(loadedimgsheet_flag[cardset_no][2]==2)){
+			if((loadedimgsheet_flag[cardset_no][0]==1)||(loadedimgsheet_flag[cardset_no][2]==2)){
+				mCardSetCards=mCardSet[0].getElementsByTagName('card');
+				for(var k=0;k<(mCardSetCards.length);k++){
+					if((typeof mCardSetCards[k].getElementsByTagName('l')[0].textContent)!='undefined'){
+						mCardId='sc'+cardset_no+'-'+mCardSetCards[k].getAttributeNode('id').value;
+						mCard_L=mCardSetCards[k].getElementsByTagName('l')[0].textContent;
+						mCard_N=mCardSetCards[k].getElementsByTagName('nm')[0].textContent;
+						mCard_Sx=mCardSetCards[k].getElementsByTagName('sx')[0].textContent;
+						mCard_Sy=mCardSetCards[k].getElementsByTagName('sy')[0].textContent;
+						mCard_Dt=mCardSetCards[k].getElementsByTagName('dt')[0].textContent;
+						mCard_D=mCardSetCards[k].getElementsByTagName('d')[0].textContent;
+						mCard_V=mCardSetCards[k].getElementsByTagName('v')[0].textContent;
+						mCard_Z=mCardSetCards[k].getElementsByTagName('z')[0].textContent;
+						if(mCard_L=='_0'){ //山札
+							card_stock[0]=card_stock[0]+1;
+							if(card_stock[2]>parseInt(mCard_Z)){
+								card_stock[1]=k;
+								card_stock[2]=parseInt(mCard_Z);
+							}
+							listCardStock[cardset_no][mCardId]={0:mCard_N};
+						}else if(mCard_L=='_1'){ //捨て札
+							discard_stock[0]=discard_stock[0]+1;
+							if(discard_stock[2]>parseInt(mCard_Z)){
+								discard_stock[1]=k;
+								discard_stock[2]=parseInt(mCard_Z);
+							}
+							listDiscardStock[cardset_no][mCardId]={0:mCard_N};
+						}else if(mCard_L=='_2'){ //場
+							card_position=initCardPosition(mCardId,mCard_L,mCard_Z);
+							displayCardArray.push([card_position[0],
+												   card_position[1],
+												   card_position[2],
+												   mCardId,
+												   mCard_N,
+												   mCard_Sx,
+												   mCard_Sy,
+												   100,150,100,150,
+												   mCard_Dt,
+												   mCard_L,
+												   mCard_D,
+												   mCard_V,
+												   mCard_Z]);
+						}else{ //手札
+							card_position=initCardPosition(mCardId,mCard_L,mCard_Z);
+							displayCardArray.push([card_position[0],
+												   card_position[1],
+												   card_position[2],
+												   mCardId,
+												   mCard_N,
+												   mCard_Sx,
+												   mCard_Sy,
+												   100,150,100,150,
+												   mCard_Dt,
+												   mCard_L,
+												   mCard_D,
+												   mCard_V,
+												   mCard_Z]);
+						}
+					}
+				}
+				if(card_stock[0]>0){
+					mCard_L=mCardSetCards[card_stock[1]].getElementsByTagName('l')[0].textContent;
+					mCard_N=mCardSetCards[card_stock[1]].getElementsByTagName('nm')[0].textContent;
+					mCard_Sx=mCardSetCards[card_stock[1]].getElementsByTagName('sx')[0].textContent;
+					mCard_Sy=mCardSetCards[card_stock[1]].getElementsByTagName('sy')[0].textContent;
+					mCard_Dt=mCardSetCards[card_stock[1]].getElementsByTagName('dt')[0].textContent;
+					mCard_D=mCardSetCards[card_stock[1]].getElementsByTagName('d')[0].textContent;
+					mCard_V=mCardSetCards[card_stock[1]].getElementsByTagName('v')[0].textContent;
+					mCard_Z=mCardSetCards[card_stock[1]].getElementsByTagName('z')[0].textContent;
+					card_position=initCardPosition('sc'+cardset_no+'-card_stock',mCard_L,mCard_Z);
+					displayCardArray.push([card_position[0],
+										   card_position[1],
+										   card_position[2],
+										   'sc'+cardset_no+'-card_stock',
+										   mCard_N,
+										   mCard_Sx,
+										   mCard_Sy,
+										   100,150,100,150,
+										   mCard_Dt,
+										   mCard_L,
+										   mCard_D,
+										   mCard_V,
+										   mCard_Z]);
+				}
+				if(discard_stock[0]>0){
+					mCard_L=mCardSetCards[discard_stock[1]].getElementsByTagName('l')[0].textContent;
+					mCard_N=mCardSetCards[discard_stock[1]].getElementsByTagName('nm')[0].textContent;
+					mCard_Sx=mCardSetCards[discard_stock[1]].getElementsByTagName('sx')[0].textContent;
+					mCard_Sy=mCardSetCards[discard_stock[1]].getElementsByTagName('sy')[0].textContent;
+					mCard_Dt=mCardSetCards[discard_stock[1]].getElementsByTagName('dt')[0].textContent;
+					mCard_D=mCardSetCards[discard_stock[1]].getElementsByTagName('d')[0].textContent;
+					mCard_V=mCardSetCards[discard_stock[1]].getElementsByTagName('v')[0].textContent;
+					mCard_Z=mCardSetCards[discard_stock[1]].getElementsByTagName('z')[0].textContent;
+					card_position=initCardPosition('sc'+cardset_no+'-discard_stock',mCard_L,mCard_Z);
+					displayCardArray.push([card_position[0],
+										   card_position[1],
+										   card_position[2],
+										   'sc'+cardset_no+'-discard_stock',
+										   mCard_N,
+										   mCard_Sx,
+										   mCard_Sy,
+										   100,150,100,150,
+										   mCard_Dt,
+										   mCard_L,
+										   mCard_D,
+										   mCard_V,
+										   mCard_Z]);
+				}
+			}
+		}
+	}
+	displayCardArray.sort(function(a,b){
+		if(a[1]<b[1]){return -1;}
+		if(a[1]>b[1]){return 1;}
+		if(a[0]<b[0]){return -1;}
+		if(a[0]>b[0]){return 1;}
+		return 0;
+	});
+	for(var i in displayCardArray){
+		createCard(displayCardArray[i][0],
+				   displayCardArray[i][1],
+				   displayCardArray[i][2],
+				   displayCardArray[i][3],
+				   displayCardArray[i][4],
+				   displayCardArray[i][5],
+				   displayCardArray[i][6],
+				   displayCardArray[i][7],
+				   displayCardArray[i][8],
+				   displayCardArray[i][9],
+				   displayCardArray[i][10],
+				   displayCardArray[i][11],
+				   displayCardArray[i][12],
+				   displayCardArray[i][13],
+				   displayCardArray[i][14],
+				   displayCardArray[i][15]);
+	}
+	var delete_card_array=[];
+	displayedCardElements=document.getElementsByClassName('card');
+	for(var i=0;i<(displayedCardElements.length);i++){
+		$exist_flag=false;
+		for(var k=0;k<(displayCardArray.length);k++){
+			if('ic_a-'+displayCardArray[k][3]==displayedCardElements[i].id){
+				$exist_flag=true;
+				break;
+			}
+		}
+		if($exist_flag==false){
+			delete_card_array.push(displayedCardElements[i].id);
+		}
+	}
+	deleteElements(delete_card_array);
+	return true;
 }
 // カードイベント 送信処理
 function sendCardEvent(ced){
@@ -1297,7 +1175,6 @@ function relocationCardPosition(){
     var img_id='';
     var eCardImg;
     var arrayCardImgAlt=[];
-    var offset=$('#cardboard').offset();
     for(var i=0;i<(displayedCardElements.length);i++){
         if(displayedCardElements[i].id.indexOf('ic_a-')!=-1){
             p_card_id=displayedCardElements[i].id.substr(5);
@@ -1306,10 +1183,14 @@ function relocationCardPosition(){
             strCardImgAlt=eCardImg.alt;
             arrayCardImgAlt=strCardImgAlt.split(","); // 0=ロケーション(l) 1=方向(d) 2=公開(v) 3=順位(z) 4=(sx) 5=(sy)
             card_position=initCardPosition(p_card_id,arrayCardImgAlt[0],arrayCardImgAlt[3]);
-            $('#'+displayedCardElements[i].id).css({'top':card_position[1],'left':card_position[0],'z-index':card_position[2]});
+			document.getElementById(displayedCardElements[i].id).style.left=card_position[0]+'px';
+			document.getElementById(displayedCardElements[i].id).style.top=card_position[1]+'px';
+			document.getElementById(displayedCardElements[i].id).style.zIndex=card_position[2]+'px';
         }
     }
 }
-// カードスペースの右クリックイベントセット
-document.addEventListener("mousedown",eventCardRightMenu);
+(function(){
+	// カードスペースの右クリックイベントセット
+	document.addEventListener("mousedown",eventCardRightMenu);
+})();
 </script>

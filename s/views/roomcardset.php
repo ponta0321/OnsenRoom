@@ -74,10 +74,10 @@
     </form>
 </div>
 <script>
-    function setCardset<?=$cardset_num;?>(){
-        document.getElementById('game_cardset<?=$cardset_num;?>').value=document.getElementById('game_cardset<?=$cardset_num;?>_select').value;
-        setModSettingData('game_cardset<?=$cardset_num;?>');
-    }
+function setCardset<?=$cardset_num;?>(){
+	document.getElementById('game_cardset<?=$cardset_num;?>').value=document.getElementById('game_cardset<?=$cardset_num;?>_select').value;
+	setModSettingData('game_cardset<?=$cardset_num;?>');
+}
 </script>
 <?php
     }

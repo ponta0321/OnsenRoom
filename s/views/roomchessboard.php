@@ -43,7 +43,7 @@ var change_map_data_array=[]; // Y,X,N
 var change_map_data_flag=false;
 var map_data_array=initMapDataArray(); // Y,X
 var long_touch_timer=''; // ロングタッチ処理
-mapping_image.src='about:blank'; // 画像ロード処理
+mapping_image.src=CONST_DEFAULT_URL_MAPCHIP; // 画像ロード処理
 /*////////////////////////////////////////////////////////////////
 anonymous function
 ////////////////////////////////////////////////////////////////*/
