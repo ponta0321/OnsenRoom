@@ -1,25 +1,25 @@
 <div class="room_setting_box">
-    <p><label>BGMの音量</label></p>
+    <p>BGMの音量</p>
     <p style="margin-top:5px;">MIN&nbsp;<input id="game_music_volume" type="range" name="music_volume" value="<?=$music_volume;?>" min="0" max="99" step="1" style="width:120px;vertical-align:middle;" />&nbsp;MAX</p>
 </div>
 <div class="room_setting_box_wb">
-    <p><label>座標の表示</label></p>
+    <p>座標の表示</p>
     <p style="margin-top:5px;"><input id="game_bn_display" type="checkbox" style="vertical-align:middle;" value="1" onClick="displayBoardNumber();setCookieSettingData();" <?=($bn_notdisplay!=0?'checked="checked"':'');?> />&nbsp;表示しない</p>
 </div>
 <div class="room_setting_box_wb">
-    <p><label>チャットの文字サイズ</label></p>
+    <p>チャットの文字サイズ</p>
     <p><select id="game_cs_setting_select" onChange="setCSfontSize();setCookieSettingData();" style="padding:2px 4px;min-width:160px;font-size:10px;">
         <option value="10px" <?=($chat_font_size=='10px'?'selected="selected"':'');?>>小さい</option>
         <option value="12px" <?=($chat_font_size=='12px'?'selected="selected"':'');?>>標準</option>
         <option value="14px" <?=($chat_font_size=='14px'?'selected="selected"':'');?>>大きい</option>
         <option value="16px" <?=($chat_font_size=='16px'?'selected="selected"':'');?>>最大</option>
     </select></p>
-    <p style="margin-top:5px;"><label>新着コメントの着信音</label></p>
+    <p style="margin-top:5px;">新着コメントの着信音</p>
     <p><select id="game_chat_se" onChange="setCookieSettingData();" style="padding:2px 4px;min-width:160px;font-size:10px;">
         <option value="false" <?=($chat_sound=='false'?'selected="selected"':'');?>>鳴らさない</option>
         <option value="true" <?=($chat_sound=='true'?'selected="selected"':'');?>>鳴らす</option>
     </select></p>
-    <p style="margin-top:5px;"><label>着信音の音量</label></p>
+    <p style="margin-top:5px;">着信音の音量</p>
     <p style="margin-top:5px;">MIN&nbsp;<input id="chat_sound_vol" type="range" name="chat_sound_vol" value="<?=$chat_sound_vol;?>" min="0" max="99" step="1" style="width:120px;vertical-align:middle;" />&nbsp;MAX</p>
 </div>
 <script>

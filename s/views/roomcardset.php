@@ -1,5 +1,5 @@
 <div class="room_setting_box">
-    <p><label>初期配置の間隔</label></p>
+    <p>初期配置の間隔</p>
     <p>
         <select id="default_card_position_select" style="padding:2px 4px;min-width:80px;font-size:10px;">
            <option value="0" selected="selected">狭い</option>
@@ -8,7 +8,7 @@
         </select>&nbsp;
         <input type="button" value="初期位置に再配置する" style="padding:0 4px;font-size:10px;" onClick="relocationCardPosition();" />
     </p>
-    <p class="m_top_1em"><label>カードセットの間隔</label></p>
+    <p class="m_top_1em">カードセットの間隔</p>
     <p>幅:&nbsp;<input id="cardset_position_x" type="number" min="0" max="9999" value="30" style="padding:2px 4px;width:40px;font-size:10px;" />&nbsp;
        高さ:&nbsp;<input id="cardset_position_y" type="number" min="0" max="9999" value="30" style="padding:2px 4px;width:40px;font-size:10px;" />&nbsp;
     <input type="button" value="セット" style="padding:0 4px;font-size:10px;" onClick="setDefaultCardPosition();" /></p>
@@ -17,7 +17,7 @@
     for($cardset_num=1;$cardset_num<5;$cardset_num++){
 ?>
 <div class="room_setting_box_wb">
-    <p><label>カードセット<?=$cardset_num;?></label></p>
+    <p>カードセット<?=$cardset_num;?></p>
     <?php
         $cardset_url='';
         if(!empty($xml->head->{'cardset'.$cardset_num}->url)){
@@ -62,7 +62,7 @@
     </select>&nbsp;
     <input type="button" value="セット＆初期化" style="padding:0 4px;font-size:10px;" onClick="setCardset<?=$cardset_num;?>();" /></p>
     <form id="upload_cardset<?=$cardset_num;?>_form" style="margin-top:5px;" enctype="multipart/form-data" method="post" action="<?=$global_page_url;?>">
-        <p><label>カードセットのアップロード<span class="font_blue small"><?=displaySimpleByte(UPLOAD_CS_LIMIT_SIZE);?>までのXML）</span></label></p>
+        <p>カードセットのアップロード<span class="font_blue small"><?=displaySimpleByte(UPLOAD_CS_LIMIT_SIZE);?>までのXML）</span></p>
         <p><input type="file" name="upload_cardset" accept="application/xml" style="font-size:10px;" /></p>
         <p><input type="button" name="submit_button" onClick="uploadBgiFile('upload_cardset<?=$cardset_num;?>_form');" style="margin-top:10px;padding:0 4px;font-size:10px;" value="アップロード＆セット＆初期化" /></p>
         <input type="hidden" name="upload_state" value="cardset<?=$cardset_num;?>" />
