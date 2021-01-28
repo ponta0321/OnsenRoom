@@ -1,16 +1,16 @@
 <div class="room_setting_box">
-    <p><label>ボードのマス数&nbsp;<span class="font_blue">（min=x:17&nbsp;y:20,&nbsp;max=100）</span></label></p>
-    <p style="margin-top:5px;"><label>幅:</label>&nbsp;<input id="game_boardwidth" type="number" min="17" max="100" value="17" onFocus="doNotUpdate('game_boardwidth');" onblur="setModSettingData('game_boardwidth');" style="padding:2px 4px;width:40px;font-size:10px;" />&nbsp;
+    <p>ボードのマス数&nbsp;<span class="font_blue">（min=x:17&nbsp;y:20,&nbsp;max=100）</span></p>
+    <p style="margin-top:5px;">幅:&nbsp;<input id="game_boardwidth" type="number" min="17" max="100" value="17" onFocus="doNotUpdate('game_boardwidth');" onblur="setModSettingData('game_boardwidth');" style="padding:2px 4px;width:40px;font-size:10px;" />&nbsp;
        高さ:&nbsp;<input id="game_boardheight" type="number" min="20" max="100" value="20" onFocus="doNotUpdate('game_boardheight');" onblur="setModSettingData('game_boardheight');" style="padding:2px 4px;width:40px;font-size:10px;" />&nbsp;
        <input type="button" value="セット" style="padding:0 4px;font-size:10px;" onClick="setBoardSize();" /></p>
 </div>
 <div class="m_top_10 room_setting_box_wb">
-    <p><label>グリッド</label></p>
-    <p><label>濃さ:</label>&nbsp;MIN&nbsp;<input id="game_grid" type="range" style="width:120px;vertical-align:middle;" value="5" min="0" max="10" step="1" />&nbsp;MAX</p>
+    <p>グリッド</p>
+    <p>濃さ:&nbsp;MIN&nbsp;<input id="game_grid" type="range" style="width:120px;vertical-align:middle;" value="5" min="0" max="10" step="1" />&nbsp;MAX</p>
 </div>
 
 <div class="room_setting_box_wb">
-    <p><label>背景</label></p>
+    <p>背景</p>
     <input id="game_backimage" type="hidden" value="<?=(string)$xml->head->game_backimage;?>" />
     <p><select id="game_backimage_select" onFocus="doNotUpdate('game_backimage_select');" onChange="setBackImage();" onblur="setBackImage();" style="padding:2px 4px;width:140px;font-size:10px;">
         <?php
@@ -43,7 +43,7 @@
     </select>&nbsp;
     <input type="button" value="セット" style="padding:0 4px;font-size:10px;" onClick="setBackImage();" /></p>
     <form id="upload_image_form" style="margin-top:5px;" enctype="multipart/form-data" method="post" action="<?=$global_page_url;?>">
-        <p><label>背景画像のアップロード<span class="font_blue small">（<?=displaySimpleByte(UPLOAD_BI_LIMIT_SIZE);?>までのJPEG,PNG,GIF）</span></label></p>
+        <p>背景画像のアップロード<span class="font_blue small">（<?=displaySimpleByte(UPLOAD_BI_LIMIT_SIZE);?>までのJPEG,PNG,GIF）</span></p>
         <p><input type="file" name="upload_image" accept="image/jpeg,image/png,image/gif" style="font-size:10px;" /></p>
         <p><input type="button" name="submit_button" onClick="uploadBgiFile('upload_image_form');" style="margin-top:10px;padding:0 4px;font-size:10px;" value="アップロードする" /></p>
         <p class="font_gray small">※&nbsp;ボードのマスは1あたり32x32pxです。</p>
@@ -54,12 +54,12 @@
         <?php } ?>
         <input type="hidden" name="MAX_FILE_SIZE" value="<?=UPLOAD_BI_LIMIT_SIZE;?>" />
     </form>
-    <p style="margin-top:5px;"><label>濃さ:</label>&nbsp;MIN&nbsp;<input id="game_imagestrength" type="range" style="width:120px;vertical-align:middle;" value="5" min="0" max="10" step="1" />&nbsp;MAX</p>
+    <p style="margin-top:5px;">濃さ:&nbsp;MIN&nbsp;<input id="game_imagestrength" type="range" style="width:120px;vertical-align:middle;" value="5" min="0" max="10" step="1" />&nbsp;MAX</p>
     <p style="margin-top:5px;"><input id="game_syncboardsize" type="checkbox" style="vertical-align:middle;" value="1" onFocus="doNotUpdate('game_syncboardsize');" onClick="setModSettingData('game_syncboardsize');" <?=($game_syncboardsize!=0?'checked="checked"':'');?> />&nbsp;背景画像を原寸サイズで表示する</p>
 </div>
 
 <div class="room_setting_box_wb">
-    <p><label>マップチップ</label></p>
+    <p>マップチップ</p>
     <input id="game_mapchip" type="hidden" value="<?=$game_mapchip_img;?>" />
     <p><select id="game_mapchip_select" onFocus="doNotUpdate('game_mapchip_select');" onChange="setMapChipImg();" onblur="setMapChipImg();" style="padding:2px 4px;width:140px;font-size:10px;">
         <?php
@@ -91,7 +91,7 @@
     </select>&nbsp;
     <input type="button" value="セット" style="padding:0 4px;font-size:10px;" onClick="setMapChipImg();" /></p>
     <form id="upload_mapchip_form" style="margin-top:5px;" enctype="multipart/form-data" method="post" action="<?=$global_page_url;?>">
-        <p><label>マップチップのアップロード<span class="font_blue small">（<?=displaySimpleByte(UPLOAD_BI_LIMIT_SIZE);?>までのPNG）</span></label></p>
+        <p>マップチップのアップロード<span class="font_blue small">（<?=displaySimpleByte(UPLOAD_BI_LIMIT_SIZE);?>までのPNG）</span></p>
         <p><input type="file" name="upload_image" accept="image/png" style="font-size:10px;" /></p>
         <p><input type="button" name="submit_button" onClick="uploadBgiFile('upload_mapchip_form');" style="margin-top:10px;padding:0 4px;font-size:10px;" value="アップロードする" /></p>
         <input type="hidden" name="upload_state" value="mapchip" />
@@ -105,23 +105,24 @@
 
 <div class="room_setting_box_wb">
     <input id="game_dicebot" type="hidden" value="<?=(string)$xml->head->game_dicebot;?>" />
-    <p><label>ダイスボット</label></p>
-    <p style="margin:2px 0;">
-        <input name="base_dicebot_type" style="vertical-align:middle;" type="radio" value="0" onClick="putAcDiceBotBox(0)" <?php
-            if(isset($bac_gamelist)){
-                echo (strpos((string)$xml->head->game_dicebot,'bac_')===false?'checked="checked"':'');
-            }else{
-                echo 'checked="checked"';
-            }
-        ?> />オンセンdb&nbsp;
-        <input name="base_dicebot_type" style="vertical-align:middle;" type="radio" value="1" onClick="putAcDiceBotBox(1)" <?php
+    <div>ダイスボット</div>
+    <div style="margin:2px 0;">
+        <label><input name="base_dicebot_type" style="vertical-align:middle;" type="radio" value="1" onClick="putAcDiceBotBox(1)" <?php
             if(isset($bac_gamelist)){
                 echo (strpos((string)$xml->head->game_dicebot,'bac_')!==false?'checked="checked"':'');
             }else{
                 echo 'disabled="disabled"';
             }
-        ?> />Bone＆Cars
-    </p>
+        ?> />Bone＆Cars</label>
+		&nbsp;
+        <label><input name="base_dicebot_type" style="vertical-align:middle;" type="radio" value="0" onClick="putAcDiceBotBox(0)" <?php
+            if(isset($bac_gamelist)){
+                echo (strpos((string)$xml->head->game_dicebot,'bac_')===false?'checked="checked"':'');
+            }else{
+                echo 'checked="checked"';
+            }
+        ?> />オンセンdb</label>
+    </div>
     <div id="id_onsenbot_box" <?php
         if(isset($bac_gamelist)){
             echo (strpos((string)$xml->head->game_dicebot,'bac_')!==false?'style="display:none;"':'');
@@ -169,7 +170,7 @@
 </div>
 
 <div class="room_setting_box_wb">
-    <p><label>BGM</label></p>
+    <p>BGM</p>
     <p><select id="game_music_select" style="padding:2px 4px;width:140px;font-size:10px;">
     <?php
         $uploaded_file_flag=false;
@@ -205,7 +206,7 @@
     <input id="game_music_stop" type="button" value="停止" style="padding:0 4px;font-size:10px;" />&nbsp;
     <span id="now_music_state"><span style="color:#606060;">■</span></span></p>
     <form id="upload_music_form" style="margin-top:5px;" enctype="multipart/form-data" method="post" action="<?=$global_page_url;?>">
-        <p><label>BGMのアップロード<span class="font_blue small">（<?=displaySimpleByte(UPLOAD_MS_LIMIT_SIZE);?>までのmp3,mpeg,ogg,wav）</span></label></p>
+        <p>BGMのアップロード<span class="font_blue small">（<?=displaySimpleByte(UPLOAD_MS_LIMIT_SIZE);?>までのmp3,mpeg,ogg,wav）</span></p>
         <?php
             if(((string)$room_pass!='')&&((int)$xml->head->tour!=0)){
                 echo '<p><input type="file" name="upload_music" accept="audio/wav,audio/mpeg,audio/ogg,audio/mp4" style="font-size:10px;" /></p>';
