@@ -1,90 +1,90 @@
 <?php
-    // phpログ保存
-    $writelog_flag=true;
-    if(empty($comment)){
-        $writelog_flag=false;
-    }elseif(empty($say_time)){
-        $writelog_flag=false;
-    }elseif(empty($say_man)){
-        $writelog_flag=false;
-    }
-    if($writelog_flag==true){
-        if(is_dir($room_dir)){
-            $phplog_dir=$room_dir.'log/';
-            if(!is_dir($phplog_dir)){
-                if(!mkdir($phplog_dir,0755,true)){
-                    return;
-                }
-            }
-            $phplog_file=$phplog_dir.date('YmdH').'.php';
-            $html_data='';
-            if(!file_exists($phplog_file)){
-                $html_data='<?php'."\n";
-            }
-            $str_chat_type='メイン';
-            if(empty($chat_type)){
-                // 何もしない
-            }elseif($chat_type==2){
-                $str_chat_type='雑談';
-            }elseif($chat_type==3){
-                $str_chat_type='見学用';
-            }
-            $log_array=array();
-            // $say_time,$say_man,$comment,$str_chat_type
-            $log_array[]=array($say_time,
-                               $say_man,
-                               str_replace(array("/n","/r"),'',$comment),
-                               $str_chat_type);
-            foreach($log_array as $la_key => $value){
-                $html_data.='$log_array[]=array(\''.addcslashes($value[0],"'\\").
-                                            '\',\''.addcslashes($value[1],"'\\").
-                                            '\',\''.addcslashes($value[2],"'\\").
-                                            '\',\''.addcslashes($value[3],"'\\").'\');'."\n";
-            }
-            $result=false;
-            $i=0;
-            do{
-                if(file_exists($phplog_file)){
-                    $result=file_put_contents($phplog_file,$html_data,FILE_APPEND|LOCK_EX);
-                }else{
-                    $result=file_put_contents($phplog_file,$html_data,LOCK_EX);
-                }
-                $i++;
-            }while(($i<3)&&($result===false));
-			// add 2018.04.27
-			$save_comment_id='';
-            if(preg_match('/^(pd|sd)&([a-zA-Z0-9]+) (.+)$/',$comment)){
-				if(!empty($comment_id)){
-					$save_comment_id=$comment_id;
-				}
+// phpログ保存
+$writelog_flag=true;
+if(empty($comment)){
+	$writelog_flag=false;
+}elseif(empty($say_time)){
+	$writelog_flag=false;
+}elseif(empty($say_man)){
+	$writelog_flag=false;
+}
+if($writelog_flag==true){
+	if(is_dir($room_dir)){
+		$phplog_dir=$room_dir.'log/';
+		if(!is_dir($phplog_dir)){
+			if(!mkdir($phplog_dir,0755,true)){
+				return;
 			}
-			if($save_comment_id!=''){
-				$secret_comment_file=$room_dir.'secret_comment_list.php';
-				$html_data='';
-				if(!file_exists($secret_comment_file)){
-					$html_data='<?php'."\n";
-				}
-				$log_array=array();
-				$log_array[$save_comment_id]=array($say_time,
-								   $say_man,
-								   str_replace(array("/n","/r"),'',$comment),
-								   $str_chat_type);
-				foreach($log_array as $la_key => $value){
-					$html_data.='$log_array[\''.$la_key.'\']=array(\''.addcslashes($value[0],"'\\").
-												'\',\''.addcslashes($value[1],"'\\").
-												'\',\''.addcslashes($value[2],"'\\").
-												'\',\''.addcslashes($value[3],"'\\").'\');'."\n";
-				}
-				$result=false;
-				$i=0;
-				do{
-					if(file_exists($secret_comment_file)){
-						$result=file_put_contents($secret_comment_file,$html_data,FILE_APPEND|LOCK_EX);
-					}else{
-						$result=file_put_contents($secret_comment_file,$html_data,LOCK_EX);
-					}
-					$i++;
-				}while(($i<3)&&($result===false));
+		}
+		$phplog_file=$phplog_dir.date('YmdH').'.php';
+		$html_data='';
+		if(!file_exists($phplog_file)){
+			$html_data='<?php'."\n";
+		}
+		$str_chat_type='メイン';
+		if(empty($chat_type)){
+			// 何もしない
+		}elseif($chat_type==2){
+			$str_chat_type='雑談';
+		}elseif($chat_type==3){
+			$str_chat_type='見学用';
+		}
+		$log_array=array();
+		// $say_time,$say_man,$comment,$str_chat_type
+		$log_array[]=array($say_time,
+						   $say_man,
+						   str_replace(array("/n","/r"),'',$comment),
+						   $str_chat_type);
+		foreach($log_array as $la_key => $value){
+			$html_data.='$log_array[]=array(\''.addcslashes($value[0],"'\\").
+										'\',\''.addcslashes($value[1],"'\\").
+										'\',\''.addcslashes($value[2],"'\\").
+										'\',\''.addcslashes($value[3],"'\\").'\');'."\n";
+		}
+		$result=false;
+		$i=0;
+		do{
+			if(file_exists($phplog_file)){
+				$result=file_put_contents($phplog_file,$html_data,FILE_APPEND|LOCK_EX);
+			}else{
+				$result=file_put_contents($phplog_file,$html_data,LOCK_EX);
 			}
-        }
-    }
+			$i++;
+		}while(($i<3)&&($result===false));
+		// add 2018.04.27
+		$save_comment_id='';
+		if(preg_match('/^(pd|sd)&([a-zA-Z0-9]+) (.+)$/',$comment)){
+			if(!empty($comment_id)){
+				$save_comment_id=$comment_id;
+			}
+		}
+		if($save_comment_id!=''){
+			$secret_comment_file=$room_dir.'secret_comment_list.php';
+			$html_data='';
+			if(!file_exists($secret_comment_file)){
+				$html_data='<?php'."\n";
+			}
+			$log_array=array();
+			$log_array[$save_comment_id]=array($say_time,
+							   $say_man,
+							   str_replace(array("/n","/r"),'',$comment),
+							   $str_chat_type);
+			foreach($log_array as $la_key => $value){
+				$html_data.='$log_array[\''.$la_key.'\']=array(\''.addcslashes($value[0],"'\\").
+											'\',\''.addcslashes($value[1],"'\\").
+											'\',\''.addcslashes($value[2],"'\\").
+											'\',\''.addcslashes($value[3],"'\\").'\');'."\n";
+			}
+			$result=false;
+			$i=0;
+			do{
+				if(file_exists($secret_comment_file)){
+					$result=file_put_contents($secret_comment_file,$html_data,FILE_APPEND|LOCK_EX);
+				}else{
+					$result=file_put_contents($secret_comment_file,$html_data,LOCK_EX);
+				}
+				$i++;
+			}while(($i<3)&&($result===false));
+		}
+	}
+}
