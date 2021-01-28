@@ -176,7 +176,7 @@ header('Last-Modified: '.gmdate( 'D, d M Y H:i:s' ).' GMT');
 		}
 	}
 	if(file_exists(BAC_ROOT.'src/bcdiceCore.rb')){
-		$bac_gamelist=array_merge($dicebot_textlist,$bac_gamelist);
+		$bac_gamelist=array_merge($bac_gamelist,$dicebot_textlist);
 	}else{
 		$bac_gamelist=$dicebot_textlist;
 	}
