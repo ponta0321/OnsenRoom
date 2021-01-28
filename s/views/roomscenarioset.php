@@ -345,13 +345,7 @@
         }else{
             document.getElementById('ss_cmd_area').style.visibility='hidden';
         }
-        document.getElementById('ss_des_area').innerHTML=des_value;
-        
-        var des_area_elm=document.getElementById("ss_des_area");
-        des_area_elm.style.height="30px";
-        if(des_area_elm.scrollHeight>des_area_elm.offsetHeight){   
-            des_area_elm.style.height=des_area_elm.scrollHeight+"px";
-        }
+        adjustDesHeightSS(des_value);
         
         var ss_list_list=document.getElementsByClassName('sslli');
         if(ss_list_list.length>0){
@@ -365,6 +359,12 @@
         }
         return true;
     }
+	function adjustDesHeightSS(des_value){
+        var des_area_elm=document.getElementById("ss_des_area");
+		des_area_elm.style.height="30px";
+        document.getElementById('ss_des_area').innerHTML=des_value;
+        des_area_elm.style.height=(des_area_elm.scrollHeight+6)+"px";
+	}
     function pushListOpnSS(scene_id){ // リスト 開くボタン押
         loadSceneConntents(scene_id);
     }
@@ -593,8 +593,8 @@
         }
     }
     (function(){
-        if(loadScenarioBase()){ // ベースデータの反映
-            if(loadScenarioList()){ // ベースデータの反映
+        if(loadScenarioBase()){ // ベースデータ（基本）の反映
+            if(loadScenarioList()){ // ベースデータ（詳細）の反映
                 var scene_idlist=JSON.parse(window.localStorage.getItem('idlist'));
                 if(scene_idlist){
                     if(scene_idlist.length>0){
