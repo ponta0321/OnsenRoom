@@ -19,13 +19,6 @@
                     <select id="ind_dicebot" style="width:86px;" <?=$observer_flag!=1?'':'disabled="disabled"';?> >
                     <?php
                         $v_html='';
-                        foreach($dicebot_textlist as $key => $value){
-                            $v_html.='<option value="'.$key.'"';
-                            if($key==(string)$xml->head->game_dicebot){
-                                $v_html.=' selected="selected"';
-                            }
-                            $v_html.='>'.$value[0].'：ｵﾝｾﾝdb</option>';
-                        }
                         if(isset($bac_gamelist)){
                             foreach($bac_gamelist as $key => $value){
                                 $v_html.='<option value="'.$key.'"';
@@ -34,6 +27,13 @@
                                 }
                                 $v_html.='>'.$value[0].'：bac</option>';
                             }
+                        }
+                        foreach($dicebot_textlist as $key => $value){
+                            $v_html.='<option value="'.$key.'"';
+                            if($key==(string)$xml->head->game_dicebot){
+                                $v_html.=' selected="selected"';
+                            }
+                            $v_html.='>'.$value[0].'：ｵﾝｾﾝdb</option>';
                         }
                         echo $v_html;
                     ?>
