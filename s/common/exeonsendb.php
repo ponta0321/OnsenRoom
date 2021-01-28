@@ -18,7 +18,7 @@ if(preg_match('/^([0-9]+) ([\-+<>=!@0-9adkxs]+) (.+)$/i',$match_comment,$match))
 	//　ダイスコマンド記憶
 	$chipcommand=(string)$match[2]; //処理別コマンド一部
 	$typecommand=(int)$match[1].' '.$chipcommand; // ダイスコマンド
-	$chipcomment='「'.(string)$match[3].'」';
+	$chipcomment=(string)$match[3];
 	$roll_process=true;
 }elseif(preg_match('/^([0-9]+) ([\-+<>=!@0-9adkxs]+)$/i',$match_comment,$match)){
 	// 繰り返し判定
@@ -42,7 +42,7 @@ if(preg_match('/^([0-9]+) ([\-+<>=!@0-9adkxs]+) (.+)$/i',$match_comment,$match))
 	//　ダイスコマンド記憶
 	$typecommand=(string)$match[1]; // ダイスコマンド
 	$chipcommand=$typecommand; //処理別コマンド一部
-	$chipcomment='「'.(string)$match[2].'」';
+	$chipcomment=(string)$match[2];
 	$roll_process=true;
 }elseif(preg_match('/^([\-+<>=!@0-9adkxs]+)$/i',$match_comment,$match)){
 	//　ダイスコマンド記憶
