@@ -113,7 +113,7 @@
             }else{
                 echo 'disabled="disabled"';
             }
-        ?> />Bone＆Cars</label>
+        ?> />BCDice</label>
 		&nbsp;
         <label><input name="base_dicebot_type" style="vertical-align:middle;" type="radio" value="0" onClick="putAcDiceBotBox(0)" <?php
             if(isset($bac_gamelist)){
