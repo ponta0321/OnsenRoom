@@ -246,7 +246,7 @@ if($observer_flag==0){
 	getTrpgSystemInfoFromLobbyServer($last_update_global_trpg_name,$global_trpg_name);
 	// 持ちキャラのロード
 	if(($characterlist_array=$c_character->loadCharacterList($base_room_file,$principal_id))===false){
-		$characterlist_array=$c_character->putCharListFLSInCharArray($base_room_file,$principal_id,getCharListFromLobbyServer($principal_id,$player_ip));
+		$characterlist_array=$c_character->putCharListFLSInCharArray($base_room_file,$principal_id,getCharListFromLobbyServer($principal_id,$player_ip,(empty($_COOKIE['room_token'])?'':$_COOKIE['room_token'])));
 	}
 	// シナリオセットリストのロード
 	$scenariosetlist_array=makeSSlistArrayFromJson(getSSListFromLobbyServer($principal_id,$player_ip));
