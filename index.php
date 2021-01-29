@@ -4,184 +4,184 @@ header('Cache-Control: post-check=0, pre-check=0',false);
 header('Pragma: no-cache');
 header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
 header('Last-Modified: '.gmdate( 'D, d M Y H:i:s' ).' GMT');
-    session_start();
-    require('./s/common/core.php');
-	require(DIR_ROOT.'s/common/function.php');
-    require(DIR_ROOT.'s/list/dicebot_textlist.php');
-    require(DIR_ROOT.'s/list/bac_gamelist.php');
-	function getRemainTime($l_time){
-		if(1<=($l_time/86400)){
-			$result=floor($l_time/86400).'日';
-		}elseif(1<=($l_time/3600)){
-			$result=floor($l_time/3600).'時間';
-		}elseif(1<=($l_time/60)){
-			$result=floor($l_time/60).'分';
-		}elseif(0>$l_time){
-			$result='期限切れ';
-		}else{
-			$result=$l_time.'秒';
-		}
-		return $result;
-	}
-	function changeAvailableRoomName($room_name){
-		$ob_word_list=array(array('<','＜'),
-							array('>','＞'),
-							array('"','”'),
-							array("'",'’'),
-							array('&','＆'),
-							array('/','／'),
-							array('.','．'),
-							array(',','，'),
-							array('_','＿'));
-		foreach($ob_word_list as $ob_word){
-			$room_name=str_replace($ob_word[0],$ob_word[1],$room_name);
-		}
-		$room_name=preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','',$room_name);
-		return trim(mb_convert_kana($room_name,'s'));
-	}
-	function checkAvailablePassString($pass_string,$pass_min_lenght=0,$pass_man_lenght=100){
-		if(preg_match('/[0-9a-zA-Z]+/',$pass_string)){
-			$pass_lenght=mb_strlen($pass_string);
-			if($pass_min_lenght<=$pass_lenght){
-				if($pass_man_lenght>=$pass_lenght){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-    $principal_id='';
-    if(isset($_POST['principal_id'])){
-        $principal_id=$_POST['principal_id'];
-    }elseif(isset($_GET['pr'])){
-        $principal_id=$_GET['pr'];
-    }elseif(isset($_SESSION['principal_id'])){
-        $principal_id=$_SESSION['principal_id'];
-    }
-	$room_type='';
-    if(isset($_POST['room_type'])){
-        $room_type=$_POST['room_type'];
-    }elseif(isset($_GET['rt'])){
-        $room_type=$_GET['rt'];
-    }
-	if(($room_type!='pc')&&($room_type!='sp')){
-		$room_type='pc';
-		if(!empty($_SERVER['HTTP_USER_AGENT'])){
-			$user_agent=$_SERVER['HTTP_USER_AGENT'];
-			if((strpos($user_agent,'iPhone')!==false)||
-			   (strpos($user_agent,'iPod')!==false)||
-			   (strpos($user_agent,'Android')!==false)){
-				$room_type='sp';
-			}
-		}
-	}
-	$nick_name='';
-    if(isset($_POST['nick_name'])){
-        $nick_name=$_POST['nick_name'];
-    }elseif(isset($_GET['nm'])){
-        $nick_name=$_GET['nm'];
-    }elseif(isset($_SESSION['nick_name'])){
-        $nick_name=$_SESSION['nick_name'];
-    }
-	if(empty($nick_name)){
-		$nick_name=$principal_id;
-	}
-    $lobby_url=URL_ROOT;
-    if(isset($_POST['lobby'])){
-        $lobby_url=$_POST['lobby'];
-    }elseif(isset($_GET['lu'])){
-        $lobby_url=$_GET['lu'];
-    }elseif(isset($_SESSION['lobby_url'])){
-        $lobby_url=$_SESSION['lobby_url'];
-    }
-	$err=0;
-    if(isset($_GET['err'])){
-        $err=$_GET['err'];
-    }
-	$state='';
-    if(isset($_POST['f_state'])){
-        $state=$_POST['f_state'];
-    }
-	if((empty($err))&&
-	   ($state=='create_room')){
-		   
-		if(empty($_POST['room_name'])){
-			$err=101;
-		}else{
-			$room_name=changeAvailableRoomName($_POST['room_name']);
-			if(empty($room_name)){
-				$err=102;
-			}
-		}
-		$room_pass='';
-		if(isset($_POST['room_pass'])){
-			$room_pass=$_POST['room_pass'];
-			if(empty($room_pass)){
-			}elseif(checkAvailablePassString($room_pass)===false){
-				$err=104;
-			}
-		}
-		$principal_ip=getClientIP();
-		$game_type='g99';
-		if(isset($_POST['game_type'])){
-			$game_type=$_POST['game_type'];
-		}
-		$tao_flag=0; // 0=見学可(書込み可) 1=見学可(書込み不) 2=見学不可
-		if(isset($_POST['tao_flag'])){
-			$tao_flag=$_POST['tao_flag'];
-		}
-		if($tao_flag==1){
-			$tour_flag=0;
-			$observe_write=1;
-		}elseif($tao_flag==2){
-			$tour_flag=1;
-			$observe_write=1;
-		}else{
-			$tour_flag=0;
-			$observe_write=0;
-		}
-		if(empty($err)){
-			require(DIR_ROOT.'s/common/exefunction.php');
-			if(createSessionRoom($room_name,$room_pass,$principal_id,$principal_ip,86400,$tour_flag,$error_msg,$game_type,$observe_write)!==false){
-				header('Location:'.URL_ROOT.'roomin.php'.
-					   '?rn='.urlencode(changeIDformRoomName($room_name)).
-					   '&rp='.urlencode($room_pass).
-					   '&rt='.urlencode($room_type).
-					   '&lu='.urlencode($lobby_url).
-					   '&pr='.urlencode($principal_id).
-					   '&nm='.urlencode($nick_name).
-					   '&ro=0'
-				);
-				exit;
-			}else{
-				$err=110;
-			}
-		}
-	}
-	$ra_load_flag=true;
-	$now_time=time();
-	$ra=array();
-	if(file_exists(DIR_ROOT.'r/roomlist.php')){
-		if(include(DIR_ROOT.'r/roomlist.php')){
-            if(1<count($ra)){
-                foreach($ra as $sort_key => $sort_value){
-                    $sort_timestamp[$sort_key]=(int)$sort_value[7];
-                }
-                @array_multisort($sort_timestamp,SORT_DESC,SORT_NUMERIC,$ra);
-                unset($sort_timestamp);
-                unset($sort_key);
-            }
-		}else{
-			$ra_load_flag=false;
-		}
-	}
-	if(file_exists(BAC_ROOT.'src/bcdiceCore.rb')){
-		$bac_gamelist=array_merge($bac_gamelist,$dicebot_textlist);
+session_start();
+require('./s/common/core.php');
+require(DIR_ROOT.'s/common/function.php');
+require(DIR_ROOT.'s/list/dicebot_textlist.php');
+require(DIR_ROOT.'s/list/bac_gamelist.php');
+function getRemainTime($l_time){
+	if(1<=($l_time/86400)){
+		$result=floor($l_time/86400).'日';
+	}elseif(1<=($l_time/3600)){
+		$result=floor($l_time/3600).'時間';
+	}elseif(1<=($l_time/60)){
+		$result=floor($l_time/60).'分';
+	}elseif(0>$l_time){
+		$result='期限切れ';
 	}else{
-		$bac_gamelist=$dicebot_textlist;
+		$result=$l_time.'秒';
 	}
-	checkPlayerCapacity($serv_delay_facter);
-	list($load_avg_1min,$load_avg_5min,$load_avg_15min)=checkLoadAvg(CPU_CORE);
+	return $result;
+}
+function changeAvailableRoomName($room_name){
+	$ob_word_list=array(array('<','＜'),
+						array('>','＞'),
+						array('"','”'),
+						array("'",'’'),
+						array('&','＆'),
+						array('/','／'),
+						array('.','．'),
+						array(',','，'),
+						array('_','＿'));
+	foreach($ob_word_list as $ob_word){
+		$room_name=str_replace($ob_word[0],$ob_word[1],$room_name);
+	}
+	$room_name=preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','',$room_name);
+	return trim(mb_convert_kana($room_name,'s'));
+}
+function checkAvailablePassString($pass_string,$pass_min_lenght=0,$pass_man_lenght=100){
+	if(preg_match('/[0-9a-zA-Z]+/',$pass_string)){
+		$pass_lenght=mb_strlen($pass_string);
+		if($pass_min_lenght<=$pass_lenght){
+			if($pass_man_lenght>=$pass_lenght){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+$principal_id='';
+if(isset($_POST['principal_id'])){
+	$principal_id=$_POST['principal_id'];
+}elseif(isset($_GET['pr'])){
+	$principal_id=$_GET['pr'];
+}elseif(isset($_SESSION['principal_id'])){
+	$principal_id=$_SESSION['principal_id'];
+}
+$room_type='';
+if(isset($_POST['room_type'])){
+	$room_type=$_POST['room_type'];
+}elseif(isset($_GET['rt'])){
+	$room_type=$_GET['rt'];
+}
+if(($room_type!='pc')&&($room_type!='sp')){
+	$room_type='pc';
+	if(!empty($_SERVER['HTTP_USER_AGENT'])){
+		$user_agent=$_SERVER['HTTP_USER_AGENT'];
+		if((strpos($user_agent,'iPhone')!==false)||
+		   (strpos($user_agent,'iPod')!==false)||
+		   (strpos($user_agent,'Android')!==false)){
+			$room_type='sp';
+		}
+	}
+}
+$nick_name='';
+if(isset($_POST['nick_name'])){
+	$nick_name=$_POST['nick_name'];
+}elseif(isset($_GET['nm'])){
+	$nick_name=$_GET['nm'];
+}elseif(isset($_SESSION['nick_name'])){
+	$nick_name=$_SESSION['nick_name'];
+}
+if(empty($nick_name)){
+	$nick_name=$principal_id;
+}
+$lobby_url=URL_ROOT;
+if(isset($_POST['lobby'])){
+	$lobby_url=$_POST['lobby'];
+}elseif(isset($_GET['lu'])){
+	$lobby_url=$_GET['lu'];
+}elseif(isset($_SESSION['lobby_url'])){
+	$lobby_url=$_SESSION['lobby_url'];
+}
+$err=0;
+if(isset($_GET['err'])){
+	$err=$_GET['err'];
+}
+$state='';
+if(isset($_POST['f_state'])){
+	$state=$_POST['f_state'];
+}
+if((empty($err))&&
+   ($state=='create_room')){
+	   
+	if(empty($_POST['room_name'])){
+		$err=101;
+	}else{
+		$room_name=changeAvailableRoomName($_POST['room_name']);
+		if(empty($room_name)){
+			$err=102;
+		}
+	}
+	$room_pass='';
+	if(isset($_POST['room_pass'])){
+		$room_pass=$_POST['room_pass'];
+		if(empty($room_pass)){
+		}elseif(checkAvailablePassString($room_pass)===false){
+			$err=104;
+		}
+	}
+	$principal_ip=getClientIP();
+	$game_type='g99';
+	if(isset($_POST['game_type'])){
+		$game_type=$_POST['game_type'];
+	}
+	$tao_flag=0; // 0=見学可(書込み可) 1=見学可(書込み不) 2=見学不可
+	if(isset($_POST['tao_flag'])){
+		$tao_flag=$_POST['tao_flag'];
+	}
+	if($tao_flag==1){
+		$tour_flag=0;
+		$observe_write=1;
+	}elseif($tao_flag==2){
+		$tour_flag=1;
+		$observe_write=1;
+	}else{
+		$tour_flag=0;
+		$observe_write=0;
+	}
+	if(empty($err)){
+		require(DIR_ROOT.'s/common/exefunction.php');
+		if(createSessionRoom($room_name,$room_pass,$principal_id,$principal_ip,86400,$tour_flag,$error_msg,$game_type,$observe_write)!==false){
+			header('Location:'.URL_ROOT.'roomin.php'.
+				   '?rn='.urlencode(changeIDformRoomName($room_name)).
+				   '&rp='.urlencode($room_pass).
+				   '&rt='.urlencode($room_type).
+				   '&lu='.urlencode($lobby_url).
+				   '&pr='.urlencode($principal_id).
+				   '&nm='.urlencode($nick_name).
+				   '&ro=0'
+			);
+			exit;
+		}else{
+			$err=110;
+		}
+	}
+}
+$ra_load_flag=true;
+$now_time=time();
+$ra=array();
+if(file_exists(DIR_ROOT.'r/roomlist.php')){
+	if(include(DIR_ROOT.'r/roomlist.php')){
+		if(1<count($ra)){
+			foreach($ra as $sort_key => $sort_value){
+				$sort_timestamp[$sort_key]=(int)$sort_value[7];
+			}
+			@array_multisort($sort_timestamp,SORT_DESC,SORT_NUMERIC,$ra);
+			unset($sort_timestamp);
+			unset($sort_key);
+		}
+	}else{
+		$ra_load_flag=false;
+	}
+}
+if(empty(BAC_ENDPOINT)){
+	$bac_gamelist=$dicebot_textlist;
+}else{
+	$bac_gamelist=array_merge($bac_gamelist,$dicebot_textlist);
+}
+checkPlayerCapacity($serv_delay_facter);
+list($load_avg_1min,$load_avg_5min,$load_avg_15min)=checkLoadAvg(CPU_CORE);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -198,38 +198,38 @@ header('Last-Modified: '.gmdate( 'D, d M Y H:i:s' ).' GMT');
 	<script type="text/javascript" charset="UTF-8" src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <style>
-	body{
-		padding:0;
-		margin:0;
-	}
-	h1,h2,h3{
-		color:#FE7F00;
-		margin:0;
-	}
-    table{
-        border:1px #E3E3E3 solid;
-        border-collapse:collapse;
-        border-spacing:0;
-    }
-    tr:hover{
-        background-color:#FF0;
-		cursor:pointer;
-    }
-    th{
-        padding:5px;
-        border:#E3E3E3 solid;
-        border-width:0 0 1px 1px;
-        background:#F5F5F5;
-        font-weight:bold;
-        line-height:120%;
-        text-align:center;
-    }
-    td{
-        padding:5px;
-        border:1px #E3E3E3 solid;
-        border-width:0 0 1px 1px;
-        text-align:center;
-    }
+body{
+	padding:0;
+	margin:0;
+}
+h1,h2,h3{
+	color:#FE7F00;
+	margin:0;
+}
+table{
+	border:1px #E3E3E3 solid;
+	border-collapse:collapse;
+	border-spacing:0;
+}
+tr:hover{
+	background-color:#FF0;
+	cursor:pointer;
+}
+th{
+	padding:5px;
+	border:#E3E3E3 solid;
+	border-width:0 0 1px 1px;
+	background:#F5F5F5;
+	font-weight:bold;
+	line-height:120%;
+	text-align:center;
+}
+td{
+	padding:5px;
+	border:1px #E3E3E3 solid;
+	border-width:0 0 1px 1px;
+	text-align:center;
+}
 </style>
 <body>
     <header>
