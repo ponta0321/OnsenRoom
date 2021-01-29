@@ -1,16 +1,17 @@
 <?php
+require(DIR_ROOT.'s/common/bcdiceapiv2class.php');
 function getDiceSR($ro_res_rand,&$dammy_dice){
 	foreach((array)$ro_res_rand as $key => $rail_value){
-		if(is_array($rail_value[0])){
+		if(is_array($rail_value['value'])){
 			getDiceSR($rail_value,$dammy_dice);
 		}else{
 			$result_rand=0;
-			if(isset($rail_value[0])){
-				$result_rand=$rail_value[0];
+			if(isset($rail_value['value'])){
+				$result_rand=$rail_value['value'];
 			}
 			$result_rmax=100;
-			if(isset($rail_value[1])){
-				$result_rmax=$rail_value[1];
+			if(isset($rail_value['sides'])){
+				$result_rmax=$rail_value['sides'];
 			}
 			$dammy_dice[]=array($result_rmax,$result_rand);
 		}
@@ -45,6 +46,9 @@ if(1<$mca_count){
 			$chipcomment.=' ';
 		}
 		$chipcomment.=(string)$m_comment_array[$i];
+	}
+	if($chipcomment!=''){
+		$chipcomment='「'.$chipcomment.'」';
 	}
 }elseif(0<$mca_count){
 	$chipcommand=(string)$m_comment_array[0];
@@ -112,68 +116,24 @@ do{
 			$run_ruby_flag=false;
 		}
 		if($run_ruby_flag==true){
-			if(!empty(BAC_FRONT_CMD)){
-				if((strpos(BAC_FRONT_CMD,'"')!==false)&&(strpos(BAC_REAR_CMD,'"')!==false)){
-					$send_command=
-						escapeshellcmd(BAC_FRONT_CMD.' '.
-						DIR_ROOT.'rb/onsenbac.rb /'.trim(BAC_ROOT,'/').'/'.' '.
-						$bac_game_dicebot.' '.
-						str_replace(array('$0','$1','$2','$3','$4','$5','$6','$7','$8','$9'),array('\$0','\$1','\$2','\$3','\$4','\$5','\$6','\$7','\$8','\$9'),$chipcommand).
-						BAC_REAR_CMD);
-				}else{
-					$send_command=
-						escapeshellcmd(BAC_FRONT_CMD.' '.
-						DIR_ROOT.'rb/onsenbac.rb /'.trim(BAC_ROOT,'/').'/'.' '.
-						$bac_game_dicebot.' '.
-						$chipcommand.
-						BAC_REAR_CMD);
-				}
-				$result_send_command=`$send_command`;
-			}else{
-				$post_data=http_build_query(
-					array(
-						'flag'=>0,
-						'bclocation'=>'/'.trim(BAC_ROOT,'/').'/',
-						'dicebot_name'=>$bac_game_dicebot,
-						'dicebot_command'=>$chipcommand
-					),"","&");
-				$header=array(
-					'Content-Type: application/x-www-form-urlencoded',
-					'Content-Length: '.strlen($post_data)
-				);
-				$context=array(
-					'http'=>array(
-						'method'=>'POST',
-						'header'=>implode("\r\n",$header),
-						'content'=>$post_data
-					),
-					'ssl'=>array(
-						'verify_peer'=>false,
-						'verify_peer_name'=>false
-					)
-				);
-				$result_send_command=file_get_contents(URL_ROOT.'rb/plug.rb',false,stream_context_create($context));
-			}
-			$result_onsenbac[$total_repet]=json_decode($result_send_command,true);
+			$result_onsenbac[$total_repet]=classBCDiceAPIv2::diceRoll(BAC_ENDPOINT,$bac_game_dicebot,$chipcommand);
 		}
 	}
 	$result_onsenbac_msg[$total_repet]='';
 	$result_rand_msg[$total_repet]='';
 	$result_onsenbac_array[$total_repet]=array();
-	if(isset($result_onsenbac[$total_repet]['secret_flag'])&&
-	   isset($result_onsenbac[$total_repet]['gmsg'])&&
-	   isset($result_onsenbac[$total_repet]['res_rand'])&&
-	   isset($result_onsenbac[$total_repet]['res_msg'])){
+	if(isset($result_onsenbac[$total_repet]['secret'])&&
+	   isset($result_onsenbac[$total_repet]['rands'])&&
+	   isset($result_onsenbac[$total_repet]['text'])){
 		   
-		$result_onsenbac[$total_repet]['gmsg']=trim($result_onsenbac[$total_repet]['gmsg']);
-		$result_onsenbac[$total_repet]['res_msg']=str_replace(array("\r\n","\n","\r"),'<br>',$result_onsenbac[$total_repet]['res_msg']);
+		$result_onsenbac[$total_repet]['text']=str_replace(array("\r\n","\n","\r"),'<br>',$result_onsenbac[$total_repet]['text']);
 		
-		if($result_onsenbac[$total_repet]['secret_flag']){
+		if($result_onsenbac[$total_repet]['secret']==true){
 			$secret_dice_flag=true;
 		}
-		if($result_onsenbac[$total_repet]['res_msg']!='1'){
+		if($result_onsenbac[$total_repet]['text']!='1'){
 			$nonroll_dice_flag=true;
-			$result_onsenbac_msg[$total_repet]=$result_onsenbac[$total_repet]['res_msg'];
+			$result_onsenbac_msg[$total_repet]=$result_onsenbac[$total_repet]['text'];
 			// 結果文字列を分割
 			if(strpos($result_onsenbac_msg[$total_repet],'＞')!==false){
 				$result_onsenbac_array[$total_repet]=explode('＞',$result_onsenbac_msg[$total_repet]);
@@ -201,7 +161,7 @@ do{
 			}
 			// ダイス別の結果を抽出
 			$dammy_dice=array();
-			getDiceSR($result_onsenbac[$total_repet]['res_rand'],$dammy_dice);
+			getDiceSR($result_onsenbac[$total_repet]['rands'],$dammy_dice);
 			if(0<count($dammy_dice)){
 				$i=0;
 				foreach($dammy_dice as $dd_key => $dd_value){
@@ -213,12 +173,6 @@ do{
 				}
 			}
 			if($total_repet==0){ // 初回のみの処理
-				$typecommand=$result_onsenbac[$total_repet]['gmsg']; // コマンドの記憶
-				$typecommand=trim($typecommand);
-				if(preg_match('/^\((.+)\)$/',$typecommand,$tc_match)){
-					$typecommand=$tc_match[1];
-				}
-				unset($tc_match);
 				if($roll_result===false){
 					$first_roll_result=0;
 					if(isset($dice[0][0])){
@@ -273,7 +227,7 @@ if($dice_roll_flag==true){
 			}
 		}
 	}else{
-		$comment=$call_name.'さんの'.$chipcomment.'ロール('.$typecommand.') → エラー'.$command_error_mes;
+		$comment=$call_name.'さんの'.$chipcomment.'ロール('.$chipcommand.') → エラー'.$command_error_mes;
 		$dice_roll_flag=false;
 	}
 	$system_comment_flag=true;
