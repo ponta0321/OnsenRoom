@@ -4,7 +4,7 @@ BCDiceのダイスボットリスト一覧
     Ver3.00.00 対応
 配列
 　　　　Keyの命名ルール
-　　　　　　Bone&Carsのフォルダ scr/diceBot のファイル名 の前に bac_ をつける
+　　　　BCDice ID の前に bac_ をつける
 　　　 [0]=ダイスボット名 [1]=ダイスボット説明(基本未使用) [2]=オンセン用キー
 順列
 	BCDiceAPIのゲームシステム sork_key昇順
