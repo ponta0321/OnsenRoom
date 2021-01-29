@@ -228,12 +228,12 @@ $dicebot_textlist=array();
 if(file_exists(DIR_ROOT.'s/list/dicebot_textlist.php')){
 	@include(DIR_ROOT.'s/list/dicebot_textlist.php');
 }
-if(file_exists(BAC_ROOT.'src/bcdiceCore.rb')){
-	@include(DIR_ROOT.'s/list/bac_gamelist.php');
-}else{
+if(empty(BAC_ENDPOINT)){
 	if(strpos((string)$xml->head->game_dicebot,'bac_')!==false){
 		$xml->head->game_dicebot='g99';
 	}
+}else{
+	@include(DIR_ROOT.'s/list/bac_gamelist.php');
 }
 if(empty($xml->head->game_mapchip)){
 	$game_mapchip_img=URL_DEFAULT_MAPCHIP;
