@@ -3,12 +3,14 @@
   define('SITE_TITLE','オンセンルーム'); // サイト名 ※サイト名はデフォルト「オンセンルーム」から必ず変更する
   define('SITE_DESCRIPTION','ブラウザで遊べるTRPGオンラインセッションルームです。'); // サイト説明
   define('CPU_CORE',8); // サーバのCPUコア数を入力する
-  define('APP_VERSION','1.03.00'); // バージョン
+  define('APP_VERSION','1.04.00'); // バージョン
 /* password */
   define('ADMINISTRATOR_PASSWORD','1234'); // 管理者ページ用パスワード
   define('AUTHENTICATION_CODE','12345678abcd'); // ロビーサーバから要求があった際の認証用パスワード（ロビーサーバから渡されるコードとこれが一致したら情報を提供する）
 /* ダイスボット（共有） */
   define('REPEAT_ROLL_LIMIT',10); // ロールを繰り返す上限
+/* ダイスボット（BCDice専用） */
+  define('BAC_ENDPOINT','https://bcdice.trpgonsen.click'); // BCDiceAPIのエンドポイント
 /* ダイスボット（オンセンdb専用） */
   define('DICE_ROLL_LIMIT',100); // 振るダイスの数の上限
   define('DICE_SURFACE_LIMIT',100); // ダイス面の上限
@@ -23,17 +25,6 @@
   define('DOWNLOAD_LOG_LIMIT_SIZE',10485760); // ダウンロードできるログの上限サイズ
 /* path */
   define('DIR_ROOT',$_SERVER['DOCUMENT_ROOT'].'/'); // ルートとなるファイルロケーションのフルパスを入力する
-/* ダイスボット（Bone&Cars専用） */
-// Bone&Carsをサーバに導入している場合のみ、値を入力する
-  define('BAC_ROOT',DIR_ROOT.'BCDice/'); // Bone&Carsのロケーションルートをフルパスで入力する、この値が空もしくはコメントアウトしている場合は導入していないと判断する
-  // BAC_FRONT_CMD および BAC_REAR_CMD に値を入れている場合
-  // Bone&Cars(ルビー)の呼び出しはシェルコマンドで実行される
-  // 実行形式 `RUBY_FRONT_CMD [ruby_file_location command]RUBY_REAR_CMD`
-  // 例： RUBY_FRONT_CMD がruby 、 RUBY_REAR_CMD が空
-  // 例でBone&Carsを実行するシェルコマンド `ruby ./rb/plug.rb id6`
-  // Bone&Cars(ルビー)をshebangで動作させる場合、BAC_FRONT_CMD および BAC_REAR_CMD の値を''空にする
-  define('BAC_FRONT_CMD','ruby'); // シェルコマンド(前)
-  define('BAC_REAR_CMD',''); // シェルコマンド(後)
 /* TRPGオンラインセッションSNSサーバー(ロビーサーバ) */
 // 基本的には変更しない、ロビーサーバを自設する場合のみ変更
   define('LOBBY_TRANSFER_PROTOCOL','https:'); // デフォルト https:
