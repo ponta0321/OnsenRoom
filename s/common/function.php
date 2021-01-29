@@ -490,7 +490,7 @@ v1.01
     }
     return $result;
 }
-function getCharListFromLobbyServer($player_id,$player_ip,$lobby_getcharacterlist_url=LOBBY_URL_ROOT.'exe/getcharacterlist.php'){
+function getCharListFromLobbyServer($player_id,$player_ip,$room_token='',$lobby_getcharacterlist_url=LOBBY_URL_ROOT.'exe/getcharacterlist.php'){
 /*-------------------------------------------------------------------
 -- 機能 --
 キャラクター一覧情報をSNSサーバーから取得する。
@@ -506,14 +506,15 @@ v1.00
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
     $post_fields ='id='.$player_id;
     $post_fields.='&ip='.$player_ip;
-    curl_setopt($ch,CURLOPT_POST,2);
+    $post_fields.='&rt='.$room_token;
+    curl_setopt($ch,CURLOPT_POST,3);
     curl_setopt($ch,CURLOPT_POSTFIELDS,$post_fields);
     curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
     $result=curl_exec($ch);
     curl_close($ch);
     return json_decode($result,true);
 }
-function getCharDataFromLobbyServer($char_id,$player_id,$player_ip,$lobby_getcharacterdata_url=LOBBY_URL_ROOT.'exe/getcharacterdata.php'){
+function getCharDataFromLobbyServer($char_id,$player_id,$player_ip,$room_token='',$lobby_getcharacterdata_url=LOBBY_URL_ROOT.'exe/getcharacterdata.php'){
 /*-------------------------------------------------------------------
 -- 機能 --
 キャラクター情報をSNSサーバーから取得する。
@@ -530,7 +531,8 @@ v1.00
     $post_fields ='id='.$player_id;
     $post_fields.='&ip='.$player_ip;
     $post_fields.='&char_id='.$char_id;
-    curl_setopt($ch,CURLOPT_POST,3);
+    $post_fields.='&rt='.$room_token;
+    curl_setopt($ch,CURLOPT_POST,4);
     curl_setopt($ch,CURLOPT_POSTFIELDS,$post_fields);
     curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
     $result=curl_exec($ch);
