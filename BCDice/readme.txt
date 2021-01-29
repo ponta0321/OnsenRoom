@@ -1,1 +1,0 @@
-BCDice（著作権者：Faceless & たいたい竹流）と連動する場合、BCDiceディレクトリ直下にBCDiceのsrcディレクトリがあるようにします。
