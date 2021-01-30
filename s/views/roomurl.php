@@ -39,7 +39,7 @@
 <?php if(!empty($voice_invite_code)&&($voice_invite_code!=-1)){ ?> 
     <div class="room_setting_box_wb">
         <p>ボイスチャット用URL（DISCORD）</p>
-        <p><input id="id_jmurlsp" type="text" value="https://discord.gg/<?=$voice_invite_code;?>" style="padding:2px 4px;min-width:240px;font-size:10px;" onFocus="$(this).select();" readonly /></p>
+        <p><input id="id_discordurl" type="text" value="https://discord.gg/<?=$voice_invite_code;?>" style="padding:2px 4px;min-width:240px;font-size:10px;" onFocus="$(this).select();" readonly /></p>
         <p class="font_red small">※&nbsp;このURLはパスワードを知らなくても参加者として入室できるため参加者以外には開示しないことをお勧めします。</p>
     </div>
 <?php 
