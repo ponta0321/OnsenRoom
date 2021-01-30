@@ -47,9 +47,6 @@ if(1<$mca_count){
 		}
 		$chipcomment.=(string)$m_comment_array[$i];
 	}
-	if($chipcomment!=''){
-		$chipcomment='「'.$chipcomment.'」';
-	}
 }elseif(0<$mca_count){
 	$chipcommand=(string)$m_comment_array[0];
 	$chipcomment='';

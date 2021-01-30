@@ -13,7 +13,7 @@ class classBCDiceAPIv2{
 					if($post_count>0){
 						$post_fields.='&';
 					}
-					$post_fields.=$key.'='.$value;
+					$post_fields.=urlencode($key).'='.urlencode($value);
 					$post_count++;
 				}
 				curl_setopt($ch,CURLOPT_POST,$post_count);
