@@ -29,7 +29,8 @@ if(!empty($_GET['pr'])){
 	$login_flag=true;
 }
 if(!empty($_POST['room_token'])){
-	setcookie('room_token',$_POST['room_token'],time()+86400);
+    setcookie('room_token',$_POST['room_token'],time()+86400,'/',THIS_DOMAIN);
+    $_COOKIE['room_token']=$_POST['room_token'];
 }
 if($login_flag===true){
 	if(checkAvailablePassString($principal_id)===false){
