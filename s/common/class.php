@@ -1041,23 +1041,25 @@ class classRoomList{
     }
     // メソッド
     // ルームリストにルームを保存
-    function save($server,
-                  $id,
-                  $name,
-                  $creater,
-                  $creater_ip,
-                  $password='',
-                  $voice_id='',
-                  $created_time=0,
-                  $update_time=0,
-                  $expiration_time=0,
-                  $ssl_flag=0,
-                  $password_flag=0,
-                  $tour_flag=0,
-                  $parties='',
-                  $visitors='',
-                  $dicebot='',
-                  $dir_root=DIR_ROOT){
+    function save(
+		$server,
+		$id,
+		$name,
+		$creater,
+		$creater_ip,
+		$password='',
+		$voice_id='',
+		$created_time=0,
+		$update_time=0,
+		$expiration_time=0,
+		$ssl_flag=0,
+		$password_flag=0,
+		$tour_flag=0,
+		$parties='',
+		$visitors='',
+		$dicebot='',
+		$dir_root=DIR_ROOT
+	){
 
         $this->stime=time();
         if(empty($server)){

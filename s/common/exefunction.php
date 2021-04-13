@@ -1518,25 +1518,28 @@ v1.04
                 $password_flag=1;
             }
             $room_list=new classRoomList;
-            if($room_list->save(THIS_DOMAIN,
-                                $base_room_file,
-                                $room_name,
-                                $creator,
-                                $creator_ip,
-                                $room_pass,
-                                '-1',
-                                $now_time,
-                                $now_time,
-                                ((int)$now_time+(int)$expiration_time),
-                                TRANSFER_PROTOCOL,
-                                $password_flag,
-                                $tour_flag,
-                                0,
-                                0,
-                                $game_type)){
-            
-                return $room_list->room;
-            }
+            if($room_list->save(
+				THIS_DOMAIN,
+				$base_room_file,
+				$room_name,
+				$creator,
+				$creator_ip,
+				$room_pass,
+				'-1',
+				$now_time,
+				$now_time,
+				((int)$now_time+(int)$expiration_time),
+				TRANSFER_PROTOCOL,
+				$password_flag,
+				$tour_flag,
+				0,
+				0,
+				$game_type)){
+					return $room_list->room;
+            }else{
+				$error_msg='ルーム作成に失敗しました。(2)';
+				return false;
+			}
         }else{
             $error_msg='ルーム作成に失敗しました。';
             return false;
