@@ -354,7 +354,7 @@ function postPutComment(temp_comment){
     if(temp_comment!=""){
         document.getElementById('id_comment').value='';
         if(temp_comment=='/bs'){
-            saveLocalBD('<?=URL_ROOT;?>r/n/<?=$base_room_file;?>/data.xml','id_comment,id_call_name');
+            saveLocalBD();
         }else if(temp_comment=='/bl'){
             loadLocalBD('<?=URL_ROOT;?>exe/putsettingdata.php','<?=$base_room_file;?>','<?=$principal_id;?>','id_comment,id_call_name');
         }else{
