@@ -96,58 +96,58 @@ if($exfilelock->flock($room_dir)){
 					$tag=(string)$character_xml->tag;
 					$macro=(string)$character_xml->macro;
 					unset($character_xml);
-					$macro_array=array();
-					$macro_rowarray=explode('^',$macro);
-					foreach($macro_rowarray as $mra_value){
-						$macro_c='';
-						$macro_e='';
-						$macro_colarray=explode('|',$mra_value);
-						if(isset($macro_colarray[0])){
-							$macro_c=$macro_colarray[0];
+					if(strpos($origin_comment,'$')!==false || strpos($origin_comment,'＄')!==false){
+						$array_no=0;
+						$macro_array=array();
+						$macro_rowarray=explode('^',$macro);
+						$sort_array=array();
+						foreach($macro_rowarray as $mra_value){
+							$macro_colarray=explode('|',$mra_value);
+							$macro_c=isset($macro_colarray[0])?$macro_colarray[0]:'';
+							$macro_e=isset($macro_colarray[1])?$macro_colarray[1]:'';
+							if(isset($macro_c) && isset($macro_e)){
+								$macro_array[$array_no]=array($macro_c,$macro_e);
+								$sort_array[$array_no]=$macro_c;
+								$array_no++;
+							}
 						}
-						if(isset($macro_colarray[1])){
-							$macro_e=$macro_colarray[1];
-						}
-						if((isset($macro_c))&&(isset($macro_e))){
-							$macro_array[]=array($macro_c,$macro_e);
-						}
-					}
-					foreach($macro_array as $macro_recode){
-						if(!empty($macro_recode[0])){
-							if((stripos($origin_comment,'$'.$macro_recode[0])!==false)||(stripos($origin_comment,'＄'.$macro_recode[0])!==false)){
+						@array_multisort($sort_array,SORT_DESC,SORT_STRING,$macro_array);
+						unset($sort_array);
+						unset($array_no);
+						foreach($macro_array as $macro_recode){
+							if(empty($macro_recode[0])) continue;
+							if(stripos($origin_comment,'$'.$macro_recode[0])!==false){
 								$origin_comment=str_ireplace('$'.$macro_recode[0],$macro_recode[1],$origin_comment);
+								break;
+							}elseif(stripos($origin_comment,'＄'.$macro_recode[0])!==false){
 								$origin_comment=str_ireplace('＄'.$macro_recode[0],$macro_recode[1],$origin_comment);
 								break;
 							}
 						}
 					}
-					$tag_array=array();
-					$tag_array_no=0;
-					$tag_rowarray=explode('^',$tag);
-					$sort_array=array();
-					foreach($tag_rowarray as $tra_value){
-						$tag_name='';
-						$tag_value='';
-						$tag_colarray=explode('|',$tra_value);
-						if(isset($tag_colarray[0])){
-							$tag_name=$tag_colarray[0];
+					if(strpos($origin_comment,'#')!==false || strpos($origin_comment,'＃')!==false){
+						$array_no=0;
+						$tag_array=array();
+						$tag_rowarray=explode('^',$tag);
+						$sort_array=array();
+						foreach($tag_rowarray as $tra_value){
+							$tag_colarray=explode('|',$tra_value);
+							$tag_name=isset($tag_colarray[0])?$tag_colarray[0]:'';
+							$tag_value=isset($tag_colarray[1])?$tag_colarray[1]:'';
+							if(isset($tag_name) && isset($tag_value)){
+								$tag_array[$array_no]=array($tag_name,$tag_value);
+								$sort_array[$array_no]=$tag_name;
+								$array_no++;
+							}
 						}
-						if(isset($tag_colarray[1])){
-							$tag_value=$tag_colarray[1];
-						}
-						if((isset($tag_name))&&(isset($tag_value))){
-							$tag_array[$tag_array_no]=array($tag_name,$tag_value);
-							$sort_array[$tag_array_no]=$tag_name;
-							$tag_array_no++;
-						}
-					}
-					@array_multisort($sort_array,SORT_DESC,SORT_STRING,$tag_array);
-					unset($sort_array);
-					unset($tag_array_no);
-					foreach($tag_array as $tag_recode){
-						if(!empty($tag_recode[0])){
-							if((stripos($origin_comment,'#'.$tag_recode[0])!==false)||(stripos($origin_comment,'＃'.$tag_recode[0])!==false)){
+						@array_multisort($sort_array,SORT_DESC,SORT_STRING,$tag_array);
+						unset($sort_array);
+						unset($array_no);
+						foreach($tag_array as $tag_recode){
+							if(empty($tag_recode[0])) continue;
+							if(stripos($origin_comment,'#'.$tag_recode[0])!==false){
 								$origin_comment=str_ireplace('#'.$tag_recode[0],$tag_recode[1],$origin_comment);
+							}elseif(stripos($origin_comment,'＃'.$tag_recode[0])!==false){
 								$origin_comment=str_ireplace('＃'.$tag_recode[0],$tag_recode[1],$origin_comment);
 							}
 						}
