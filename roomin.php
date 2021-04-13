@@ -9,7 +9,7 @@ require('./s/common/core.php');
 require(DIR_ROOT.'s/common/function.php');
 require(DIR_ROOT.'s/common/exefunction.php');
 function checkAvailablePassString($pass_string,$pass_min_lenght=0,$pass_man_lenght=100){
-	if(preg_match('/[0-9a-zA-Z]+/',$pass_string)){
+	if(preg_match('/^[0-9a-zA-Z]+$/',$pass_string)){
 		$pass_lenght=mb_strlen($pass_string);
 		if($pass_min_lenght<=$pass_lenght){
 			if($pass_man_lenght>=$pass_lenght){
@@ -28,13 +28,20 @@ if(!empty($_GET['pr'])){
 	$principal_id=$_POST['principal_id'];
 	$login_flag=true;
 }
-if(!empty($_POST['room_token'])){
+if(!empty($_GET['tk'])){
+    setcookie('room_token',$_GET['tk'],time()+86400,'/',THIS_DOMAIN);
+    $_COOKIE['room_token']=$_GET['tk'];
+}elseif(!empty($_POST['room_token'])){
     setcookie('room_token',$_POST['room_token'],time()+86400,'/',THIS_DOMAIN);
     $_COOKIE['room_token']=$_POST['room_token'];
 }
 if($login_flag===true){
 	if(checkAvailablePassString($principal_id)===false){
 		header('Location: '.$lobby_url.'roomout.php?err=2') ;
+		exit;
+	}
+	if(empty(preg_match('/[0-9]/',$principal_id)) || empty(preg_match('/[a-zA-Z]/',$principal_id))){
+		header('Location: '.$lobby_url.'roomout.php?err=106') ;
 		exit;
 	}
 }

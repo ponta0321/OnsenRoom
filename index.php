@@ -23,24 +23,25 @@ function getRemainTime($l_time){
 	}
 	return $result;
 }
-function changeAvailableRoomName($room_name){
-	$ob_word_list=array(array('<','＜'),
-						array('>','＞'),
-						array('"','”'),
-						array("'",'’'),
-						array('&','＆'),
-						array('/','／'),
-						array('.','．'),
-						array(',','，'),
-						array('_','＿'));
+function changeAvailableWord($word){
+	$ob_word_list=array(
+		array('<','＜'),
+		array('>','＞'),
+		array('"','”'),
+		array("'",'’'),
+		array('&','＆'),
+		array('/','／'),
+		array('.','．'),
+		array(',','，'),
+		array('_','＿'));
 	foreach($ob_word_list as $ob_word){
-		$room_name=str_replace($ob_word[0],$ob_word[1],$room_name);
+		$word=str_replace($ob_word[0],$ob_word[1],$word);
 	}
-	$room_name=preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','',$room_name);
-	return trim(mb_convert_kana($room_name,'s'));
+	$word=preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','',$word);
+	return trim(mb_convert_kana($word,'s'));
 }
 function checkAvailablePassString($pass_string,$pass_min_lenght=0,$pass_man_lenght=100){
-	if(preg_match('/[0-9a-zA-Z]+/',$pass_string)){
+	if(preg_match('/^[0-9a-zA-Z]+$/',$pass_string)){
 		$pass_lenght=mb_strlen($pass_string);
 		if($pass_min_lenght<=$pass_lenght){
 			if($pass_man_lenght>=$pass_lenght){
@@ -83,9 +84,7 @@ if(isset($_POST['nick_name'])){
 }elseif(isset($_SESSION['nick_name'])){
 	$nick_name=$_SESSION['nick_name'];
 }
-if(empty($nick_name)){
-	$nick_name=$principal_id;
-}
+if(empty($nick_name)) $nick_name=$principal_id;
 $lobby_url=URL_ROOT;
 if(isset($_POST['lobby'])){
 	$lobby_url=$_POST['lobby'];
@@ -95,24 +94,21 @@ if(isset($_POST['lobby'])){
 	$lobby_url=$_SESSION['lobby_url'];
 }
 $err=0;
-if(isset($_GET['err'])){
-	$err=$_GET['err'];
-}
+if(isset($_GET['err'])) $err=$_GET['err'];
 $state='';
-if(isset($_POST['f_state'])){
-	$state=$_POST['f_state'];
-}
-if((empty($err))&&
-   ($state=='create_room')){
-	   
+if(isset($_POST['f_state'])) $state=$_POST['f_state'];
+if(empty($err) && $state=='create_room'){
 	if(empty($_POST['room_name'])){
 		$err=101;
 	}else{
-		$room_name=changeAvailableRoomName($_POST['room_name']);
+		$room_name=changeAvailableWord($_POST['room_name']);
 		if(empty($room_name)){
 			$err=102;
 		}
 	}
+	if(empty($principal_id)) $err=103;
+	if(preg_match('/[^0-9a-zA-Z]/',$principal_id)) $err=105;
+	if(empty(preg_match('/[0-9]/',$principal_id)) || empty(preg_match('/[a-zA-Z]/',$principal_id))) $err=106;
 	$room_pass='';
 	if(isset($_POST['room_pass'])){
 		$room_pass=$_POST['room_pass'];
@@ -123,13 +119,9 @@ if((empty($err))&&
 	}
 	$principal_ip=getClientIP();
 	$game_type='g99';
-	if(isset($_POST['game_type'])){
-		$game_type=$_POST['game_type'];
-	}
+	if(isset($_POST['game_type'])) $game_type=$_POST['game_type'];
 	$tao_flag=0; // 0=見学可(書込み可) 1=見学可(書込み不) 2=見学不可
-	if(isset($_POST['tao_flag'])){
-		$tao_flag=$_POST['tao_flag'];
-	}
+	if(isset($_POST['tao_flag'])) $tao_flag=$_POST['tao_flag'];
 	if($tao_flag==1){
 		$tour_flag=0;
 		$observe_write=1;
@@ -401,8 +393,17 @@ td{
 						case 102:
 							echo 'ルーム作成失敗:<br>無効なルーム名です。';
 							break;
+						case 103:
+							echo 'ルーム作成失敗:<br>プレイヤーIDが入力されていません。';
+							break;
 						case 104:
-							echo 'ルーム作成失敗:<br>パスワードに使用できない文字（半角英数字以外の文字、記号など）が入力されているため、ルームを作成できませんでした。';
+							echo 'ルーム作成失敗:<br>パスワードに使用できない文字（半角英数字以外の文字、記号など）が入力されています。';
+							break;
+						case 105:
+							echo 'ルーム作成失敗:<br>プレイヤーIDに使用できない文字（半角英数字以外の文字、記号など）が入力されています。';
+							break;
+						case 106:
+							echo 'プレイヤーIDの入力は英字と数字を合わせて使用してください。';
 							break;
 						case 110:
 							echo 'ルーム作成失敗:<br>'.$error_msg;
@@ -422,58 +423,58 @@ td{
 </body>
 </html>
 <script>
-	$(function(){
-		$("#in_dialog").dialog({
-			resizable:false,
-			modal:true,
-			autoOpen:false,
-			buttons:{
-				"入場する":function(){
-					document.frm_roomin.submit();
-				}
+$(function(){
+	$("#in_dialog").dialog({
+		resizable:false,
+		modal:true,
+		autoOpen:false,
+		buttons:{
+			"入場する":function(){
+				document.frm_roomin.submit();
 			}
-		});
-		$("#cr_dialog").dialog({
-			resizable:false,
-			modal:true,
-			autoOpen:false,
-			buttons:{
-				"作成する":function(){
-					document.frm_crroom.submit();
-				}
-			}
-		});
-		$("#err_dialog").dialog({
-			resizable:false,
-			modal:true,
-			autoOpen:false,
-			buttons:{
-				"OK":function(){
-					$("#err_dialog").dialog("close");
-				}
-			}
-		});
-		<?=($err>0?'$("#err_dialog").dialog("open");':'');?>
+		}
 	});
-	function open_cr_dialog(){
-		document.getElementById('input_rp').value='';
-		$("#cr_dialog").dialog("open");
-	}
-	function open_in_dialog(room_id,room_name,pass_flag,obs_flag){
-        document.getElementById('span_rn').innerHTML=room_name;
-		document.frm_roomin.ro[0].checked=true;
-		if(obs_flag!=0){
-			document.getElementById('input_obs_on').disabled=true;
-		}else{
-			document.getElementById('input_obs_on').disabled=false;
+	$("#cr_dialog").dialog({
+		resizable:false,
+		modal:true,
+		autoOpen:false,
+		buttons:{
+			"作成する":function(){
+				document.frm_crroom.submit();
+			}
 		}
-		document.getElementById('input_rp').value='';
-		document.getElementById('hidden_rn').value=room_id;
-		if(pass_flag!=0){
-			document.getElementById('div_password').style.display='block';
-		}else{
-			document.getElementById('div_password').style.display='none';
+	});
+	$("#err_dialog").dialog({
+		resizable:false,
+		modal:true,
+		autoOpen:false,
+		buttons:{
+			"OK":function(){
+				$("#err_dialog").dialog("close");
+			}
 		}
-		$("#in_dialog").dialog("open");
+	});
+	<?=($err>0?'$("#err_dialog").dialog("open");':'');?>
+});
+function open_cr_dialog(){
+	document.getElementById('input_rp').value='';
+	$("#cr_dialog").dialog("open");
+}
+function open_in_dialog(room_id,room_name,pass_flag,obs_flag){
+	document.getElementById('span_rn').innerHTML=room_name;
+	document.frm_roomin.ro[0].checked=true;
+	if(obs_flag!=0){
+		document.getElementById('input_obs_on').disabled=true;
+	}else{
+		document.getElementById('input_obs_on').disabled=false;
 	}
+	document.getElementById('input_rp').value='';
+	document.getElementById('hidden_rn').value=room_id;
+	if(pass_flag!=0){
+		document.getElementById('div_password').style.display='block';
+	}else{
+		document.getElementById('div_password').style.display='none';
+	}
+	$("#in_dialog").dialog("open");
+}
 </script>
