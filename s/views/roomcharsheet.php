@@ -454,9 +454,9 @@ function saveCharacter(){
 }
 function reloadCharacterList(){
 	document.getElementById('id_cs_b_reload').disabled=true;
-	$.post('<?=URL_ROOT;?>exe/reloadcharacterlist.php',{
-		room_id:'<?=$base_room_file;?>',
-		principal_id:'<?=$principal_id;?>',
+	$.post(CONST_URL_ROOT+'exe/reloadcharacterlist.php',{
+		room_id:CONST_ROOM_ID,
+		principal_id:CONST_PRINCIPAL_ID,
 		principal_ip:'<?=$player_ip;?>'
 	},function(data){
 		var json_charlist_data=convertJsonTextToObject(data);
@@ -470,14 +470,23 @@ function reloadCharacterList(){
 			if((typeof setMacroList)=='function'){
 				setMacroList();
 			}
-			var html_v='<option value="">新しいキャラクターを作る</option>';
+			var html_v='';
 			if(obj_character_list.charlist){
 				for(var key in obj_character_list.charlist){
 					html_v+='<option value="'+obj_character_list.charlist[key].id+'">'+obj_character_list.charlist[key].name+'</option>';
 				}
 			}
 			document.getElementById('id_cs_s_name').value='';
-			document.getElementById('id_cs_s_name').innerHTML=html_v;
+			document.getElementById('id_cs_s_name').innerHTML='<option value="">新しいキャラクターを作る</option>'+html_v;
+			if(CONST_NICKNAME!=CONST_PRINCIPAL_ID && CONST_NICKNAME!=''){
+				html_v='<option value="gm_nick_name">GM／'+CONST_NICKNAME+'</option>'+html_v;
+				html_v='<option value="nick_name">'+CONST_NICKNAME+'</option>'+html_v;
+			}else{
+				html_v='<option value="gm_principal_id">GM／'+CONST_PRINCIPAL_ID+'</option>'+html_v;
+				html_v='<option value="principal_id">'+CONST_PRINCIPAL_ID+'</option>'+html_v;
+			}
+			document.getElementById('id_call_name_st').value='';
+			document.getElementById('id_call_name_st').innerHTML=html_v;
 			callCharacterData();
 			displayWTL('ロビーからキャラ一覧を再取得しました。',50,50,40,163,11);
 		}
