@@ -28,10 +28,10 @@ var listDiscardStock={
 };
 var loadedimgsheet_flag=[
     [0,CONST_URL_ROOT+'images/cardback.jpg',1],
-    [0,'about:blank',0],
-    [0,'about:blank',0],
-    [0,'about:blank',0],
-    [0,'about:blank',0]
+    [0,'',0],
+    [0,'',0],
+    [0,'',0],
+    [0,'',0]
 ];
 var chessman_array=[];
 var font_color_list={
@@ -68,6 +68,7 @@ var map_linechip_w=0; // マップチップ（ライン）width
 var map_linechip_h=0; // マップチップ（ライン）height
 var map_decchip_w=0; // マップチップ（デコレーション）width
 var map_decchip_h=0; // マップチップ（デコレーション）height
+var resBoardData={}; // xml取得のボード情報
 /*////////////////////////////////////////////////////////////////
 function
 ////////////////////////////////////////////////////////////////*/
@@ -115,6 +116,14 @@ function callRoomdData(data_url,roomid){
 function CB(HttpObj){
     if((HttpObj.responseXML!==null)&&(HttpObj.responseXML.documentElement!==null)){
         var resHTTP=HttpObj.responseXML.documentElement;
+		resBoardData['map_data']=resHTTP.getElementsByTagName('map_data')[0]!=null?getDomValue(resHTTP.getElementsByTagName('map_data')[0]):'';
+		resBoardData['game_mapping']=resHTTP.getElementsByTagName('game_mapping')[0]!=null?getDomValue(resHTTP.getElementsByTagName('game_mapping')[0]):'0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0';
+		resBoardData['game_mapchip']=resHTTP.getElementsByTagName('game_mapchip')[0]!=null?getDomValue(resHTTP.getElementsByTagName('game_mapchip')[0]):'';
+		resBoardData['game_backimage']=resHTTP.getElementsByTagName('game_backimage')[0]!=null?getDomValue(resHTTP.getElementsByTagName('game_backimage')[0]):'';
+		resBoardData['game_boardwidth']=resHTTP.getElementsByTagName('game_boardwidth')[0]!=null?getDomValue(resHTTP.getElementsByTagName('game_boardwidth')[0]):17;
+		resBoardData['game_boardheight']=resHTTP.getElementsByTagName('game_boardheight')[0]!=null?getDomValue(resHTTP.getElementsByTagName('game_boardheight')[0]):20;
+		resBoardData['game_syncboardsize']=resHTTP.getElementsByTagName('game_syncboardsize')[0]!=null?getDomValue(resHTTP.getElementsByTagName('game_syncboardsize')[0]):0;
+		resBoardData['game_grid']=resHTTP.getElementsByTagName('game_grid')[0]!=null?getDomValue(resHTTP.getElementsByTagName('game_grid')[0]):5;
     }else{
         return false;
     }
@@ -1115,75 +1124,20 @@ function getDomValue(dom){
     }
 }
 // ローカルの一時記憶領域にボード情報を保存する
-function saveLocalBD(room_file,locked_eml_ids){
-    var locked_eml_id_list=locked_eml_ids.split(',');
-    for(var i=0;i<locked_eml_id_list.length;i++){
-        document.getElementById(locked_eml_id_list[i]).disabled=true;
-    }
-    select_fileValue=document.getElementById('ss_gam_select').value;
-    var xmlObject=createXMLHttpRequest();
-    xmlObject.onreadystatechange=function(){
-        if(xmlObject.readyState==4){
-            var xml=xmlObject.responseXML;
-            if(xml){
-                var elm_map_data=xml.getElementsByTagName('map_data');
-                var map_data='';
-                if(elm_map_data[0]!=null){
-                    map_data=getDomValue(elm_map_data[0]);
-                }
-                window.localStorage.setItem('map_data',map_data);
-                var elm_game_mapping=xml.getElementsByTagName('game_mapping');
-                var game_mapping='0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0^0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0';
-                if(elm_game_mapping[0]!=null){
-                    game_mapping=getDomValue(elm_game_mapping[0]);
-                }
-                window.localStorage.setItem('game_mapping',game_mapping);
-                var elm_game_mapchip=xml.getElementsByTagName('game_mapchip');
-                var game_mapchip='';
-                if(elm_game_mapchip[0]!=null){
-                    game_mapchip=getDomValue(elm_game_mapchip[0]);
-                }
-                window.localStorage.setItem('game_mapchip',game_mapchip);
-                var elm_game_backimage=xml.getElementsByTagName('game_backimage');
-                var game_backimage='';
-                if(elm_game_backimage[0]!=null){
-                    game_backimage=getDomValue(elm_game_backimage[0]);
-                }
-                window.localStorage.setItem('game_backimage',game_backimage);
-                var elm_game_boardwidth=xml.getElementsByTagName('game_boardwidth');
-                var game_boardwidth=17;
-                if(elm_game_boardwidth[0]!=null){
-                    game_boardwidth=getDomValue(elm_game_boardwidth[0]);
-                }
-                window.localStorage.setItem('game_boardwidth',game_boardwidth);
-                var elm_game_boardheight=xml.getElementsByTagName('game_boardheight');
-                var game_boardheight=20;
-                if(elm_game_boardheight[0]!=null){
-                    game_boardheight=getDomValue(elm_game_boardheight[0]);
-                }
-                window.localStorage.setItem('game_boardheight',game_boardheight);
-                var elm_game_syncboardsize=xml.getElementsByTagName('game_syncboardsize');
-                var game_syncboardsize=0;
-                if(elm_game_syncboardsize[0]!=null){
-                    game_syncboardsize=getDomValue(elm_game_syncboardsize[0]);
-                }
-                window.localStorage.setItem('game_syncboardsize',game_syncboardsize);
-                var elm_game_grid=xml.getElementsByTagName('game_grid');
-                var game_grid=5;
-                if(elm_game_grid[0]!=null){
-                    game_grid=getDomValue(elm_game_grid[0]);
-                }
-                window.localStorage.setItem('game_grid',game_grid);
-                openWTL('SWM=ボード情報を一時記憶しました。');
-            }
-            for(var i=0;i<locked_eml_id_list.length;i++){
-                document.getElementById(locked_eml_id_list[i]).disabled=false;
-            }
-        }
-    }
-    // openメソッドでXMLファイルを開く
-    xmlObject.open('POST',room_file,true);
-    xmlObject.send();
+function saveLocalBD(){
+	if(resBoardData['map_data']){
+		window.localStorage.setItem('map_data',resBoardData['map_data']);
+		window.localStorage.setItem('game_mapping',resBoardData['game_mapping']);
+		window.localStorage.setItem('game_mapchip',resBoardData['game_mapchip']);
+		window.localStorage.setItem('game_backimage',resBoardData['game_backimage']);
+		window.localStorage.setItem('game_boardwidth',resBoardData['game_boardwidth']);
+		window.localStorage.setItem('game_boardheight',resBoardData['game_boardheight']);
+		window.localStorage.setItem('game_syncboardsize',resBoardData['game_syncboardsize']);
+		window.localStorage.setItem('game_grid',resBoardData['game_grid']);
+		openWTL('SWM=ボード情報を一時記憶しました。');
+	}else{
+		openWTL('ERR=ボード情報を一時記憶に失敗しました。');
+	}
 }
 // ローカルの一時記憶領域にあるボード情報を読み込む
 function loadLocalBD(psd_file,room_id,principal_id,locked_eml_ids){
@@ -1201,7 +1155,7 @@ function loadLocalBD(psd_file,room_id,principal_id,locked_eml_ids){
     }
     var game_mapchip=window.localStorage.getItem('game_mapchip');
     if(game_mapchip==null){
-        game_mapchip='';
+        game_mapchip=CONST_DEFAULT_URL_MAPCHIP;
     }
     var game_backimage=window.localStorage.getItem('game_backimage');
     if(game_backimage==null){
