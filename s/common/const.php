@@ -3,7 +3,7 @@
   define('SITE_TITLE','オンセンルーム'); // サイト名 ※サイト名はデフォルト「オンセンルーム」から必ず変更する
   define('SITE_DESCRIPTION','ブラウザで遊べるTRPGオンラインセッションルームです。'); // サイト説明
   define('CPU_CORE',8); // サーバのCPUコア数を入力する
-  define('APP_VERSION','1.04.03'); // バージョン
+  define('APP_VERSION','1.04.04'); // バージョン
 /* password */
   define('ADMINISTRATOR_PASSWORD','1234'); // 管理者ページ用パスワード
   define('AUTHENTICATION_CODE','12345678abcd'); // ロビーサーバから要求があった際の認証用パスワード（ロビーサーバから渡されるコードとこれが一致したら情報を提供する）
