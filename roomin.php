@@ -40,10 +40,6 @@ if($login_flag===true){
 		header('Location: '.$lobby_url.'roomout.php?err=2') ;
 		exit;
 	}
-	if(empty(preg_match('/[0-9]/',$principal_id)) || empty(preg_match('/[a-zA-Z]/',$principal_id))){
-		header('Location: '.$lobby_url.'roomout.php?err=106') ;
-		exit;
-	}
 }
 $room_type='pc';
 if(!empty($_GET['rt'])){

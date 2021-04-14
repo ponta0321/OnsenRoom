@@ -108,7 +108,6 @@ if(empty($err) && $state=='create_room'){
 	}
 	if(empty($principal_id)) $err=103;
 	if(preg_match('/[^0-9a-zA-Z]/',$principal_id)) $err=105;
-	if(empty(preg_match('/[0-9]/',$principal_id)) || empty(preg_match('/[a-zA-Z]/',$principal_id))) $err=106;
 	$room_pass='';
 	if(isset($_POST['room_pass'])){
 		$room_pass=$_POST['room_pass'];
