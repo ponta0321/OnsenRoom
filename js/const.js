@@ -27,7 +27,7 @@ var listDiscardStock={
     4:{}
 };
 var loadedimgsheet_flag=[
-    [0,CONST_URL_ROOT+'images/cardback.jpg',1],
+    [0,CONST_URL_ROOT+'images/cardback02.jpg',1],
     [0,'',0],
     [0,'',0],
     [0,'',0],
