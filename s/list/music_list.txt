@@ -1,63 +1,82 @@
-# The following music files of copyright shall belong to Shade
+# The following music files of copyright shall belong to 魔王魂
 # The following music files is prohibited from being used for anything other than this program.
-https://trpgsession.click/sounds/shade/bgm02.mp3,☆ Battle
-https://trpgsession.click/sounds/shade/bgm01.mp3,△ Map
-https://trpgsession.click/sounds/shade/bgm08.mp3,□ Map 2
-https://trpgsession.click/sounds/shade/bgm03.mp3,〇 Event Scene 1
-https://trpgsession.click/sounds/shade/bgm04.mp3,△ Event Scene 2
-https://trpgsession.click/sounds/shade/bgm05.mp3,△ Event Scene 3
-https://trpgsession.click/sounds/shade/bgm06.mp3,△ Event Scene 4
-https://trpgsession.click/sounds/shade/bgm07.mp3,△ Event Scene 5
-
-# The following music files of copyright shall belong to ハヤシユウ
-# The following music files is prohibited from being used for anything other than this program.
-https://trpgsession.click/sounds/yh/bgm01.mp3,☆ 夢想高速
-https://trpgsession.click/sounds/yh/bgm02.mp3,☆ 青色ジェラシー
-https://trpgsession.click/sounds/yh/bgm03.mp3,☆ フィットネスジム
-https://trpgsession.click/sounds/yh/bgm40.mp3,☆ オン・ザ・ステージ
-https://trpgsession.click/sounds/yh/bgm47.mp3,☆ 鉄火巻きができるまで
-https://trpgsession.click/sounds/yh/bgm05.mp3,〇 2月の教室
-https://trpgsession.click/sounds/yh/bgm06.mp3,〇 morning fair
-https://trpgsession.click/sounds/yh/bgm08.mp3,〇 ありふれたしあわせ
-https://trpgsession.click/sounds/yh/bgm10.mp3,〇 わくわくショッピング
-https://trpgsession.click/sounds/yh/bgm37.mp3,〇 the grandeur of nature
-https://trpgsession.click/sounds/yh/bgm38.mp3,〇 VARIOUS COLORS
-https://trpgsession.click/sounds/yh/bgm41.mp3,〇 さえずり
-https://trpgsession.click/sounds/yh/bgm46.mp3,〇 清流
-https://trpgsession.click/sounds/yh/bgm45.mp3,□ 空中散歩
-https://trpgsession.click/sounds/yh/bgm11.mp3,□ funky session
-https://trpgsession.click/sounds/yh/bgm15.mp3,□ 真夜中のちょっと前
-https://trpgsession.click/sounds/yh/bgm19.mp3,□ 一気に進もう
-https://trpgsession.click/sounds/yh/bgm20.mp3,□ 森林ループ
-https://trpgsession.click/sounds/yh/bgm21.mp3,□ ジャングルンバ
-https://trpgsession.click/sounds/yh/bgm22.mp3,□ african jungle
-https://trpgsession.click/sounds/yh/bgm23.mp3,□ desert
-https://trpgsession.click/sounds/yh/bgm26.mp3,□ 沈黙の街
-https://trpgsession.click/sounds/yh/bgm42.mp3,□ さすらいのフォーゲル
-https://trpgsession.click/sounds/yh/bgm33.mp3,□ tree-clad cavern
-https://trpgsession.click/sounds/yh/bgm27.mp3,◇ 秘密の兵器工場
-https://trpgsession.click/sounds/yh/bgm48.mp3,◇ 箱からの脱出
-https://trpgsession.click/sounds/yh/bgm49.mp3,◇ 立入禁止区域
-https://trpgsession.click/sounds/yh/bgm28.mp3,◇ 森の洋館
-https://trpgsession.click/sounds/yh/bgm29.mp3,◇ サイケデリック・ドール
-https://trpgsession.click/sounds/yh/bgm30.mp3,◇ spooky house
-https://trpgsession.click/sounds/yh/bgm18.mp3,◇ 正体
-https://trpgsession.click/sounds/yh/bgm32.mp3,◇ 地下炭鉱
-https://trpgsession.click/sounds/yh/bgm34.mp3,◇ 風のダンジョン
-https://trpgsession.click/sounds/yh/bgm35.mp3,◇ 砂のダンジョン
-https://trpgsession.click/sounds/yh/bgm36.mp3,◇ 氷のダンジョン
-https://trpgsession.click/sounds/yh/bgm31.mp3,◇ space elevator
-https://trpgsession.click/sounds/yh/bgm25.mp3,◇ グラフモード
-https://trpgsession.click/sounds/yh/bgm04.mp3,△ blackhole
-https://trpgsession.click/sounds/yh/bgm07.mp3,△ the meridian sun
-https://trpgsession.click/sounds/yh/bgm09.mp3,△ うちのまじっく
-https://trpgsession.click/sounds/yh/bgm12.mp3,△ みずたまり
-https://trpgsession.click/sounds/yh/bgm13.mp3,△ 枯れ葉
-https://trpgsession.click/sounds/yh/bgm14.mp3,△ 静かな空気
-https://trpgsession.click/sounds/yh/bgm16.mp3,△ 聖なる夜の悲劇
-https://trpgsession.click/sounds/yh/bgm17.mp3,△ 危険な香り
-https://trpgsession.click/sounds/yh/bgm24.mp3,△ 大空を翔ける
-https://trpgsession.click/sounds/yh/bgm39.mp3,△ おとぎ話プロローグ
-https://trpgsession.click/sounds/yh/bgm43.mp3,△ ツバメさんとの別れ
-https://trpgsession.click/sounds/yh/bgm44.mp3,△ 宇宙旅行社イントロダクション
-https://trpgsession.click/sounds/yh/bgm50.mp3,△ 傲慢な王様
+https://trpgsession.click/sounds/maoudamashii/fantasy03.mp3,☆ 戦闘：ファンタジー03
+https://trpgsession.click/sounds/maoudamashii/fantasy04.mp3,☆ 戦闘：ファンタジー04
+https://trpgsession.click/sounds/maoudamashii/fantasy11.mp3,☆ 戦闘：ファンタジー11
+https://trpgsession.click/sounds/maoudamashii/fantasy12.mp3,☆ 戦闘：ファンタジー12
+https://trpgsession.click/sounds/maoudamashii/fantasy15.mp3,☆ 戦闘：ファンタジー15
+https://trpgsession.click/sounds/maoudamashii/fantasy05.mp3,〇 村：ファンタジー05
+https://trpgsession.click/sounds/maoudamashii/fantasy10.mp3,〇 街：ファンタジー10
+https://trpgsession.click/sounds/maoudamashii/fantasy14.mp3,〇 街：ファンタジー14
+https://trpgsession.click/sounds/maoudamashii/orchestra02.mp3,〇 街：オーケストラ02
+https://trpgsession.click/sounds/maoudamashii/orchestra05.mp3,〇 遊園地：オーケストラ05
+https://trpgsession.click/sounds/maoudamashii/orchestra06.mp3,〇 城：オーケストラ06
+https://trpgsession.click/sounds/maoudamashii/orchestra08.mp3,〇 城：オーケストラ08
+https://trpgsession.click/sounds/maoudamashii/cyber02.mp3,〇 都市：サイバー02
+https://trpgsession.click/sounds/maoudamashii/cyber13.mp3,〇 散策：サイバー13
+https://trpgsession.click/sounds/maoudamashii/folk01.mp3,〇 儀式：民族01
+https://trpgsession.click/sounds/maoudamashii/folk02.mp3,〇 南国：民族02
+https://trpgsession.click/sounds/maoudamashii/folk03.mp3,〇 エスニック：民族03
+https://trpgsession.click/sounds/maoudamashii/folk04.mp3,〇 スパイス：民族04
+https://trpgsession.click/sounds/maoudamashii/folk06.mp3,〇 中庸：民族06
+https://trpgsession.click/sounds/maoudamashii/healing08.mp3,〇 木漏れ日：ヒーリング08
+https://trpgsession.click/sounds/maoudamashii/healing09.mp3,〇 海：ヒーリング09
+https://trpgsession.click/sounds/maoudamashii/healing10.mp3,〇 故郷：ヒーリング10
+https://trpgsession.click/sounds/maoudamashii/healing13.mp3,〇 夕日：ヒーリング13
+https://trpgsession.click/sounds/maoudamashii/fantasy01.mp3,□ フィールド：ファンタジー01
+https://trpgsession.click/sounds/maoudamashii/fantasy07.mp3,□ フィールド：ファンタジー07
+https://trpgsession.click/sounds/maoudamashii/fantasy08.mp3,□ フィールド：ファンタジー08
+https://trpgsession.click/sounds/maoudamashii/fantasy13.mp3,□ フィールド：ファンタジー13
+https://trpgsession.click/sounds/maoudamashii/fantasy02.mp3,□ 飛行船：ファンタジー02
+https://trpgsession.click/sounds/maoudamashii/healing01.mp3,□ 海岸線：ヒーリング01
+https://trpgsession.click/sounds/maoudamashii/fantasy09.mp3,◇ 探索：ファンタジー09
+https://trpgsession.click/sounds/maoudamashii/acoustic01.mp3,◇ ラジオ：アコースティック01
+https://trpgsession.click/sounds/maoudamashii/acoustic02.mp3,◇ ジャズ：アコースティック02
+https://trpgsession.click/sounds/maoudamashii/acoustic04.mp3,◇ カフェ：アコースティック04
+https://trpgsession.click/sounds/maoudamashii/acoustic07.mp3,◇ カフェ：アコースティック07
+https://trpgsession.click/sounds/maoudamashii/acoustic05.mp3,◇ 番組：アコースティック05
+https://trpgsession.click/sounds/maoudamashii/acoustic06.mp3,◇ 店内：アコースティック06
+https://trpgsession.click/sounds/maoudamashii/acoustic08.mp3,◇ バー：アコースティック08
+https://trpgsession.click/sounds/maoudamashii/acoustic09.mp3,◇ カジノ：アコースティック09
+https://trpgsession.click/sounds/maoudamashii/acoustic10.mp3,◇ ファンキー：アコースティック10
+https://trpgsession.click/sounds/maoudamashii/orchestra07.mp3,◇ バロック：オーケストラ07
+https://trpgsession.click/sounds/maoudamashii/orchestra09.mp3,◇ クラシック：オーケストラ09
+https://trpgsession.click/sounds/maoudamashii/orchestra10.mp3,◇ クラシック：オーケストラ10
+https://trpgsession.click/sounds/maoudamashii/cyber04.mp3,◇ 研究所：サイバー04
+https://trpgsession.click/sounds/maoudamashii/cyber08.mp3,◇ 侵入：サイバー08
+https://trpgsession.click/sounds/maoudamashii/cyber10.mp3,◇ 潜伏：サイバー10
+https://trpgsession.click/sounds/maoudamashii/cyber11.mp3,◇ 疾走：サイバー11
+https://trpgsession.click/sounds/maoudamashii/cyber15.mp3,◇ 武器屋：サイバー15
+https://trpgsession.click/sounds/maoudamashii/folk05.mp3,◇ マングローブ：民族05
+https://trpgsession.click/sounds/maoudamashii/folk07.mp3,◇ 裏路地：民族07
+https://trpgsession.click/sounds/maoudamashii/healing05.mp3,◇ 闇：ヒーリング05
+https://trpgsession.click/sounds/maoudamashii/healing06.mp3,◇ 月：ヒーリング06
+https://trpgsession.click/sounds/maoudamashii/fantasy06.mp3,△ オープニング：ファンタジー06
+https://trpgsession.click/sounds/maoudamashii/acoustic03.mp3,△ 勝利：アコースティック03
+https://trpgsession.click/sounds/maoudamashii/piano01.mp3,△ リラックス：ピアノ01
+https://trpgsession.click/sounds/maoudamashii/piano02.mp3,△ 苦悩：ピアノ02
+https://trpgsession.click/sounds/maoudamashii/piano03.mp3,△ 神秘：ピアノ03
+https://trpgsession.click/sounds/maoudamashii/piano04.mp3,△ 回想：ピアノ04
+https://trpgsession.click/sounds/maoudamashii/healing04.mp3,△ 回想：ヒーリング04
+https://trpgsession.click/sounds/maoudamashii/piano05.mp3,△ 前進：ピアノ05
+https://trpgsession.click/sounds/maoudamashii/piano06.mp3,△ 物語：ピアノ06
+https://trpgsession.click/sounds/maoudamashii/orchestra04.mp3,△ 物語：オーケストラ04
+https://trpgsession.click/sounds/maoudamashii/piano07.mp3,△ 哀愁：ピアノ07
+https://trpgsession.click/sounds/maoudamashii/piano08.mp3,△ 鈴共：ピアノ08
+https://trpgsession.click/sounds/maoudamashii/piano09.mp3,△ 前説：ピアノ09
+https://trpgsession.click/sounds/maoudamashii/piano10.mp3,△ 回帰：ピアノ10
+https://trpgsession.click/sounds/maoudamashii/orchestra03.mp3,△ 回帰：オーケストラ03
+https://trpgsession.click/sounds/maoudamashii/orchestra01.mp3,△ 邂逅：オーケストラ01
+https://trpgsession.click/sounds/maoudamashii/cyber01.mp3,△ チェイス：サイバー01
+https://trpgsession.click/sounds/maoudamashii/cyber03.mp3,△ 準備：サイバー03
+https://trpgsession.click/sounds/maoudamashii/cyber05.mp3,△ 侵略：サイバー05
+https://trpgsession.click/sounds/maoudamashii/cyber06.mp3,△ レース：サイバー06
+https://trpgsession.click/sounds/maoudamashii/cyber07.mp3,△ チューニング：サイバー07
+https://trpgsession.click/sounds/maoudamashii/cyber09.mp3,△ 際物：サイバー09
+https://trpgsession.click/sounds/maoudamashii/cyber12.mp3,△ 決意：サイバー12
+https://trpgsession.click/sounds/maoudamashii/cyber14.mp3,△ 再熱：サイバー14
+https://trpgsession.click/sounds/maoudamashii/healing02.mp3,△ 使命：ヒーリング02
+https://trpgsession.click/sounds/maoudamashii/healing03.mp3,△ 哀愁：ヒーリング03
+https://trpgsession.click/sounds/maoudamashii/healing07.mp3,△ 再開：ヒーリング07
+https://trpgsession.click/sounds/maoudamashii/healing11.mp3,△ 雨：ヒーリング11
+https://trpgsession.click/sounds/maoudamashii/healing12.mp3,△ モノローグ：ヒーリング12
