@@ -131,18 +131,10 @@ openCardRightMenu=function(e){
                 }else{
                     document.getElementById('cdrm_hide').style.display='none'; //カードを伏せる（非公開）
                 }
-                if(arrayCardImgAlt[1]!=0){
-                    document.getElementById('cdrm_front').style.display='block'; //正面に向ける
-                }else{
-                    document.getElementById('cdrm_front').style.display='none'; //正面に向ける
-                }
+                document.getElementById('cdrm_front').style.display='none'; //正面に向ける
                 document.getElementById('cdrm_right').style.display='none'; //右向きにする
                 document.getElementById('cdrm_left').style.display='none'; //左向きにする
-                if(arrayCardImgAlt[1]!=180){
-                    document.getElementById('cdrm_reverse').style.display='block'; //逆向きにする
-                }else{
-                    document.getElementById('cdrm_reverse').style.display='none'; //逆向きにする
-                }
+                document.getElementById('cdrm_reverse').style.display='none'; //逆向きにする
             }else if(arrayCardImgAlt[0]=='_1'){ //捨て札
                 document.getElementById('cdrm_draw_1t').style.display='block'; //カードを引く
                 document.getElementById('cdrm_draw_c1').style.display='block'; //選んで引く
