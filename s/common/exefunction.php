@@ -727,7 +727,11 @@ v1.00
                     $base_card['v']=(string)$obj_room->head->{$tag_cardset}->card[$min_no_array[0]]->v;
                     $obj_room->head->{$tag_cardset}->card[$min_no_array[0]]->l=$l_flag;
                     if($l_flag!='_2'){
-                        $obj_room->head->{$tag_cardset}->card[$min_no_array[0]]->d=0;
+                        if($obj_room->head->{$tag_cardset}->card[$min_no_array[0]]->d==90){
+                            $obj_room->head->{$tag_cardset}->card[$min_no_array[0]]->d=0;
+                        }elseif($obj_room->head->{$tag_cardset}->card[$min_no_array[0]]->d==270){
+                            $obj_room->head->{$tag_cardset}->card[$min_no_array[0]]->d=180;
+                        }
                     }
                     $obj_room->head->{$tag_cardset}->card[$min_no_array[0]]->v=$v_flag;
                 }elseif($card_id=='discard_stock'){ // 一番上のカードを移動
