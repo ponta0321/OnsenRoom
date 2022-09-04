@@ -54,7 +54,7 @@
                     <?=setOptionCallName($principal_id,$nick_name,$characterlist_array,0);?></select>
             </td>
             <td>
-                <input id="id_comment" type="text" maxlength="200" value="" onkeypress="checkPushKeyEnter(event.keyCode);" <?php
+                <input id="id_comment" type="text" inputmode="text" enterkeyhint="enter" maxlength="200" value="" onkeypress="checkPushKeyEnter(event.keyCode);" <?php
                     if(($login_flag!=true)||
                        (($observer_flag!=0)&&($observer_write!=0))){
                         echo 'disabled="disabled"';
