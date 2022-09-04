@@ -1,13 +1,14 @@
 <?php
 /*-----------------------------------------------------------------
 BCDiceのダイスボットリスト一覧
-    Ver3.00.00 対応
+    Ver3.3.0 対応
 配列
 　　　　Keyの命名ルール
-　　　　BCDice ID の前に bac_ をつける
+　　　　　　Bone&Carsのフォルダ scr/diceBot のファイル名 の前に bac_ をつける
 　　　 [0]=ダイスボット名 [1]=ダイスボット説明(基本未使用) [2]=オンセン用キー
 順列
 	BCDiceAPIのゲームシステム sork_key昇順
+	確認方法： https://trpgonsen.click/game_sysytem.php にアクセス
 未使用にするダイスボットのルール
     韓国語版、18禁(絶対隷奴など)
 -----------------------------------------------------------------*/
@@ -30,9 +31,10 @@ $default_preset_comment=
 【例】 公開したいコメントID: #wp515　　【入力】 /o #wp515
 【例】 最後に発言したシークレットダイスorプロット　　【入力】 /ol
 
-《BCDice》 コマンドでサイコロを振ります。
+《ダイスボット「ボーンズ＆カーズ」》 コマンドでサイコロを振ります。
 【例】
 2d8 ： 8面ダイスを2個振ります。
+1d6+1d4-5 ： 6面ダイスと4面ダイスを振り、結果から5を引きます。
 1d100>=50 ： 100面ダイスを振り、50以上は成功、未満は失敗。
 1d100>=25 聞き耳 : 合否判定ロールに名称「聞き耳」をつけて振ります。
 10b6 ： 6面ダイスを10個振り、全てダイスの和は出しません。
@@ -41,7 +43,8 @@ $default_preset_comment=
 3u6[6]>=3 ： 結果が上方無限境界値以上になると再度振り、その値をダイス目に加えます。
 choice[1,3,5] ： 列挙した要素1,3,5から一つを選択表示します。
 s2d6 ： 6面ダイスを2個振り、結果は振った本人にのみ分かります。
-3 2d4 ： 4面ダイスを2個振ります。これを3回繰り返します。
+3 2d4 ： 4面ダイスを2個振ります。これを3回繰り返します。 
+[1...5]D6 ： 6面ダイスを1～5個振ります。 
 ';
 $bac_gamelist=array(
 	'bac_DiceBot'=>array('指定なし','','g99'),
@@ -71,10 +74,12 @@ $bac_gamelist=array(
 	'bac_AceKillerGene'=>array('エースキラージーン','','g117'),
 	'bac_EclipsePhase'=>array('エクリプス・フェイズ','','g53'),
 	'bac_NSSQ'=>array('SRSじゃない世界樹の迷宮TRPG','','g412'),
+	'bac_Ainecadette'=>array('エネカデット','','g320'),
 	'bac_EmbryoMachine'=>array('エムブリオマシン','','g106'),
 	'bac_Emoklore'=>array('エモクロア','','g99'),
 	'bac_Elysion'=>array('エリュシオン','','g72'),
 	'bac_Elric'=>array('エルリック！','','g233'),
+	'bac_AngelGear'=>array('エンゼルギア2e','','g84'),
 	'bac_EndBreaker'=>array('エンドブレイカー','','g86'),
 	'bac_Oukahoushin3rd'=>array('央華封神RPG第3版','','g358'),
 	'bac_OracleEngine'=>array('オラクルエンジン','','g357'),
@@ -101,6 +106,7 @@ $bac_gamelist=array(
 	'bac_GeishaGirlwithKatana'=>array('ゲイシャ・ガール・ウィズ・カタナ','','g345'),
 	'bac_GehennaAn'=>array('アナスタシス','','g113'),
 	'bac_KemonoNoMori'=>array('獸ノ森','','g279'),
+	'bac_Revulture'=>array('光砕のリヴァルチャー','','g428'),
 	'bac_StrangerOfSwordCity'=>array('剣の街の異邦人','','g114'),
 	'bac_Yggdrasill'=>array('鋼鉄のユグドラシル','','g410'),
 	'bac_Illusio'=>array('晃天のイルージオ','','g350'),
@@ -125,8 +131,10 @@ $bac_gamelist=array(
 	'bac_InfiniteBabeL'=>array('Infinite BabeL','','g260'),
 	'bac_ShinkuuGakuen'=>array('真空学園','','g371'),
 	'bac_ShinMegamiTenseiKakuseihen'=>array('真・女神転生TRPG覚醒篇','','g28'),
-	'bac_Skynauts'=>array('歯車の塔の探空士','','g121'),
+	'bac_Skynauts'=>array('歯車の塔の探空士 同人版','','g121'),
+	'bac_SkynautsBouken'=>array('歯車の塔の探空士 冒険版','','g422'),
 	'bac_ScreamHighSchool'=>array('スクリームハイスクール','','g291'),
+	'bac_StarryDolls'=>array('スタリィドール','','g429'),
 	'bac_SRS'=>array('スタンダードRPGシステム','','g99'),
 	'bac_SteamPunkers'=>array('スチームパンカーズ','','g309'),
 	'bac_SterileLife'=>array('ステラーライフ','','g356'),
@@ -205,10 +213,10 @@ $bac_gamelist=array(
 	'bac_MeikyuKingdom'=>array('CPDT迷宮キングダム','','g351'),
 	'bac_MeikyuKingdomBasic'=>array('迷宮キングダム','','g50'),
 	'bac_MeikyuDays'=>array('迷宮デイズ','','g245'),
-	'bac_MetallicGuadian'=>array('メタリックガーディアン','','g34'),
+	'bac_MetallicGuardian'=>array('メタリックガーディアン','','g34'),
 	'bac_MetalHead'=>array('メタルヘッド','','g31'),
 	'bac_MetalHeadExtream'=>array('メタルヘッドエクストリーム','','g352'),
-	'bac_MonotoneMusium'=>array('モノトーンミュージアムRPG','','g7'),
+	'bac_MonotoneMuseum'=>array('モノトーンミュージアムRPG','','g7'),
 	'bac_YankeeYogSothoth'=>array('ヤンキー＆ヨグ＝ソトース','','g253'),
 	'bac_GoldenSkyStories'=>array('ゆうやけこやけ','','g17'),
 	'bac_Ryutama'=>array('りゅうたま','','g46'),
