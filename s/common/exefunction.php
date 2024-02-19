@@ -145,7 +145,7 @@ v1.01
     if(file_exists($shadow_file)){
         $load_files[]=$shadow_file;
     }
-    if(count($load_files)==0){
+    if(couting($load_files)==0){
         return false;
     }
     libxml_use_internal_errors(true);
@@ -248,11 +248,11 @@ v1.00
 -------------------------------------------------------------------*/
     foreach($room_part_array as $rp_key => $rp_value){
         if(!empty($res_preg=preg_match_all('/<'.$rp_key.'>([\s\S]*?)<\/'.$rp_key.'>/',$text_data,$matched_group))){
-            $matched_number=count($matched_group[1]);
+            $matched_number=couting($matched_group[1]);
             for($i=0;$i<$matched_number;$i++){
                 if(is_array($rp_value)){
                     $branch_elm=$root_elm->addChild($rp_key);
-                    if(count($rp_value)>0){
+                    if(couting($rp_value)>0){
                         autoloadXmlFile_LoopProcess($matched_group[1][$i],$branch_elm,$rp_value,1);
                     }
                 }else{
@@ -264,12 +264,12 @@ v1.00
                 }
             }
         }elseif(!empty($res_preg=preg_match_all('/<'.$rp_key.' ([0-9a-zA-Z]+?)="(.*?)">([\s\S]*?)<\/'.$rp_key.'>/',$text_data,$matched_group))){
-            $matched_number=count($matched_group[1]);
+            $matched_number=couting($matched_group[1]);
             for($i=0;$i<$matched_number;$i++){
                 if(is_array($rp_value)){
                     $branch_elm=$root_elm->addChild($rp_key);
                     $branch_elm->addAttribute($matched_group[1][$i],$matched_group[2][$i]);
-                    if(count($rp_value)>0){
+                    if(couting($rp_value)>0){
                         autoloadXmlFile_LoopProcess($matched_group[3][$i],$branch_elm,$rp_value,1);
                     }
                 }else{
@@ -282,14 +282,14 @@ v1.00
                 }
             }
         }elseif(!empty($res_preg=preg_match_all('/<'.$rp_key.'\/>/',$text_data,$matched_group))){
-            $matched_number=count($matched_group[0]);
+            $matched_number=couting($matched_group[0]);
             for($i=0;$i<$matched_number;$i++){
                 $root_elm->addChild($rp_key,$rp_value);
             }
         }elseif($forced_add!=0){
             if(is_array($rp_value)){
                 $branch_elm=$root_elm->addChild($rp_key);
-                if(count($rp_value)>0){
+                if(couting($rp_value)>0){
                     autoloadXmlFile_LoopProcess('',$branch_elm,$rp_value,1);
                 }
             }else{
@@ -502,7 +502,7 @@ v1.00
         $BContent->addChild('chat_color','#000000');
         $BContent->addChild('author','システム');
         // 100を超えたコメントを削除
-        $overflow_comment=count($obj_room->body->content)-100;
+        $overflow_comment=couting($obj_room->body->content)-100;
         if($overflow_comment>0){
             for($i=0;$i<$overflow_comment;$i++){
                 unset($obj_room->body->content[$i]);
@@ -530,7 +530,7 @@ v1.00
     $tag_cardset='cardset'.$cardset_no;
     // 必要データのチェック
     if(isset($obj_room->head->{$tag_cardset}->id)){
-        $card_count=count($obj_room->head->{$tag_cardset}->card);
+        $card_count=couting($obj_room->head->{$tag_cardset}->card);
         $card_numbering_array=array();
         for($i=0;$i<$card_count;$i++){
             $card_numbering_array[$i]=$i;
@@ -652,13 +652,13 @@ v1.00
                 $alignment_array[]=array($target_card[0],($max_no+1));
             }
         }
-        if(1<count($alignment_array)){
+        if(1<couting($alignment_array)){
             foreach($alignment_array as $sort_key => $sort_value){
                 $sort_z[$sort_key]=(int)$sort_value[1];
             }
             @array_multisort($sort_z,SORT_ASC,SORT_NUMERIC,$alignment_array);
         }
-        for($i=0;$i<count($alignment_array);$i++){
+        for($i=0;$i<couting($alignment_array);$i++){
             foreach($obj_room->head->{$tag_cardset}->card as $card_value){
                 if($card_value['id']==$alignment_array[$i][0]){
                     $card_value->z=$i;
@@ -706,7 +706,7 @@ v1.00
                     $exlocation='_1';
                 }
             }
-            for($i=0;$i<count($obj_room->head->{$tag_cardset}->card);$i++){
+            for($i=0;$i<couting($obj_room->head->{$tag_cardset}->card);$i++){
                 if($obj_room->head->{$tag_cardset}->card[$i]->l==$target_location){
                     if(((int)$obj_room->head->{$tag_cardset}->card[$i]->z)<$min_no_array[1]){
                         $min_no_array=array($i,(int)$obj_room->head->{$tag_cardset}->card[$i]->z);
@@ -856,12 +856,12 @@ v1.00
     // 必要データのチェック
     if(isset($obj_room->head->{$tag_cardset}->id)){
         $reiteration_array=array();
-        for($i=0;$i<count($obj_room->head->{$tag_cardset}->card);$i++){
+        for($i=0;$i<couting($obj_room->head->{$tag_cardset}->card);$i++){
             if($obj_room->head->{$tag_cardset}->card[$i]->l==$bl_flag){
                 $reiteration_array[]=(string)$obj_room->head->{$tag_cardset}->card[$i]['id'];
             }
         }
-        if(count($reiteration_array)>0){
+        if(couting($reiteration_array)>0){
             foreach($reiteration_array as $r_value){
                 $result=changeCardLocation($base_card,$cardset_no,$obj_room,$r_value,$l_flag,$v_flag,$z_flag);
             }
@@ -897,7 +897,7 @@ v1.00
             }elseif($card_id=='discard_stock'){
                 $target_location='_1';
             }
-            for($i=0;$i<count($obj_room->head->{$tag_cardset}->card);$i++){
+            for($i=0;$i<couting($obj_room->head->{$tag_cardset}->card);$i++){
                 if($obj_room->head->{$tag_cardset}->card[$i]->l==$target_location){
                     if(((int)$obj_room->head->{$tag_cardset}->card[$i]->z)<$min_no_array[1]){
                         $min_no_array=array($i,(int)$obj_room->head->{$tag_cardset}->card[$i]->z);
@@ -1183,7 +1183,7 @@ v1.01
         if($map_data!=''){
             $rows=explode('^',$map_data);
             $rebuild_map_data='';
-			for($i=0;$i<count($rows);$i++){
+			for($i=0;$i<couting($rows);$i++){
 				$columns=explode('|',$rows[$i]);
 				if(!empty($columns[1])){
 					foreach($restored_images as $r_image){
@@ -1251,7 +1251,7 @@ v1.01
         $BContent->addChild('chat_color','#909090');
         $BContent->addChild('author','システム');
         // 100を超えたコメントを削除
-        $overflow_comment=count($obj_room->body->content)-100;
+        $overflow_comment=couting($obj_room->body->content)-100;
         if($overflow_comment>0){
             for($i=0;$i<$overflow_comment;$i++){
                 unset($obj_room->body->content[$i]);
@@ -1297,9 +1297,9 @@ v1.00
         }
     }
     $mapping_list_y=explode('^',$game_mapping);
-    for($i=0;$i<count($mapping_list_y);$i++){
+    for($i=0;$i<couting($mapping_list_y);$i++){
         $mapping_list_x=explode(',',$mapping_list_y[$i]);
-        for($j=0;$j<count($mapping_list_x);$j++){
+        for($j=0;$j<couting($mapping_list_x);$j++){
             if(($i<$game_boardheight)&&($j<$game_boardwidth)){
                 if($mapping_list_x[$j]>0){
                     $mapping_data_array[$i][$j]=$mapping_list_x[$j];
@@ -1362,7 +1362,7 @@ v1.00
 2017.09.12 制作
 -------------------------------------------------------------------*/
     // 100を超えたコメントを削除
-    $overflow_comment=count($obj_room->body->content)-100;
+    $overflow_comment=couting($obj_room->body->content)-100;
     if($overflow_comment>0){
         for($i=0;$i<$overflow_comment;$i++){
             unset($obj_room->body->content[$i]);
@@ -1378,7 +1378,7 @@ v1.00
     $participant_update_flag=false;
     $now_time=time();
     if(isset($obj_room->body->participant)){
-        for($i=0;$i<count($obj_room->body->participant);$i++){
+        for($i=0;$i<couting($obj_room->body->participant);$i++){
             $alive_participant_flag=false;
             foreach($participant_array as $p_value){
                 if((string)$obj_room->body->participant[$i]->participant_id==$p_value[0]){
@@ -1574,7 +1574,7 @@ v1.00
             $exist_flag=true;
         }
         if(is_array($rp_value)){
-            if(count($rp_value)>0){
+            if(couting($rp_value)>0){
                 complementRoomData_LoopProcess($branch_elm,$rp_value);
             }
         }elseif($exist_flag===false){
@@ -1844,20 +1844,20 @@ v1.00
             }
             $mapping_list_x=array();
             $mapping_list_y=explode('^',$game_mapping);
-            for($i=0;$i<count($mapping_list_y);$i++){
+            for($i=0;$i<couting($mapping_list_y);$i++){
                 $mapping_list_x=explode(',',$mapping_list_y[$i]);
-                for($j=0;$j<count($mapping_list_x);$j++){
+                for($j=0;$j<couting($mapping_list_x);$j++){
                     $mapping_data_array[$i][$j]=$mapping_list_x[$j];
                 }
             }
-            $game_boardwidth=count($mapping_list_x);
+            $game_boardwidth=couting($mapping_list_x);
             if($game_boardwidth<17){
                 $game_boardwidth=17;
             }elseif($game_boardwidth>100){
                 $game_boardwidth=100;
             }
             $room_xml->head->game_boardwidth=$game_boardwidth;
-            $game_boardheight=count($mapping_list_y);
+            $game_boardheight=couting($mapping_list_y);
             if($game_boardheight<20){
                 $game_boardheight=20;
             }elseif($game_boardheight>100){
@@ -2069,19 +2069,19 @@ v1.00
 	}
 	if(isset($room_xml->head->popup_flag)){
 		$record=explode('^',(string)$room_xml->head->popup_flag);
-		for($i=0;$i<count($record);$i++){
+		for($i=0;$i<couting($record);$i++){
 			$new_memo_array[($i+1)]['flag']=(int)$record[$i];
 		}
 		unset($room_xml->head->popup_flag);
 	}
 	if(isset($room_xml->head->puw_limit_time)){
 		$record=explode('^',(string)$room_xml->head->puw_limit_time);
-		for($i=0;$i<count($record);$i++){
+		for($i=0;$i<couting($record);$i++){
 			$new_memo_array[($i+1)]['limit']=(int)$record[$i];
 		}
 		unset($room_xml->head->puw_limit_time);
 	}
-	if(count($new_memo_array)>0){
+	if(couting($new_memo_array)>0){
 		unset($room_xml->head->memo);
 		foreach($new_memo_array as $key => $value){
 			$memo_node=$room_xml->head->addChild('memo');

@@ -1,7 +1,7 @@
 <?php
 /*-----------------------------------------------------------------
 BCDiceのダイスボットリスト一覧
-    Ver3.3.0 対応
+    Ver3.11.0 対応
 配列
 　　　　Keyの命名ルール
 　　　　　　Bone&Carsのフォルダ scr/diceBot のファイル名 の前に bac_ をつける
@@ -65,6 +65,7 @@ $bac_gamelist=array(
 	'bac_IthaWenUa'=>array('イサー・ウェン=アー','','g207'),
 	'bac_YearZeroEngine'=>array('イヤーゼロエンジン','','g376'),
 	'bac_Insane'=>array('インセイン','','g36'),
+	'bac_Irisbane'=>array('瞳逸らさぬイリスベイン','','g433'),
 	'bac_VampireTheMasquerade5th'=>array('ヴァンパイア：ザ・マスカレード5版','','g122'),
 	'bac_WitchQuest'=>array('ウィッチクエスト','','g204'),
 	'bac_Warhammer'=>array('ウォーハンマー','','g63'),
@@ -76,7 +77,7 @@ $bac_gamelist=array(
 	'bac_NSSQ'=>array('SRSじゃない世界樹の迷宮TRPG','','g412'),
 	'bac_Ainecadette'=>array('エネカデット','','g320'),
 	'bac_EmbryoMachine'=>array('エムブリオマシン','','g106'),
-	'bac_Emoklore'=>array('エモクロア','','g99'),
+	'bac_Emoklore'=>array('エモクロア','','g426'),
 	'bac_Elysion'=>array('エリュシオン','','g72'),
 	'bac_Elric'=>array('エルリック！','','g233'),
 	'bac_AngelGear'=>array('エンゼルギア2e','','g84'),
@@ -152,7 +153,8 @@ $bac_gamelist=array(
 	'bac_DarkBlaze'=>array('ダークブレイズ','','g92'),
 	'bac_DiceOfTheDead'=>array('ダイス・オブ・ザ・デッド','','g55'),
 	'bac_DoubleCross'=>array('ダブルクロス2nd,3rd','','g14'),
-	'bac_DungeonsAndDragons'=>array('ダンジョンズ＆ドラゴンズ','','g20'),
+	'bac_DungeonsAndDragons5'=>array('ダンジョンズ＆ドラゴンズ第5版','','g20'),
+	'bac_DungeonsAndDragons'=>array('ダンジョンズ＆ドラゴンズ','','g42'),
 	'bac_Paradiso'=>array('チェレステ色のパラディーゾ','','g319'),
 	'bac_Chill'=>array('Chill','','g337'),
 	'bac_Chill3'=>array('Chill 3','','g338'),
@@ -233,4 +235,37 @@ $bac_gamelist=array(
 	'bac_WaresBlade'=>array('ワースブレイド','','g165'),
 	'bac_WARPS'=>array('ワープス','','g205'),
 	'bac_WorldOfDarkness'=>array('ワールド・オブ・ダークネス','','g125'),
+	'bac_PersonaO'=>array('ペルソナTRPG-O','','g99'),
+	'bac_ToshiakiHolyGrailWar'=>array('としあきの聖杯戦争TRPG','','g250'),
+	'bac_CastleInGray'=>array('灰色城綺譚','','g99'),
+	'bac_FateCoreSystem'=>array('FATE','','g473'),
+	'bac_Karukami'=>array('カルカミ','','g99'),
+	'bac_AssaultEngine'=>array('アサルトエンジン','','g29'),
+	'bac_TalesFromTheLoop'=>array('ザ・ループTRPG','','g432'),
+	'bac_Aoharubaan'=>array('あおはるばーんっ','','g440'),
+	'bac_Bakenokawa'=>array('バケノカワ','','g438'),
+	'bac_Ayabito'=>array('あやびと','','g469'),
+	'bac_Shiranui'=>array('不知火','','g472'),
+	'bac_ShuumatsuKikou'=>array('終末紀行RPG','','g99'),
+	'bac_CyberpunkRed'=>array('サイバーパンクRED','','g477'),
+	'bac_GhostLive'=>array('実況ゴーストライヴ','','g99'),
+	'bac_Sengensyou'=>array('千幻抄','','g257'),
+	'bac_VisionConnect'=>array('ヴィジョンコネクト','','g482'),
+	'bac_Kutulu'=>array('Kutulu','','g478'),
+	'bac_IfIfIf'=>array('イフ・イフ・イフ','','g99'),
+	'bac_BeginningIdol2022'=>array('ビギニングアイドル大判','','g474'),
+	'bac_NobunagasBlackCastle'=>array('信長の黒い城','','g99'),
+	'bac_SajinsenkiAGuS'=>array('砂塵戦機アーガス','','g99'),
+	'bac_HunterTheReckoning5th'=>array('Hunter 5th','','g99'),
+	'bac_ConvictorDrive'=>array('コンヴィクタードライブ','','g99'),
+	'bac_Bloodorium'=>array('ブラドリウム','','g491'),
+	'bac_TenkaRyouran'=>array('新・天下繚乱','','g431'),
+	'bac_WorldsEndFrontline'=>array('ワールドエンドフロントライン','','g493'),
+	'bac_HeroScale'=>array('英雄の尺度','','g99'),
+	'bac_Ventangle'=>array('Ventangle','','g99'),
+	'bac_GundamSentinel'=>array('ガンダムセンチネルRPG','','g193'),
+	'bac_MamonoScramble'=>array('マモノスクランブル','','g498'),
+	'bac_DemonSpike'=>array('デモンスパイク','','g496'),
+	'bac_RuneQuestRoleplayingInGlorantha'=>array('新ルーンクエスト','','g281'),
+	'bac_ZombiLine'=>array('ゾンビライン','','g99'),
 );

@@ -142,7 +142,7 @@ if($rollcommand!=0){
                 if(!empty($rd_value[0])){
                     if($total_one_roll=rollDice($rd_value[1],$rd_value[2],$dice,DICE_ROLL_LIMIT,DICE_SURFACE_LIMIT)){
                         if($rd_value[3]!=0){
-                            if(1<count($dice)){
+                            if(1<couting($dice)){
                                 foreach($dice as $sort_key => $sort_value){
                                     $sort_result[$sort_key]=(int)$sort_value[1];
                                 }
@@ -156,7 +156,7 @@ if($rollcommand!=0){
                                 unset($sort_key);
                             }
                         }
-                        for($i=0;$i<count($dice);$i++){
+                        for($i=0;$i<couting($dice);$i++){
                             if($result_detail_comment!=''){
                                 $result_detail_comment.=',';
                             }

@@ -103,7 +103,7 @@
     if(isset($_POST['macro_c1'])){
         $str_proto_macro=trim($_POST['macro_c1']);
         $macro_rowarray=explode("\n",$str_proto_macro);
-        for($i=0;$i<count($macro_rowarray);$i++){
+        for($i=0;$i<couting($macro_rowarray);$i++){
             $macro_colarray=explode('|',$macro_rowarray[$i]);
             $macro_name='';
             if(!empty($macro_colarray[0])){

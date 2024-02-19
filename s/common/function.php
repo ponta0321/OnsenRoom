@@ -845,10 +845,10 @@ v1.00
 -- 更新履歴 --
 2018.01.31 制作
 -------------------------------------------------------------------*/
-    if(count($power)==0){
+    if(couting($power)==0){
         $power=array('B');
     }
-    for($i=(count($power)-1);$i>=0;$i--){
+    for($i=(couting($power)-1);$i>=0;$i--){
         if($byte_size>=pow(1024,$i)){
             break;
         }
