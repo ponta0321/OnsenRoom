@@ -227,7 +227,7 @@
             <th>操作</th>
         </tr>
         <?php
-            if(0<count($ra)){
+            if(0<couting($ra)){
                 foreach($ra as $room_value){
                     echo '<tr>';
                     echo '<td><a href="'.URL_ROOT.'r/n/'.$room_value[1].'/data.xml" target="_blank">'.$room_value[2].'</a></td>'; // ルーム名

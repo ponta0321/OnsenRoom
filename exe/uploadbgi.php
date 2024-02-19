@@ -64,9 +64,9 @@
                     $room_xml->head->game_backimagelist=$image_save_url;
                     $room_xml->asXML($room_file);
                     $delete_uploadfiles=glob($room_save_basepath.'uploadimage1*');
-                    if(count($delete_uploadfiles)>100){
+                    if(couting($delete_uploadfiles)>100){
                         if(sort($delete_uploadfiles)){
-                            for($i=0;$i<(count($delete_uploadfiles)-100);$i++){
+                            for($i=0;$i<(couting($delete_uploadfiles)-100);$i++){
                                 @unlink($delete_uploadfiles[$i]);
                             }
                         }
@@ -88,7 +88,7 @@
 					$node_memo=$room_xml->head->memo;
 					$write_flag=false;
 					if($node_memo){
-						for($i=0;$i<count($node_memo);$i++){
+						for($i=0;$i<couting($node_memo);$i++){
 							if($node_memo[$i]['id']==$memoimage_no){
 								$node_memo[$i]->txt=$image_save_url;
 								$write_flag=true;
@@ -210,9 +210,9 @@
                     }
                     $room_xml->asXML($room_file);
                     $delete_uploadfiles=glob($room_save_basepath.'uploadmapchip*');
-                    if(count($delete_uploadfiles)>100){
+                    if(couting($delete_uploadfiles)>100){
                         if(sort($delete_uploadfiles)){
-                            for($i=0;$i<(count($delete_uploadfiles)-100);$i++){
+                            for($i=0;$i<(couting($delete_uploadfiles)-100);$i++){
                                 @unlink($delete_uploadfiles[$i]);
                             }
                         }

@@ -17,7 +17,7 @@
     $v_html='';
     $total_log_array=getChatLogArray($room_id);
     if(isset($total_log_array[0][0])){
-        $last_count=count($total_log_array);
+        $last_count=couting($total_log_array);
         for($i=0;$i<$last_count;$i++){
             $v_html.=changeLogStringFormLogRecord($total_log_array[$i],$principal,$last_time);
         }

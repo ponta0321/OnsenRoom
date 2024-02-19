@@ -154,7 +154,7 @@ $now_time=time();
 $ra=array();
 if(file_exists(DIR_ROOT.'r/roomlist.php')){
 	if(include(DIR_ROOT.'r/roomlist.php')){
-		if(1<count($ra)){
+		if(1<couting($ra)){
 			foreach($ra as $sort_key => $sort_value){
 				$sort_timestamp[$sort_key]=(int)$sort_value[7];
 			}
