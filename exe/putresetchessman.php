@@ -42,7 +42,7 @@
         $map_data=(string)$room_xml->head->map_data;
         if(!empty($map_data)){
             $columns=explode('^',$map_data);
-            $count_column=count($columns);
+            $count_column=couting($columns);
             $map_data='';
             if($reset_type==0){
                 /* 何もしない */

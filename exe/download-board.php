@@ -31,7 +31,7 @@
 			$encoded_images=array();
             $str_room_data='';
             $md_records=explode('^',(string)$room_xml->head->map_data);
-            for($i=0;$i<count($md_records);$i++){
+            for($i=0;$i<couting($md_records);$i++){
                 $md_columns=explode('|',$md_records[$i]);
                 $md_columns[1]=preg_replace('/^(|https?:)\/\/'.preg_quote(THIS_DOMAIN,'/').'/',TRANSFER_PROTOCOL.'//'.THIS_DOMAIN,$md_columns[1]);
                 if(!isset($encoded_images[basename($md_columns[1])])){

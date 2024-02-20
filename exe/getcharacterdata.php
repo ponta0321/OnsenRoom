@@ -107,7 +107,7 @@ foreach($tag_array as $value){
 	$json_base_data[$value[0]]=$c_character->{$value[1]};
 }
 $json_base_data['stand_image']=$c_character->stand;
-if(0>=count($json_base_data)){
+if(0>=couting($json_base_data)){
 	echo json_encode(array(
 		'error'=>'not_exist_char_info',
 		'error_description'=>'キャラクター情報はありません。'
