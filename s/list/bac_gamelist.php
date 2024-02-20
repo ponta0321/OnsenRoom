@@ -1,7 +1,7 @@
 <?php
 /*-----------------------------------------------------------------
 BCDiceのダイスボットリスト一覧
-    Ver3.11.0 対応
+    Ver3.13.0 対応
 配列
 　　　　Keyの命名ルール
 　　　　　　Bone&Carsのフォルダ scr/diceBot のファイル名 の前に bac_ をつける
@@ -268,4 +268,16 @@ $bac_gamelist=array(
 	'bac_DemonSpike'=>array('デモンスパイク','','g496'),
 	'bac_RuneQuestRoleplayingInGlorantha'=>array('新ルーンクエスト','','g281'),
 	'bac_ZombiLine'=>array('ゾンビライン','','g99'),
+	'bac_SajinsenkiAGuS2E'=>array('アーガス2nd','','g99'),
+	'bac_WerewolfTheApocalypse5th'=>array('ワーウルフ：ジ・アポカリプス','','g123'),
+	'bac_KamitsubakiCityUnderConstructionNarrative'=>array('神椿市建設中','','g99'),
+	'bac_NinjaSlayer2'=>array('ニンジャスレイヤーTRPG','','g284'),
+	'bac_Siren'=>array('セイレーン','','g99'),
+	'bac_Liminal'=>array('リミナル','','g99'),
+	'bac_ArknightsFan'=>array('アークナイツTRPG','','g99'),
+	'bac_FullFace'=>array('フルフェイス','','g99'),
+	'bac_AniMalus'=>array('アニマラス','','g99'),
+	'bac_PastFutureParadox'=>array('パストフューチャーパラドックス','','g99'),
+	'bac_KyokoShinshoku'=>array('虚構侵蝕TRPG','','g483'),
+	'bac_NRR'=>array('nRR','','g483'),
 );
