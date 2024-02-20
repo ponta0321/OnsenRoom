@@ -52,7 +52,7 @@ class classFileLock{
 		if(!file_exists($dir)){
 			return false;
 		}
-	    if(count(glob($dir.$this->base_name.'*',GLOB_NOSORT))==0){
+	    if(couting(glob($dir.$this->base_name.'*',GLOB_NOSORT))==0){
             if(!touch($dir.$this->base_name)){
                 return false;
             }
@@ -190,7 +190,7 @@ class classCharacter{
         foreach($details as $detail_one){
             $match=array();
             if(preg_match_all('/\[(.+?):(.*?)\]/u',$detail_one,$match)){
-                for($i=0;$i<count($match[0]);$i++){
+                for($i=0;$i<couting($match[0]);$i++){
                     $tag_name=trim($match[1][$i]);
                     $tag_name=str_replace(' ','',$tag_name);
                     $tag_name=str_replace('$','',$tag_name);
@@ -231,7 +231,7 @@ class classCharacter{
         // $flag: 0=編集 1=削除
         $tags_array=array();
         $tags_rowarray=explode('^',(string)$this->tag);
-        for($i=0;$i<count($tags_rowarray);$i++){
+        for($i=0;$i<couting($tags_rowarray);$i++){
             $tag_colarray=explode('|',$tags_rowarray[$i]);
             $tag_name='';
             if(isset($tag_colarray[0])){
@@ -268,7 +268,7 @@ class classCharacter{
     function getTagArray(){
         $tags_array=array();
         $tags_rowarray=explode('^',(string)$this->tag);
-        for($i=0;$i<count($tags_rowarray);$i++){
+        for($i=0;$i<couting($tags_rowarray);$i++){
             $tag_colarray=explode('|',$tags_rowarray[$i]);
             $tag_name='';
             if(isset($tag_colarray[0])){
@@ -290,7 +290,7 @@ class classCharacter{
         foreach($details as $detail_one){
             $match=array();
             if(preg_match_all('/\{(.+?)\}([\s\S]+?)\{\/\}/u',$detail_one,$match)){
-                for($i=0;$i<count($match[0]);$i++){
+                for($i=0;$i<couting($match[0]);$i++){
                     $mass_name=trim($match[1][$i]);
                     $mass_name=str_replace(' ','',$mass_name);
                     $mass_name=str_replace('$','',$mass_name);
@@ -475,7 +475,7 @@ class classCharacter{
                             unset($dom->expressions);
                         }
                         $stand_image_array=$this->standStringToArray($char_data_from_lobby_server['stand_image']);
-                        if(count($stand_image_array)>0){
+                        if(couting($stand_image_array)>0){
                             foreach($stand_image_array as $value){
                                 $expression=$dom->addChild('expressions');
                                 $expression->addChild('name',htmlspecialchars($value[0],ENT_XML1));
@@ -502,7 +502,7 @@ class classCharacter{
                     $domRoot->appendChild($dom->createElement($key,htmlspecialchars($value,ENT_XML1)));
                 }
                 $stand_image_array=$this->standStringToArray($char_data_from_lobby_server['stand_image']);
-                if(count($stand_image_array)>0){
+                if(couting($stand_image_array)>0){
                     foreach($stand_image_array as $value){
                         $expression=$domRoot->appendChild($dom->createElement('expressions'));
                         $expression->appendChild($dom->createElement('name',htmlspecialchars($value[0],ENT_XML1)));
@@ -715,7 +715,7 @@ class classCharacter{
                 }
             }
         }
-        if(count($characterlist_array)>0){
+        if(couting($characterlist_array)>0){
             $char_dir=$this->getCharDir($room_id,$owner_id);
             foreach($characterlist_array as $c_key => $c_value){
                 $filename=$char_dir.$c_value[0].'.xml';

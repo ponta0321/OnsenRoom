@@ -5,7 +5,7 @@
         <p style="margin:3px 0;"><select id="ss_gam_select" style="padding:0 4px;font-size:10px;">
         <?php
             $temp_html='';
-            if(0<count($scenariosetlist_array)){
+            if(0<couting($scenariosetlist_array)){
                 foreach($scenariosetlist_array as $ss_key => $ss_column){
                     $temp_html.='<option value="'.$ss_column[0].'">';
                     if(!empty($ss_column[1])){

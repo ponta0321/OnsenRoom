@@ -68,7 +68,7 @@
 			$node_memo=$room_xml->head->memo;
 			$write_flag=false;
 			if($node_memo){
-				for($i=0;$i<count($node_memo);$i++){
+				for($i=0;$i<couting($node_memo);$i++){
 					if($node_memo[$i]['id']==$game_memo_key){
 						$node_memo[$i]->txt=$game_memo;
 						if($popup_flag){
@@ -94,7 +94,7 @@
 				$node_memo=$room_xml->head->memo;
 				$last_memo_key=1;
 				if($node_memo){
-					for($i=0;$i<count($node_memo);$i++){
+					for($i=0;$i<couting($node_memo);$i++){
 						if((int)$node_memo[$i]['id']>$last_memo_key){
 							$last_memo_key=(int)$node_memo[$i]['id'];
 						}
@@ -113,7 +113,7 @@
 					$node_memo=$room_xml->head->memo;
 					$write_flag=false;
 					if($node_memo){
-						for($i=0;$i<count($node_memo);$i++){
+						for($i=0;$i<couting($node_memo);$i++){
 							if($node_memo[$i]['id']==$game_memo_key){
 								unset($node_memo[$i]);
 								$write_flag=true;
@@ -277,7 +277,7 @@
                         $BContent->addChild('ctyp',1);
                         $BContent->addChild('author','システム');
                         // 100を超えたコメントを削除
-                        $overflow_comment=count($room_xml->body->content)-100;
+                        $overflow_comment=couting($room_xml->body->content)-100;
                         if($overflow_comment>0){
                             for($k=0;$k<$overflow_comment;$k++){
                                 unset($room_xml->body->content[$k]);

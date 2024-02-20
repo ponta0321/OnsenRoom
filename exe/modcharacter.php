@@ -63,7 +63,7 @@
             exit;
         }
         if(isset($room_xml->body->character)){
-            $count_character_in_room=count($room_xml->body->character);
+            $count_character_in_room=couting($room_xml->body->character);
             for($i=0;$i<$count_character_in_room;$i++){
                 if((string)$room_xml->body->character[$i]->char_id==$char_id){
                     $room_xml->body->character[$i]->char_hp=$char_hp;

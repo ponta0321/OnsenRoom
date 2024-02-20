@@ -24,7 +24,7 @@ $dice=array();
 $dice_result=0;
 $chipcomment='';
 $m_comment_array=explode(' ',$match_comment);
-$mca_count=count($m_comment_array);
+$mca_count=couting($m_comment_array);
 
 if(1<$mca_count){
 	// 配列一つ目を繰り返しかチェック
@@ -139,7 +139,7 @@ do{
 			}
 			// リール用の結果を抽出
 			$roll_result=false;
-			$roa_count=count($result_onsenbac_array[$total_repet]);
+			$roa_count=couting($result_onsenbac_array[$total_repet]);
 			$result_area=(($roa_count-1)<0?0:($roa_count-1));
 			$result_onsenbac_array[$total_repet][$result_area]=trim($result_onsenbac_array[$total_repet][$result_area]);
 			if(preg_match('/^-?[0-9]+$/',$result_onsenbac_array[$total_repet][$result_area])){ //加算ロール1Dのみ
@@ -159,7 +159,7 @@ do{
 			// ダイス別の結果を抽出
 			$dammy_dice=array();
 			getDiceSR($result_onsenbac[$total_repet]['rands'],$dammy_dice);
-			if(0<count($dammy_dice)){
+			if(0<couting($dammy_dice)){
 				$i=0;
 				foreach($dammy_dice as $dd_key => $dd_value){
 					if($i>=$start_count){
@@ -201,10 +201,10 @@ do{
 if($dice_roll_flag==true){
 	if($command_error_mes==''){
 		// 複数回コマンド
-		if(1<count($result_onsenbac_array)){
+		if(1<couting($result_onsenbac_array)){
 			$comment=$call_name.'さんの'.$chipcomment.'ロール('.$repeat_flag.' '.$chipcommand.')';
-			for($j=0;$j<count($result_onsenbac_array);$j++){
-				for($i=0;$i<count($result_onsenbac_array[$j]);$i++){
+			for($j=0;$j<couting($result_onsenbac_array);$j++){
+				for($i=0;$i<couting($result_onsenbac_array[$j]);$i++){
 					if($i==0){
 						$comment.='<br>→ '.($j+1).'回目： '.$bac_game_dicebot.' '.$result_onsenbac_array[$j][$i];
 					}else{
@@ -215,7 +215,7 @@ if($dice_roll_flag==true){
 		// 1コマンド
 		}else{
 			$comment=$call_name.'さんの'.$chipcomment.'ロール('.$chipcommand.')';
-			for($i=0;$i<count($result_onsenbac_array[0]);$i++){
+			for($i=0;$i<couting($result_onsenbac_array[0]);$i++){
 				if($i==0){
 					$comment.='<br>→ '.$bac_game_dicebot.' '.$result_onsenbac_array[0][$i];
 				}else{
