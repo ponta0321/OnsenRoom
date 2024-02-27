@@ -87,13 +87,11 @@
                 if(uploadImage($_FILES['upload_image'],$image_save_path,$upload_err_msg,UPLOAD_BI_LIMIT_SIZE,250)){
 					$node_memo=$room_xml->head->memo;
 					$write_flag=false;
-					if($node_memo){
-						for($i=0;$i<couting($node_memo);$i++){
-							if($node_memo[$i]['id']==$memoimage_no){
-								$node_memo[$i]->txt=$image_save_url;
-								$write_flag=true;
-								break;
-							}
+					for($i=0;$i<couting($node_memo);$i++){
+						if($node_memo[$i]['id']==$memoimage_no){
+							$node_memo[$i]->txt=$image_save_url;
+							$write_flag=true;
+							break;
 						}
 					}
 					if($write_flag===false){
