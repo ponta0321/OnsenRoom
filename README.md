@@ -39,7 +39,7 @@ Webサーバにオンセンルームを設置して利用することができ�
 
 ## 開発言語
 
-PHP7、JavaScript（jQuery）
+PHP、JavaScript（jQuery）
 
 ## 開発寄与・バグの報告・要望について
 
