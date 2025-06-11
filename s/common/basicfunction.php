@@ -12,15 +12,14 @@ PHP7.1以前と同等の動作をするcount
 v1.00
 
 -- 更新履歴 --
-2024.02.27 更新
+2024.02.19 制作
 -------------------------------------------------------------------*/
-	$count=0;
-	try{
-		$count=count($target);
-	}catch(Exception $ex){
-		$count=0;
+	if(is_array($target)){
+		return count($target);
 	}
-	return $count;
+	else{
+		return 0;
+	}
 }
 function changeIDformRoomName($room_name){
 /*-------------------------------------------------------------------
