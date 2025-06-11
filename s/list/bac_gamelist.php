@@ -1,14 +1,14 @@
 <?php
 /*-----------------------------------------------------------------
 BCDiceのダイスボットリスト一覧
-    Ver3.13.0 対応
+    Ver3.14.0 対応
 配列
 　　　　Keyの命名ルール
 　　　　　　Bone&Carsのフォルダ scr/diceBot のファイル名 の前に bac_ をつける
 　　　 [0]=ダイスボット名 [1]=ダイスボット説明(基本未使用) [2]=オンセン用キー
 順列
 	BCDiceAPIのゲームシステム sork_key昇順
-	確認方法： https://trpgonsen.click/game_sysytem.php にアクセス
+	確認方法： https://trpgonsenroom.com/game_sysytem.php にアクセス
 未使用にするダイスボットのルール
     韓国語版、18禁(絶対隷奴など)
 -----------------------------------------------------------------*/
@@ -271,7 +271,7 @@ $bac_gamelist=array(
 	'bac_SajinsenkiAGuS2E'=>array('アーガス2nd','','g99'),
 	'bac_WerewolfTheApocalypse5th'=>array('ワーウルフ：ジ・アポカリプス','','g123'),
 	'bac_KamitsubakiCityUnderConstructionNarrative'=>array('神椿市建設中','','g99'),
-	'bac_NinjaSlayer2'=>array('ニンジャスレイヤーTRPG','','g284'),
+	'bac_NinjaSlayer2'=>array('ニンジャスレイヤー 書籍版','','g506'),
 	'bac_Siren'=>array('セイレーン','','g99'),
 	'bac_Liminal'=>array('リミナル','','g99'),
 	'bac_ArknightsFan'=>array('アークナイツTRPG','','g99'),
@@ -280,4 +280,17 @@ $bac_gamelist=array(
 	'bac_PastFutureParadox'=>array('パストフューチャーパラドックス','','g99'),
 	'bac_KyokoShinshoku'=>array('虚構侵蝕TRPG','','g483'),
 	'bac_NRR'=>array('nRR','','g483'),
+	// 3.14.0 追加分
+	'bac_DivineCharger'=>array('ディヴァインチャージャー','','g282'),
+	'bac_ShuumatsuBargainWars'=>array('終末買い物戦争','','g99'),
+	'bac_ShuumatsuBargainWars'=>array('天才軍師になろう','','g502'),
+	'bac_BlackJacket'=>array('ブラックジャケット','','g283'),
+	'bac_TheUnofficialHollowKnightRPG'=>array('The Unofficial Hollow Knight RPG','','g99'),
+	'bac_TheOneRing2nd'=>array('一つの指輪','','g494'),
+	'bac_FinalFantasyXIV'=>array('FF14TT','','g505'),
+	'bac_KizunaBullet'=>array('キズナバレット','','g470'),
+	'bac_Agnostos'=>array('アグノストス','','g99'),
+	'bac_InvisibleLiar'=>array('インビジブルライアー','','g99'),
+	'bac_Yotabana'=>array('ヨタバナ','','g99'),
+	'bac_TrailOfCthulhu'=>array('トレイル・オブ・クトゥルー','','g331'),
 );
