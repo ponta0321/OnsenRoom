@@ -1696,9 +1696,9 @@ v1.00
         }else{
             return false;
         }
-    // trpgsession.click内の画像かチェック
-    }elseif(strpos($str_candidate_img,'//trpgsession.click')!==false){
-        if(preg_match('/(|https?:)\/\/trpgsession.click\/[cp]\/[0-9a-z]+\/(i|image)\/[a-z]+[0-9]+/i',$str_candidate_img,$match_result)){
+    // trpgsession.com内の画像かチェック
+    }elseif(strpos($str_candidate_img,'//trpgsession.com')!==false){
+        if(preg_match('/(|https?:)\/\/trpgsession.com\/[cp]\/[0-9a-z]+\/(i|image)\/[a-z]+[0-9]+/i',$str_candidate_img,$match_result)){
             return $match_result[0];
         }else{
             return false;
