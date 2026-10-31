@@ -1339,6 +1339,7 @@ label{
     flex-wrap:nowrap;
     overflow-x:auto; /* 多すぎる場合は横スクロール */
     overflow-y:hidden; /* 縦スクロールバーが暗黙的に出るのを防止 */
+    padding-left:6px; /* 下枠 (.tab_block) の border 位置に揃える */
 }
 .lt_t_tab span{
     font-size:11px;
