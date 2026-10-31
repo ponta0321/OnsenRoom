@@ -58,13 +58,11 @@ function makeDraggable(el, opt) {
         dragging = true;
         startX = e.clientX;
         startY = e.clientY;
-        const rect = target.getBoundingClientRect();
-        origLeft = rect.left + window.scrollX;
-        origTop = rect.top + window.scrollY;
-        // 絶対位置化
-        target.style.position = 'absolute';
-        target.style.left = origLeft + 'px';
-        target.style.top = origTop + 'px';
+        // 親要素基準の相対座標 (offsetLeft/Top は position != static な親の内側座標)
+        // 既存の CSS で .popup_window は position:absolute, .card も position:absolute
+        // になっているため、style を書き換えず現在の offsetLeft/Top を基準とする
+        origLeft = target.offsetLeft;
+        origTop = target.offsetTop;
         if (e.pointerId !== undefined) {
             handleEl.setPointerCapture(e.pointerId);
         }
@@ -75,23 +73,21 @@ function makeDraggable(el, opt) {
         if (!dragging) return;
         let newLeft = origLeft + (e.clientX - startX);
         let newTop = origTop + (e.clientY - startY);
-        // containment 制限
+        // containment 制限 (親要素基準の相対座標で判定)
         if (containment) {
             let container;
             if (containment === 'parent') {
-                container = target.parentElement;
+                container = target.offsetParent || target.parentElement;
             } else {
                 container = document.querySelector(containment);
             }
             if (container) {
-                const crect = container.getBoundingClientRect();
-                const containerLeft = crect.left + window.scrollX;
-                const containerTop = crect.top + window.scrollY;
-                const trect = target.getBoundingClientRect();
-                const maxLeft = containerLeft + crect.width - trect.width;
-                const maxTop = containerTop + crect.height - trect.height;
-                if (newLeft < containerLeft) newLeft = containerLeft;
-                if (newTop < containerTop) newTop = containerTop;
+                // target.offsetParent が container と同じ場合は 0 基準でよい
+                // 違う場合は container の offsetLeft/Top との差分を考慮
+                const maxLeft = container.clientWidth - target.offsetWidth;
+                const maxTop = container.clientHeight - target.offsetHeight;
+                if (newLeft < 0) newLeft = 0;
+                if (newTop < 0) newTop = 0;
                 if (newLeft > maxLeft) newLeft = maxLeft;
                 if (newTop > maxTop) newTop = maxTop;
             }
@@ -139,23 +135,39 @@ function makeResizable(el, opt) {
     // 右下にリサイズハンドルを追加
     const handle = document.createElement('div');
     handle.className = 'or-resize-handle';
-    handle.style.cssText = 'position:absolute;right:0;bottom:0;width:14px;height:14px;cursor:nwse-resize;background:transparent;z-index:9999;';
-    // CSS で視覚ハンドルを提供する場合は or-resize-handle クラスにスタイルを当てる
-    target.style.position = target.style.position || 'relative';
+    // CSS で視覚ハンドルを提供するためスタイル は or-resize-handle クラスに集約
     target.appendChild(handle);
+    // box-sizing を border-box に揃えることで、style.width に offsetWidth を
+    // そのまま入れても見た目サイズが変化しないようにする (resizable 時のマージン変化対策)
+    target.style.boxSizing = 'border-box';
+    // alsoResize 対象の要素も box-sizing を揃える (padding/border のある内側要素が親からはみ出さないよう)
+    if (alsoResizeSelector) {
+        const alsoEl = target.querySelector(alsoResizeSelector) || document.querySelector(alsoResizeSelector);
+        if (alsoEl) alsoEl.style.boxSizing = 'border-box';
+    }
 
     let resizing = false;
     let startX = 0, startY = 0;
     let origWidth = 0, origHeight = 0;
+    // alsoResize 対象の初期サイズを記憶 (差分方式でサイズ変更するため)
+    let alsoOrigWidth = 0, alsoOrigHeight = 0;
+    let alsoEl = null;
 
     function onPointerDown(e) {
         if (e.button !== undefined && e.button !== 0) return;
         resizing = true;
         startX = e.clientX;
         startY = e.clientY;
-        const rect = target.getBoundingClientRect();
-        origWidth = rect.width;
-        origHeight = rect.height;
+        // offsetWidth/Height は border + padding + content のサイズ (border-box 時は = style.width)
+        origWidth = target.offsetWidth;
+        origHeight = target.offsetHeight;
+        if (alsoResizeSelector) {
+            alsoEl = target.querySelector(alsoResizeSelector) || document.querySelector(alsoResizeSelector);
+            if (alsoEl) {
+                alsoOrigWidth = alsoEl.offsetWidth;
+                alsoOrigHeight = alsoEl.offsetHeight;
+            }
+        }
         if (e.pointerId !== undefined) {
             handle.setPointerCapture(e.pointerId);
         }
@@ -164,19 +176,22 @@ function makeResizable(el, opt) {
 
     function onPointerMove(e) {
         if (!resizing) return;
-        let newWidth = origWidth + (e.clientX - startX);
-        let newHeight = origHeight + (e.clientY - startY);
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        let newWidth = origWidth + dx;
+        let newHeight = origHeight + dy;
         if (newWidth < minWidth) newWidth = minWidth;
         if (newHeight < minHeight) newHeight = minHeight;
+        // 実際の適用量 (最小サイズでクリップされた場合は差分も縮む)
+        const actualDx = newWidth - origWidth;
+        const actualDy = newHeight - origHeight;
         target.style.width = newWidth + 'px';
         target.style.height = newHeight + 'px';
-        if (alsoResizeSelector) {
-            const also = target.querySelector(alsoResizeSelector) || document.querySelector(alsoResizeSelector);
-            if (also) {
-                // 対象要素のサイズも同期 (jQuery UI の alsoResize と同等の単純版)
-                also.style.width = newWidth + 'px';
-                also.style.height = newHeight + 'px';
-            }
+        if (alsoEl) {
+            // 差分方式: alsoResize 対象には、元のサイズに実際の変化分だけ加算
+            // (jQuery UI の alsoResize と同じ挙動)
+            alsoEl.style.width = (alsoOrigWidth + actualDx) + 'px';
+            alsoEl.style.height = (alsoOrigHeight + actualDy) + 'px';
         }
     }
 
