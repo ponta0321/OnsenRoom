@@ -249,18 +249,21 @@ function setBackImage(){
     setModSettingData('game_backimage');
 }
 function uploadBgiFile(form_id){
-    var formElement=$('#'+form_id);
-    var formData=new FormData(formElement[0]);
-    $.ajax({
-        url:'<?=URL_ROOT;?>exe/uploadbgi.php',
-        type:'post',
-        processData:false,
-        contentType:false,
-        data:formData,
-    }).done(function(data){
+    var formElement=document.getElementById(form_id);
+    var formData=new FormData(formElement);
+    var httpStatus=0;
+    fetch('<?=URL_ROOT;?>exe/uploadbgi.php',{
+        method:'POST',
+        body:formData,
+        credentials:'same-origin'
+    }).then(function(response){
+        httpStatus=response.status;
+        if(!response.ok) throw new Error('HTTP '+response.status);
+        return response.text();
+    }).then(function(data){
         processAfterUploadBgi(data);
-    }).fail(function(xhr,txtstatus,errorthrown){
-        displayWTL('アップロードに失敗しました。('+xhr.status+')',50,50,255,0,0);
+    }).catch(function(err){
+        displayWTL('アップロードに失敗しました。('+httpStatus+')',50,50,255,0,0);
     });
 }
 function processAfterUploadBgi(msg){

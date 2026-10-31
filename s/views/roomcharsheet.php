@@ -94,7 +94,7 @@
 <script>
 function putValueForSelect(){
 	var key=document.getElementById('id_cs_s_type').value;
-	$.post('<?=URL_ROOT;?>exe/getchartemplate.php',{
+	postForm('<?=URL_ROOT;?>exe/getchartemplate.php',{
 		gt:key,
 	},function(data){
 		var json_char_data=convertJsonTextToObject(data);
@@ -183,7 +183,7 @@ function getCharacterData(character_id,forced_load_flag){
 	if(character_id==""){
 		return false;
 	}
-	$.post('<?=URL_ROOT;?>exe/getcharacterdata.php',{
+	postForm('<?=URL_ROOT;?>exe/getcharacterdata.php',{
 		room_id:'<?=$base_room_file;?>',
 		principal_id:'<?=$principal_id;?>',
 		principal_ip:'<?=$player_ip;?>',
@@ -302,7 +302,7 @@ function setCharacterList(flg){
 	document.getElementById('id_cs_b_add').disabled=true;
 	document.getElementById('id_cs_b_delete').disabled=true;
 	document.getElementById('id_cs_b_update').disabled=true;
-	$.post('<?=URL_ROOT;?>exe/setcharacterlist.php',{
+	postForm('<?=URL_ROOT;?>exe/setcharacterlist.php',{
 		room_id:'<?=$base_room_file;?>',
 		principal_id:'<?=$principal_id;?>',
 		nick_name:'<?=$nick_name;?>',
@@ -372,13 +372,14 @@ function saveCharacter(){
 		if(document.getElementById('id_edit_page_link').style.display=='none'){
 			form_data.append('created_in_room','1');
 		}
-		$.ajax({
-			url:'<?=URL_ROOT;?>exe/savecharacterdata.php',
-			type:'post',
-			processData:false,
-			contentType:false,
-			data:form_data,
-		}).done(function(data){
+		fetch('<?=URL_ROOT;?>exe/savecharacterdata.php',{
+			method:'POST',
+			body:form_data,
+			credentials:'same-origin'
+		}).then(function(response){
+			if(!response.ok) throw new Error('HTTP '+response.status);
+			return response.text();
+		}).then(function(data){
 			var json_char_data=convertJsonTextToObject(data);
 			if(json_char_data.error){
 				displayWTL(json_char_data.error_description,50,50,255,0,0);
@@ -443,9 +444,9 @@ function saveCharacter(){
 			document.getElementById('id_cs_b_add').disabled=false;
 			document.getElementById('id_cs_b_delete').disabled=false;
 			document.getElementById('id_cs_b_update').disabled=false;
-		}).fail(function(data){
+		}).catch(function(err){
 			displayWTL('キャラクターの更新に失敗しました。',50,50,255,0,0);
-		}).always(function(data){
+		}).finally(function(){
 			document.getElementById('id_cs_img_upload').value='';
 		});
 	}else{
@@ -454,7 +455,7 @@ function saveCharacter(){
 }
 function reloadCharacterList(){
 	document.getElementById('id_cs_b_reload').disabled=true;
-	$.post(CONST_URL_ROOT+'exe/reloadcharacterlist.php',{
+	postForm(CONST_URL_ROOT+'exe/reloadcharacterlist.php',{
 		room_id:CONST_ROOM_ID,
 		principal_id:CONST_PRINCIPAL_ID,
 		principal_ip:'<?=$player_ip;?>'
@@ -504,13 +505,14 @@ function uploadCharImage(req_flag,img_name,img_file){
 		form_data.append('request',req_flag);
 		form_data.append('img_name',img_name);
 		form_data.append('upload_image',img_file);
-		$.ajax({
-			url:'<?=URL_ROOT;?>exe/uploadcharimage.php',
-			type:'post',
-			processData:false,
-			contentType:false,
-			data:form_data,
-		}).done(function(data){
+		fetch('<?=URL_ROOT;?>exe/uploadcharimage.php',{
+			method:'POST',
+			body:form_data,
+			credentials:'same-origin'
+		}).then(function(response){
+			if(!response.ok) throw new Error('HTTP '+response.status);
+			return response.text();
+		}).then(function(data){
 			var json_char_data=convertJsonTextToObject(data);
 			if(json_char_data.error){
 				displayWTL(json_char_data.error_description,50,50,255,0,0);
@@ -527,9 +529,9 @@ function uploadCharImage(req_flag,img_name,img_file){
 					}
 				}
 			}
-		}).fail(function(data){
+		}).catch(function(err){
 			displayWTL('キャラクターの更新に失敗しました。',50,50,255,0,0);
-		}).always(function(data){
+		}).finally(function(){
 			document.getElementById('stand_img_file').value='';
 		});
 	}else{

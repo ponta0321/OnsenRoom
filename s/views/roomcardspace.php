@@ -1082,7 +1082,7 @@ function sendCardEvent(ced){
     ced.xml='<?=$base_room_file;?>';
     ced.principal='<?=$principal_id;?>';
     ced.nick_name='<?=$nick_name;?>';
-    $.post('<?=URL_ROOT;?>exe/putcardevent.php',ced,function(data){
+    postForm('<?=URL_ROOT;?>exe/putcardevent.php',ced,function(data){
         openWTL(data);
     },'html');
 }

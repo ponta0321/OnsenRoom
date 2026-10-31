@@ -1177,7 +1177,7 @@ function loadLocalBD(psd_file,room_id,principal_id,locked_eml_ids){
     if(game_grid==null){
         game_grid=5;
     }
-    $.post(psd_file,{
+    postForm(psd_file,{
         xml:room_id,
         principal:principal_id,
         map_data:map_data,
@@ -1686,7 +1686,7 @@ function setModSettingData(eid){
         sd2.xml=CONST_ROOM_ID;
         sd2.principal=CONST_PRINCIPAL_ID;
         sd2.nick_name=CONST_NICKNAME;
-        $.post(CONST_URL_ROOT+'exe/putsettingdata.php',sd2,function(data){
+        postForm(CONST_URL_ROOT+'exe/putsettingdata.php',sd2,function(data){
             openWTL(data);
 			if(unlock_id){
 				document.getElementById(unlock_id).disabled=false;
@@ -1699,13 +1699,13 @@ function sendSettingData(sd){
     sd.xml=CONST_ROOM_ID;
     sd.principal=CONST_PRINCIPAL_ID;
     sd.nick_name=CONST_NICKNAME;
-    $.post(CONST_URL_ROOT+'exe/putsettingdata.php',sd,function(data){
+    postForm(CONST_URL_ROOT+'exe/putsettingdata.php',sd,function(data){
         openWTL(data);
         noneUpdateSettingId='';
     },'html');
 }
 function setModCharData(id){
-    $.post(CONST_URL_ROOT+'exe/modcharacter.php',{
+    postForm(CONST_URL_ROOT+'exe/modcharacter.php',{
         xml:CONST_ROOM_ID,
         principal:CONST_PRINCIPAL_ID,
         nick_name:CONST_NICKNAME,
@@ -1732,7 +1732,7 @@ function delFromCharList(char_id,char_name){
                         "\n\n"+
                         '本当によろしいですか？';
     if(confirm(caution_comment)){
-        $.post(CONST_URL_ROOT+'exe/setcharacterlist.php',{
+        postForm(CONST_URL_ROOT+'exe/setcharacterlist.php',{
             room_id:CONST_ROOM_ID,
             principal_id:CONST_PRINCIPAL_ID,
             nick_name:CONST_NICKNAME,
@@ -1760,7 +1760,7 @@ function clearAllMapping(){
         var map_surface=document.getElementById('mapsurface');
         var map_surface_ctx=map_surface.getContext('2d');
         map_surface_ctx.clearRect(0,0,bw*32,bh*32);
-        $.post(CONST_URL_ROOT+'exe/putsettingdata.php',{
+        postForm(CONST_URL_ROOT+'exe/putsettingdata.php',{
             xml:CONST_ROOM_ID,
             principal:CONST_PRINCIPAL_ID,
             nick_name:CONST_NICKNAME,
@@ -1778,7 +1778,7 @@ function putChessmanReset(num){
                            'コマと全て消去します。'+"\n"+'（マーキングは消去されません。）'+"\n\n"+'本当によろしいですか？',
                            'マーキングを全て消去します。'+"\n"+'（コマは消去されません。）'+"\n\n"+'本当によろしいですか？'];
     if(confirm(caution_comment[num])){
-        $.post(CONST_URL_ROOT+'exe/putresetchessman.php',{
+        postForm(CONST_URL_ROOT+'exe/putresetchessman.php',{
             xml:CONST_ROOM_ID,
             principal:CONST_PRINCIPAL_ID,
             nick_name:CONST_NICKNAME,
@@ -1795,7 +1795,7 @@ function pushDiceRoll(){
     document.getElementById('id_roll_button').disabled=true;
     document.getElementById('id_dice_count_number').disabled=true;
     document.getElementById('id_dice_surface').disabled=true;
-    $.post(CONST_URL_ROOT+'exe/diceroll.php',{
+    postForm(CONST_URL_ROOT+'exe/diceroll.php',{
         chat_color:document.getElementById('id_chat_color').value,
         call_name:document.getElementById('id_call_name').value,
         dcn:document.getElementById('id_dice_count_number').value,
@@ -1811,7 +1811,7 @@ function pushDiceRoll(){
     },'html');
 }
 function pushStartVoiceChat(){
-    $.post(CONST_URL_ROOT+'exe/putsysmsg.php',{
+    postForm(CONST_URL_ROOT+'exe/putsysmsg.php',{
         principal:CONST_PRINCIPAL_ID,
         nick_name:CONST_NICKNAME,
         system_msg:'1',
@@ -1827,7 +1827,7 @@ function sendChangeMappingData(){
         var bw=parseInt(document.getElementById("game_boardwidth").value);
         var bh=parseInt(document.getElementById("game_boardheight").value);
         change_map_data_flag=false;
-        $.post(CONST_URL_ROOT+'exe/putsettingdata.php',{
+        postForm(CONST_URL_ROOT+'exe/putsettingdata.php',{
             xml:CONST_ROOM_ID,
             principal:CONST_PRINCIPAL_ID,
             nick_name:CONST_NICKNAME,
@@ -1864,7 +1864,7 @@ function saveChessmanData(){
         }
     }
     noneUpdateBoardTime=1;
-    $.post(CONST_URL_ROOT+'exe/putpositiondata.php',{
+    postForm(CONST_URL_ROOT+'exe/putpositiondata.php',{
         principal:CONST_PRINCIPAL_ID,
         nick_name:CONST_NICKNAME,
         xml:CONST_ROOM_ID,

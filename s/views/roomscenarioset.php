@@ -137,7 +137,7 @@
         reader.readAsText(files[0]);
     }
     function pushRequestSS(){ // 設定 選択 読み込みボタン押
-        $.post('<?=URL_ROOT;?>exe/getssdata.php',{
+        postForm('<?=URL_ROOT;?>exe/getssdata.php',{
             principal_id:CONST_PRINCIPAL_ID,
             player_ip:'<?=$player_ip;?>',
             sso:document.getElementById('ss_gam_select').value,
@@ -421,7 +421,7 @@
                 return false;
             }
             document.getElementById('sslc_'+scene_id).disabled=true;
-            $.post('<?=URL_ROOT;?>exe/putcomment.php',{
+            postForm('<?=URL_ROOT;?>exe/putcomment.php',{
                 comment:cmd_value,
                 chat_color:'#000000',
                 call_name:send_speeker,
@@ -538,7 +538,7 @@
 					document.getElementById('ss_spk_area').disabled=false;
 					document.getElementById('ss_exe_button').disabled=false;
 				},10000);
-            $.post('<?=URL_ROOT;?>exe/putcomment.php',{
+            postForm('<?=URL_ROOT;?>exe/putcomment.php',{
                 comment:send_comment,
                 chat_color:'#000000',
                 call_name:send_speeker,

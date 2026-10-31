@@ -202,6 +202,39 @@ function getData(url, opt) {
         .catch(err => { if (opt.onError) opt.onError(err); });
 }
 
+/**
+ * jQuery $.post 互換ヘルパ: postForm(url, data, callback)
+ *
+ * jQuery の postForm(url, data, callback) と同じシグネチャで動作。
+ * データは application/x-www-form-urlencoded でエンコード、
+ * レスポンスは文字列として callback に渡す (jQuery のデフォルト動作と同じ)。
+ *
+ * @param {string} url
+ * @param {Object} data POST データ (キー: 値)
+ * @param {Function} [callback] function(responseText) { ... }
+ */
+function postForm(url, data, callback) {
+    const body = new URLSearchParams();
+    if (data) {
+        Object.keys(data).forEach(k => {
+            const v = data[k];
+            if (Array.isArray(v)) {
+                v.forEach(x => body.append(k + '[]', x));
+            } else {
+                body.append(k, v === undefined || v === null ? '' : v);
+            }
+        });
+    }
+    fetch(url, {
+        method: 'POST',
+        body: body,
+        credentials: 'same-origin'
+    })
+    .then(response => response.text())
+    .then(text => { if (typeof callback === 'function') callback(text); })
+    .catch(err => { /* エラー時は callback 呼ばない (jQuery $.post もエラー時はデフォルトでは success callback 呼ばない) */ });
+}
+
 /* ========================================================================
  * モーダルダイアログ (<dialog> ネイティブ要素を使用)
  * ======================================================================== */

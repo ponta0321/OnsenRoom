@@ -230,7 +230,7 @@ function postPutComment(){
 					document.getElementById('id_call_name').disabled=false;
 					document.getElementById('send_cmt_b').disabled=false;
 				},10000);
-			$.post('<?=URL_ROOT;?>exe/putcomment.php',{
+			postForm('<?=URL_ROOT;?>exe/putcomment.php',{
 				comment:temp_comment,
 				chat_color:document.getElementById('id_chat_color').value,
 				call_name:temp_call_name,
@@ -293,7 +293,7 @@ function loadChatTextCookie(){
 function setDiceBotCommentary(){
 	var form_data=new FormData();
 	form_data.append('game_key',document.getElementById("ind_dicebot").value);
-	$.post('<?=URL_ROOT;?>exe/pushdicebottext.php',{
+	postForm('<?=URL_ROOT;?>exe/pushdicebottext.php',{
 		game_key:document.getElementById("ind_dicebot").value
 	},function(msg){
 		document.getElementById("dicebot_text").innerHTML=msg;

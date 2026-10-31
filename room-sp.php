@@ -364,7 +364,7 @@ function postPutComment(temp_comment){
 					document.getElementById('id_comment').disabled=false;
 					document.getElementById('id_call_name').disabled=false;
 				},10000);
-            $.post('<?=URL_ROOT;?>exe/putcomment.php',{
+            postForm('<?=URL_ROOT;?>exe/putcomment.php',{
                 comment:temp_comment,
                 chat_color:document.getElementById('id_chat_color').value,
                 call_name:temp_call_name,
@@ -432,26 +432,28 @@ after load process
 $(function(){
     callRoomdData('<?=URL_ROOT;?>','<?=$base_room_file;?>');
     var interval_id = setInterval("callRoomdData('<?=URL_ROOT;?>','<?=$base_room_file;?>')",1000);
-    $("#load_board_data").change(function(){
+    document.getElementById("load_board_data").addEventListener("change",function(){
         var form_data=new FormData();
         form_data.append('upload_state','boarddata');
         form_data.append('room_file','<?=$base_room_file;?>');
         form_data.append('room_pass','<?=$room_pass;?>');
         form_data.append('upload_boarddata',document.getElementById('load_board_data').files[0]);
-        $('#load_board_data').replaceWith($('#load_board_data').clone(true));
-        $.ajax({
-            url:'<?=URL_ROOT;?>exe/uploadbgi.php',
-            type:'post',
-            processData:false,
-            contentType:false,
-            data:form_data,
-        }).done(function(data){
+        var httpStatus=0;
+        fetch('<?=URL_ROOT;?>exe/uploadbgi.php',{
+            method:'POST',
+            body:form_data,
+            credentials:'same-origin'
+        }).then(function(response){
+            httpStatus=response.status;
+            if(!response.ok) throw new Error('HTTP '+response.status);
+            return response.text();
+        }).then(function(data){
             if(processAfterUploadMemo(data)){
                 displayWTL('ボード情報の読込が完了しました。',50,50,40,163,11);
             }
-        }).fail(function(xhr,txtstatus,errorthrown){
-            displayWTL('アップロードに失敗しました。('+xhr.status+')',50,50,255,0,0);
-        }).always(function(data){
+        }).catch(function(err){
+            displayWTL('アップロードに失敗しました。('+httpStatus+')',50,50,255,0,0);
+        }).finally(function(){
             document.getElementById('load_board_data').value='';
         });
     });
