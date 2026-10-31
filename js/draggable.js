@@ -121,6 +121,7 @@ function makeDraggable(el, opt) {
  * @param {Element|string} el
  * @param {Object} opt
  *   - minHeight / minWidth: 最小サイズ (px)
+ *   - maxHeight / maxWidth: 最大サイズ (px、省略時は Infinity)
  *   - alsoResize: 同時にリサイズするセレクタ
  */
 function makeResizable(el, opt) {
@@ -129,6 +130,8 @@ function makeResizable(el, opt) {
     opt = opt || {};
     const minHeight = opt.minHeight || 50;
     const minWidth = opt.minWidth || 50;
+    const maxHeight = opt.maxHeight || Infinity;
+    const maxWidth = opt.maxWidth || Infinity;
     const alsoResizeSelector = opt.alsoResize || null;
 
     // 既に resize ハンドルを持っていたらスキップ
@@ -184,6 +187,8 @@ function makeResizable(el, opt) {
         let newHeight = origHeight + dy;
         if (newWidth < minWidth) newWidth = minWidth;
         if (newHeight < minHeight) newHeight = minHeight;
+        if (newWidth > maxWidth) newWidth = maxWidth;
+        if (newHeight > maxHeight) newHeight = maxHeight;
         // 実際の適用量 (最小サイズでクリップされた場合は差分も縮む)
         const actualDx = newWidth - origWidth;
         const actualDy = newHeight - origHeight;

@@ -803,9 +803,12 @@ $(function(){
     makeDraggable("#puw_08",{handle:"div.puw_head",cancel:"span.puw_close"});
     makeResizable("#puw_08",{minHeight:340,minWidth:562,alsoResize:"#puw_inbody_08"});
     makeDraggable("#puw_09",{handle:"div.puw_head",cancel:"span.puw_close"});
-    makeResizable("#puw_09",{minHeight:150,minWidth:220,alsoResize:"#puw_inbody_09"});
+    // キャラ一覧は内コンテンツ (.character_list 208px float:left) が固定幅設計のため、
+    // 横可変を禁止 (minWidth=maxWidth=220)
+    makeResizable("#puw_09",{minHeight:150,minWidth:220,maxWidth:220,alsoResize:"#puw_inbody_09"});
     makeDraggable("#puw_10",{handle:"div.puw_head",cancel:"span.puw_close"});
-    makeResizable("#puw_10",{minHeight:88,minWidth:220,alsoResize:"#puw_inbody_10"});
+    // 参加者一覧も固定幅設計のため、横可変を禁止 (minWidth=maxWidth=220)
+    makeResizable("#puw_10",{minHeight:88,minWidth:220,maxWidth:220,alsoResize:"#puw_inbody_10"});
     makeDraggable("#puw_11",{handle:"div.puw_head",cancel:"span.puw_close"});
     makeResizable("#puw_11",{minHeight:340,minWidth:562,alsoResize:"#puw_inbody_11"});
     makeDraggable("#puw_13",{handle:"div.puw_head",cancel:"span.puw_close"});
