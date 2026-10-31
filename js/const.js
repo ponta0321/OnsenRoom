@@ -2124,69 +2124,61 @@ function getFixDefaultWidth(){
 /*////////////////////////////////////////////////////////////////
 after load process
 ////////////////////////////////////////////////////////////////*/
-// smartphone - hover
+// smartphone - hover (タッチ時のホバーエフェクト、vanilla JS)
 (function(){
-    var tapClass = "";
-    var hoverClass = "";
-    var Hover = window.Hover = function (ele) {
-        return new Hover.fn.init(ele);
-    };
-    Hover.fn = {
-        //Hover Instance
-        init : function (ele) {
-            this.prop = ele;
-        },
-        bind : function (_hoverClass, _tapClass) {
-            hoverClass = _hoverClass;
-            tapClass = _tapClass;
-            $(window).bind("touchstart", function(event) {
-                var target = event.target || window.target;
-                var bindElement = null;
-                if (target.tagName == "A" || $(target).hasClass(tapClass)) {
-                    bindElement = $(target);
-                } else if ($(target).parents("a").length > 0) {
-                    bindElement = $(target).parents("a");
-                } else if ($(target).parents("." + tapClass).length > 0) {
-                    bindElement = $(target).parents("." + tapClass);
-                }
-                if (bindElement != null) {
-                    Hover().touchstartHoverElement(bindElement);
-                }
-            });
-        }, 
-        touchstartHoverElement : function (bindElement) {
-            bindElement.addClass(hoverClass);
-            bindElement.unbind("touchmove", Hover().touchmoveHoverElement);
-            bindElement.bind("touchmove", Hover().touchmoveHoverElement);
-            bindElement.unbind("touchend", Hover().touchendHoverElement);
-            bindElement.bind("touchend", Hover().touchendHoverElement);
-        }, 
-        touchmoveHoverElement : function (event) {
-            $(this).removeClass(hoverClass);
-        }, 
-        touchendHoverElement : function (event) {
-            $(this).removeClass(hoverClass);
+    var hoverClass = 'hover';
+    var tapClass = 'tap';
+    function findTargetElement(target){
+        // A タグまたは tap クラスを持つ要素、またはその祖先を辿る
+        var el = target;
+        while(el && el !== document){
+            if(el.tagName === 'A' || (el.classList && el.classList.contains(tapClass))){
+                return el;
+            }
+            el = el.parentElement;
         }
+        return null;
     }
-    Hover.fn.init.prototype = Hover.fn;
-    Hover().bind("hover", "tap");
+    function onTouchMove(e){
+        if(e.currentTarget && e.currentTarget.classList){
+            e.currentTarget.classList.remove(hoverClass);
+        }
+        e.currentTarget.removeEventListener('touchmove', onTouchMove);
+        e.currentTarget.removeEventListener('touchend', onTouchEnd);
     }
-)();
-// smartphone - page-top button
-$(function(){
-    var topBtn = $('#page-top');    
-    topBtn.hide();
-    $(window).scroll(function(){
-        if ($(this).scrollTop() > 100){
-            topBtn.fadeIn();
-        } else {
-            topBtn.fadeOut();
+    function onTouchEnd(e){
+        if(e.currentTarget && e.currentTarget.classList){
+            e.currentTarget.classList.remove(hoverClass);
+        }
+        e.currentTarget.removeEventListener('touchmove', onTouchMove);
+        e.currentTarget.removeEventListener('touchend', onTouchEnd);
+    }
+    window.addEventListener('touchstart', function(e){
+        var el = findTargetElement(e.target);
+        if(!el) return;
+        el.classList.add(hoverClass);
+        el.removeEventListener('touchmove', onTouchMove);
+        el.addEventListener('touchmove', onTouchMove);
+        el.removeEventListener('touchend', onTouchEnd);
+        el.addEventListener('touchend', onTouchEnd);
+    });
+})();
+// smartphone - page-top button (スクロール時に表示、クリックでトップへスムーズスクロール)
+document.addEventListener('DOMContentLoaded', function(){
+    var topBtn = document.getElementById('page-top');
+    if(!topBtn) return;
+    topBtn.style.display = 'none';
+    window.addEventListener('scroll', function(){
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if(scrollTop > 100){
+            topBtn.style.display = '';
+        }else{
+            topBtn.style.display = 'none';
         }
     });
-    topBtn.click(function(){
-        $('body,html').animate({
-            scrollTop: 0
-        }, 500);
+    topBtn.addEventListener('click', function(e){
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        e.preventDefault();
         return false;
     });
 });
