@@ -306,9 +306,13 @@ function applyPuwState(el, id) {
     const all = loadPuwStateAll();
     const s = all[id];
     if (!s) return false;
-    // ウィンドウ内側 (.puw_inbody_memo_X 等) の初期サイズとの差分を記憶してから
-    // ウィンドウサイズを変更し、内側も同じ差分で追従させる (alsoResize と同等の挙動)
-    const inbody = el.querySelector('[id^="puw_inbody_"]');
+    // 共有メモ ポップアップ (puw_memo_X) のみ、内側コンテナ (.puw_inbody_memo_X) の
+    // サイズを差分方式で追従させる (下余白対策)。
+    // 他ポップアップは、各 roomXXX view の CSS/JS に追従ロジックがある (または不要) なので
+    // ここで inbody を触らない。触ると width:100% ベースの子孫 (#comment_space 等)
+    // が親固定幅になり、ウィンドウリサイズに追従しなくなる。
+    const isMemoPopup = /^memo_\d+$/.test(id);
+    const inbody = isMemoPopup ? el.querySelector('[id^="puw_inbody_memo_"]') : null;
     const origInbodyW = inbody ? inbody.offsetWidth : 0;
     const origInbodyH = inbody ? inbody.offsetHeight : 0;
     const origElW = el.offsetWidth;
