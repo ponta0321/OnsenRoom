@@ -4,6 +4,8 @@
   define('SITE_DESCRIPTION','ブラウザで遊べるTRPGオンラインセッションルームです。'); // サイト説明
   define('CPU_CORE',8); // サーバのCPUコア数を入力する
   define('APP_VERSION','1.04.08'); // バージョン
+/* debug */
+  define('DEBUG_MODE',false); // true にすると log/debug.log に全エラー (@ 抑制分含む) を出力。本番運用時は false のまま
 /* password */
   define('ADMINISTRATOR_PASSWORD','1234'); // 管理者ページ用パスワード
   define('AUTHENTICATION_CODE','12345678abcd'); // ロビーサーバから要求があった際の認証用パスワード（ロビーサーバから渡されるコードとこれが一致したら情報を提供する）
