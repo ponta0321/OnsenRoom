@@ -1400,7 +1400,7 @@ v1.00
     if(($participant_update_flag==false)&&($observer_flag==0)&&($entry_flag==1)){
         $nodeCharacter=$obj_room->body->addChild('participant');
         $nodeCharacter->addChild('participant_id',$principal);
-        $nodeCharacter->addChild('participant_nm',htmlentities($nick_name),ENT_XML1);
+        $nodeCharacter->addChild('participant_nm',htmlentities($nick_name,ENT_XML1));
         $nodeCharacter->addChild('participant_ut',$now_time);
     }
     return $obj_room->asXML($room_file);
