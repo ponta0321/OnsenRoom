@@ -353,3 +353,65 @@ function savePuwVisibility(el, id) {
     if (!el) return;
     savePuwState(id, { visible: el.style.display !== 'none' });
 }
+
+/* ========================================================================
+ * アニメーション (jQuery slideToggle/slideUp/slideDown 相当、vanilla JS)
+ * ======================================================================== */
+
+/**
+ * 要素の表示/非表示を height アニメーションで切替 (jQuery slideToggle 相当)
+ *
+ * @param {Element|string} el 対象要素 または '#id'/CSSセレクタ
+ * @param {number} [duration=100] アニメーション時間 (ms)
+ * @param {Function} [callback] 完了時コールバック
+ */
+function slideToggleEl(el, duration, callback) {
+    const target = typeof el === 'string' ? document.querySelector(el) : el;
+    if (!target) return;
+    duration = (typeof duration === 'number') ? duration : 100;
+    const isHidden = (target.style.display === 'none' ||
+                      window.getComputedStyle(target).display === 'none');
+    // 複数回連続呼び出しの衝突回避
+    if (target._slideAnim) {
+        clearTimeout(target._slideAnim);
+        target._slideAnim = null;
+    }
+    // transition で height を変化。終了時に inline style をクリーンアップ
+    const prevOverflow = target.style.overflow;
+    const prevTransition = target.style.transition;
+    target.style.overflow = 'hidden';
+    target.style.transition = `height ${duration}ms ease`;
+
+    if (isHidden) {
+        // 表示: display を復元 → scrollHeight に向けて height アニメ
+        target.style.display = '';
+        target.style.height = '0px';
+        // 1フレーム待ってから target height を設定 (transition が効くように)
+        requestAnimationFrame(() => {
+            const h = target.scrollHeight;
+            target.style.height = h + 'px';
+            target._slideAnim = setTimeout(() => {
+                target.style.height = '';
+                target.style.overflow = prevOverflow;
+                target.style.transition = prevTransition;
+                target._slideAnim = null;
+                if (typeof callback === 'function') callback.call(target);
+            }, duration);
+        });
+    } else {
+        // 非表示: 現在高を固定 → 0 にアニメ → display:none
+        const h = target.scrollHeight;
+        target.style.height = h + 'px';
+        requestAnimationFrame(() => {
+            target.style.height = '0px';
+            target._slideAnim = setTimeout(() => {
+                target.style.display = 'none';
+                target.style.height = '';
+                target.style.overflow = prevOverflow;
+                target.style.transition = prevTransition;
+                target._slideAnim = null;
+                if (typeof callback === 'function') callback.call(target);
+            }, duration);
+        });
+    }
+}
