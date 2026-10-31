@@ -1,6 +1,6 @@
 <?php
 class classBCDiceAPIv2{
-	function curl($url,$post_array=null){
+	static function curl($url,$post_array=null){
 		try{
 			$ch=curl_init();
 			curl_setopt($ch,CURLOPT_URL,$url);
@@ -28,19 +28,19 @@ class classBCDiceAPIv2{
 			return false;
 		}
 	}
-	function normalizEP($url){
+	static function normalizEP($url){
 		return trim(rtrim($url,'/'));
 	}
-	function list($ep){
+	static function list($ep){
 		return self::curl(self::normalizEP($ep).'/v2/game_system');
 	}
-	function info($ep,$id){
+	static function info($ep,$id){
 		return self::curl(self::normalizEP($ep).'/v2/game_system/'.$id);
 	}
-	function diceRoll($ep,$id,$command){
+	static function diceRoll($ep,$id,$command){
 		return self::curl(self::normalizEP($ep).'/v2/game_system/'.$id.'/roll',array('command'=>$command));
 	}
-	function table($ep,$id,$table){
+	static function table($ep,$id,$table){
 		return self::curl(self::normalizEP($ep).'/v2/original_table',array('table'=>$table));
 	}
 }

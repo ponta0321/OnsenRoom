@@ -53,7 +53,7 @@ $forced_load_flag=0;
 if(!empty($_POST['forced_load'])){
 	$forced_load_flag=$_POST['forced_load'];
 	if($forced_load_flag==-1){
-		if(file_exists(classCharacter::getCharDir($room_id,$principal_id).$char_id.'.xml')){
+		if(file_exists((new classCharacter)->getCharDir($room_id,$principal_id).$char_id.'.xml')){
 			exit;
 		}
 	}
