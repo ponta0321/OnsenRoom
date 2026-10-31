@@ -1238,9 +1238,9 @@ function createMappingTool(ic_no){
     var html_v='';
     html_v='<canvas id="mappingtool_ic_'+ic_no+'" class="mappingtool" width="32" height="32" onClick="setMappingTool('+ic_no+')"></canvas>';
     if(ic_no<100){
-        $('#mt_bx_line').append(html_v);
+        document.getElementById('mt_bx_line').insertAdjacentHTML('beforeend',html_v);
     }else{
-        $('#mt_bx_deco').append(html_v);
+        document.getElementById('mt_bx_deco').insertAdjacentHTML('beforeend',html_v);
     }
 }
 function initMappingTool(){

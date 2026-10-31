@@ -753,7 +753,7 @@ document.getElementById('loading_box').style.display='block';
 /*////////////////////////////////////////////////////////////////
 after load process
 ////////////////////////////////////////////////////////////////*/
-$(function(){
+document.addEventListener('DOMContentLoaded',function(){
     callRoomdData('<?=URL_ROOT;?>','<?=$base_room_file;?>');
     var interval_id = setInterval("callRoomdData('<?=URL_ROOT;?>','<?=$base_room_file;?>')",1000);
     document.getElementById("load_board_data").addEventListener("change",function(){

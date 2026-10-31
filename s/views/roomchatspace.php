@@ -316,7 +316,7 @@ function openDicebotDetailWindow(transfer_id,title){
 		return false;
 	}
 }
-$(function(){
+document.addEventListener('DOMContentLoaded',function(){
 	putCallName();
 	document.onkeydown=function(e){
 		var alt,ctrl;

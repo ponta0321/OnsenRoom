@@ -116,7 +116,7 @@
         noneUpdateMusicStateTime=1;
         setModSettingData('game_music_state');
     };
-    $(function(){
+    document.addEventListener('DOMContentLoaded',function(){
         document.getElementById('game_audio').volume=(music_volume.value.length==1)?'0.0'+<?=$music_volume;?>:'0.'+<?=$music_volume;?>;
         music_volume.addEventListener('change',function(){
             var volumeValue=(music_volume.value.length==1)?'0.0'+music_volume.value:'0.'+music_volume.value;

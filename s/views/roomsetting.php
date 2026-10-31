@@ -342,7 +342,7 @@ function putAcDiceBotBox(target){
         }
     }
 }
-$(function(){
+document.addEventListener('DOMContentLoaded',function(){
     var inputRangeImageStrength=document.getElementById('game_imagestrength');
     inputRangeImageStrength.addEventListener('change',function(){doNotUpdate('game_imagestrength');setModSettingData('game_imagestrength');},false);
     var inputRangeGrid=document.getElementById('game_grid');

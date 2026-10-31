@@ -1452,6 +1452,13 @@ div[id^="puw_inbody_memo_"],   /* 共有メモ ポップアップ */
 #puw_inbody_02{                 /* ダイス */
     overflow-y:scroll;
 }
+/* キャラ一覧 (puw_09) / 参加者一覧 (puw_10) は横可変禁止 + 内コンテンツも固定幅なので、
+   横スクロールバーは出さない。縦は内容が溢れたら出す。 */
+#puw_inbody_09,
+#puw_inbody_10{
+    overflow-x:hidden;
+    overflow-y:auto;
+}
 
 /* 2. 小さいボタン類の改行防止 (「アップロード&セット&初期化」等) */
 input[type="button"],
