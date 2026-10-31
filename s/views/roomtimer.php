@@ -69,7 +69,6 @@ function sendTimeData(tmr_row){
         game_timer_value:timer_data_array[tmr_row][1],
         game_timer_step:timer_data_array[tmr_row][2]
     });
-    console.log(tmr_row+' / '+timer_data_array[tmr_row][0]+' / '+timer_data_array[tmr_row][1]+' / '+timer_data_array[tmr_row][2]);
 }
 function sendTimerEvent(event_name){
     sendSettingData({
