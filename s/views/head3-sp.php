@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<?=URL_ROOT;?>css/sp.css?2018070101">
 <script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>js/dom.js?2026103101"></script>
+<script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>js/draggable.js?2026103101"></script>
 <script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>js/const.js?2020060901"></script>
 <script>
 <?='var original_saver_time='.(time()*1000).';';?>

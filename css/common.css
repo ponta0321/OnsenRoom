@@ -207,3 +207,22 @@ color square buttom
     border:1px solid #000;
     cursor:pointer;
 }
+/* ========================================================================
+ * jQuery UI 置換用: ミニ resizable のハンドル
+ * (draggable/resizable を vanilla JS で再実装、2026-10-31)
+ * ======================================================================== */
+.or-resize-handle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 14px;
+    height: 14px;
+    cursor: nwse-resize;
+    background:
+        linear-gradient(135deg, transparent 0%, transparent 50%, #999 50%, #999 60%, transparent 60%, transparent 70%, #999 70%, #999 80%, transparent 80%);
+    z-index: 100;
+}
+.or-resize-handle:hover {
+    background:
+        linear-gradient(135deg, transparent 0%, transparent 50%, #333 50%, #333 60%, transparent 60%, transparent 70%, #333 70%, #333 80%, transparent 80%);
+}
