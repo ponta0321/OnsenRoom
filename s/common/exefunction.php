@@ -1384,7 +1384,8 @@ v1.00
         $existing_participant_ids=array();
         foreach($obj_room->body->participant as $p){ $existing_participant_ids[]=(string)$p->participant_id; }
         debug_trace_enter('saveRoomXmlFile.loop_begin',array('existing_participant_ids'=>$existing_participant_ids,'participant_array'=>$participant_array,'principal'=>$principal));
-        for($i=0;$i<couting($obj_room->body->participant);$i++){
+        // 逆順ループ: unset でインデックスがシフトしても未処理領域には影響しない
+        for($i=couting($obj_room->body->participant)-1;$i>=0;$i--){
             $alive_participant_flag=false;
             $this_pid=(string)$obj_room->body->participant[$i]->participant_id;
             foreach($participant_array as $p_value){

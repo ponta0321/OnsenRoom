@@ -120,7 +120,11 @@ $max_size　　　:0=画像加工しない 1~=画像の縦横最大値で加工
             $err_msg='ファイル保存時にエラーが発生しました';
             return false;
         }
-        @unlink($image_file['tmp_name']);
+        // trimImage 内で move_uploaded_file 経路を通ると tmp_name が既に消費されている
+        // ため、存在チェックしてから削除する (従来の @unlink による Warning 握りつぶしをやめる)
+        if(file_exists($image_file['tmp_name'])){
+            unlink($image_file['tmp_name']);
+        }
     }
     chmod($dir_save,0755);
     $err_msg='';

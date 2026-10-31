@@ -17,6 +17,7 @@ class classFileLock{
     }
     // メソッド
 	public function flock($dir){
+        if(empty($dir)) return false; // ガード: 空ディレクトリは拒否 (/ への書き込み試行を防ぐ)
         $dir=rtrim($dir,'/').'/';
 	    for($i=0;$i<$this->try_time;$i++){
             $this->current_name=$this->base_name.time();
@@ -44,10 +45,12 @@ class classFileLock{
 	    return false;
 	}
 	public function unflock($dir){
+        if(empty($dir)) return false; // ガード
         $dir=rtrim($dir,'/').'/';
 	    return @rename($dir.$this->current_name,$dir.$this->base_name);
 	}
 	public function createlfile($dir){
+        if(empty($dir)) return false; // ガード: 空ディレクトリでは / 配下に lockfile 作成しようとして Permission denied になるため拒否
         $dir=rtrim($dir,'/').'/';
 		if(!file_exists($dir)){
 			return false;
