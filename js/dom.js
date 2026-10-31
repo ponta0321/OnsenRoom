@@ -256,3 +256,96 @@ function closeModal(el) {
     const e = typeof el === 'string' ? $id(el) : el;
     if (e && typeof e.close === 'function') e.close();
 }
+
+/* ========================================================================
+ * ポップアップウィンドウの状態 (位置・サイズ・開閉) を localStorage に保存
+ * ======================================================================== */
+const PUW_STATE_KEY = 'onsenroom_puw_state';
+
+/**
+ * 全ポップアップの状態をロード
+ * @returns {Object} {id: {top, left, width, height, visible}, ...}
+ */
+function loadPuwStateAll() {
+    try {
+        const raw = localStorage.getItem(PUW_STATE_KEY);
+        return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+        return {};
+    }
+}
+
+/**
+ * 全状態を保存
+ */
+function savePuwStateAll(obj) {
+    try {
+        localStorage.setItem(PUW_STATE_KEY, JSON.stringify(obj));
+    } catch (e) { /* QuotaExceeded 等は無視 */ }
+}
+
+/**
+ * 1 ポップアップの状態を保存 (部分更新)
+ * @param {string} id 'puw_XX' の XX (例: '00', 'memo_1')
+ * @param {Object} patch {top?, left?, width?, height?, visible?}
+ */
+function savePuwState(id, patch) {
+    const all = loadPuwStateAll();
+    all[id] = Object.assign({}, all[id] || {}, patch);
+    savePuwStateAll(all);
+}
+
+/**
+ * ポップアップ要素に保存された状態を適用
+ * @param {Element} el ポップアップ要素
+ * @param {string} id 'puw_XX' の XX
+ * @returns {boolean} 状態があって適用されたら true
+ */
+function applyPuwState(el, id) {
+    if (!el) return false;
+    const all = loadPuwStateAll();
+    const s = all[id];
+    if (!s) return false;
+    // ウィンドウ内側 (.puw_inbody_memo_X 等) の初期サイズとの差分を記憶してから
+    // ウィンドウサイズを変更し、内側も同じ差分で追従させる (alsoResize と同等の挙動)
+    const inbody = el.querySelector('[id^="puw_inbody_"]');
+    const origInbodyW = inbody ? inbody.offsetWidth : 0;
+    const origInbodyH = inbody ? inbody.offsetHeight : 0;
+    const origElW = el.offsetWidth;
+    const origElH = el.offsetHeight;
+    if (typeof s.top === 'number')    el.style.top    = s.top + 'px';
+    if (typeof s.left === 'number')   el.style.left   = s.left + 'px';
+    if (typeof s.width === 'number')  el.style.width  = s.width + 'px';
+    if (typeof s.height === 'number') el.style.height = s.height + 'px';
+    if (inbody && (typeof s.width === 'number' || typeof s.height === 'number')) {
+        const dw = (typeof s.width === 'number') ? (s.width - origElW) : 0;
+        const dh = (typeof s.height === 'number') ? (s.height - origElH) : 0;
+        inbody.style.width = (origInbodyW + dw) + 'px';
+        inbody.style.height = (origInbodyH + dh) + 'px';
+    }
+    if (typeof s.visible === 'boolean') {
+        el.style.display = s.visible ? 'block' : 'none';
+    }
+    return true;
+}
+
+/**
+ * ポップアップから現在の位置・サイズを取得して保存
+ */
+function savePuwPositionSize(el, id) {
+    if (!el) return;
+    savePuwState(id, {
+        top: parseFloat(el.style.top) || el.offsetTop,
+        left: parseFloat(el.style.left) || el.offsetLeft,
+        width: el.offsetWidth,
+        height: el.offsetHeight
+    });
+}
+
+/**
+ * ポップアップの開閉状態を保存
+ */
+function savePuwVisibility(el, id) {
+    if (!el) return;
+    savePuwState(id, { visible: el.style.display !== 'none' });
+}

@@ -184,43 +184,113 @@ list($load_avg_1min,$load_avg_5min,$load_avg_15min)=checkLoadAvg(CPU_CORE);
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?=$global_page_title;?></title>
 	<meta name="description" content="<?=$global_page_description;?>">
-	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script type="text/javascript" charset="UTF-8" src="//code.jquery.com/jquery-3.1.0.min.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>js/dom.js?2026103101"></script>
+	<link rel="stylesheet" type="text/css" href="<?=URL_ROOT;?>css/common.css?2026103102">
+	<script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>js/dom.js?2026103102"></script>
 </head>
 <style>
 body{
 	padding:0;
 	margin:0;
+	font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans JP","Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif;
+	font-size:14px;
+	line-height:1.5;
+	color:#333;
+	background:#FAFAFA;
+}
+main{
+	display:block;
 }
 h1,h2,h3{
 	color:#FE7F00;
-	margin:0;
+	margin:0 0 0.6em 0;
+	line-height:1.3;
+}
+h2{font-size:22px;}
+h3{font-size:17px;margin-top:1.6em;}
+p{margin:0 0 0.6em 0;}
+a{color:#2C7CB0;}
+a:hover{color:#FE7F00;}
+.main_container{
+	background:#FFF;
+	border:1px solid #E0E0E0;
+	border-radius:4px;
+	box-shadow:0 1px 2px rgba(0,0,0,0.03);
+	padding:20px 24px;
+	margin:20px auto;
+}
+.section_block{
+	margin-bottom:1.4em;
+}
+.progress_bar{
+	width:100%;
+	max-width:420px;
+	height:12px;
+	border:1px #AAA solid;
+	border-radius:3px;
+	overflow:hidden;
+	margin:4px 0 6px 0;
+	background:#F5F5F5;
+}
+.progress_bar > div{
+	height:100%;
+	transition:width 0.3s ease;
+}
+/* 共通ボタン */
+.btn{
+	display:inline-block;
+	padding:7px 18px;
+	font-size:14px;
+	font-weight:bold;
+	color:#FFF;
+	background:#FE7F00;
+	border:1px solid #CC5A00;
+	border-radius:3px;
+	cursor:pointer;
+	line-height:1.3;
+	transition:background 0.15s ease;
+}
+.btn:hover{
+	background:#E56F00;
+}
+.btn:active{
+	background:#CC5A00;
+}
+.btn_secondary{
+	color:#333;
+	background:#F0F0F0;
+	border-color:#AAA;
+}
+.btn_secondary:hover{
+	background:#E0E0E0;
 }
 table{
-	border:1px #E3E3E3 solid;
 	border-collapse:collapse;
 	border-spacing:0;
 }
-tr:hover{
-	background-color:#FF0;
-	cursor:pointer;
+.roomlist_table{
+	border:1px #DDD solid;
 }
-th{
-	padding:5px;
-	border:#E3E3E3 solid;
-	border-width:0 0 1px 1px;
-	background:#F5F5F5;
+.roomlist_table tr:hover{
+	background-color:#FFF8E0;
+}
+.roomlist_table th{
+	padding:8px 6px;
+	border-bottom:1px solid #CCC;
+	background:#F0F0F0;
 	font-weight:bold;
-	line-height:120%;
+	line-height:1.3;
 	text-align:center;
+	font-size:13px;
+	color:#555;
 }
-td{
-	padding:5px;
-	border:1px #E3E3E3 solid;
-	border-width:0 0 1px 1px;
+.roomlist_table td{
+	padding:8px 6px;
+	border-bottom:1px solid #EEE;
 	text-align:center;
+	vertical-align:middle;
+}
+.roomlist_table tr:last-child td{
+	border-bottom:none;
 }
 </style>
 <body>
@@ -232,51 +302,55 @@ td{
         </div>
     </header>
     <main>
-        <div style="max-width:900px;min-width:160px;margin:0 auto;padding:10px;">
+        <div class="main_container" style="max-width:900px;">
 			<h2><?=SITE_TITLE;?></h2>
 			<p><?=SITE_DESCRIPTION;?></p>
-			<p style="text-align:right;font-weight:bold;"><a href="<?=($room_type=='pc'?LOBBY_URL_ROOT:LOBBY_URL_SP_ROOT);?>">ロビーサーバーに戻る</a></p>
-            <h3>サーバー稼働状況</h3>
-			<p>収容人数（<?=$serv_delay_facter.' / '.PLAYER_CAPACITY;?>人）</p>
-			<div style="width:300px;height:10px;border:1px #AAA solid;margin:5px 0;"><?php
-				$serv_delay_facter=($serv_delay_facter/PLAYER_CAPACITY);
-				if($serv_delay_facter>1){
-					$serv_delay_facter=1;
-				}
-				$clf_color='#00FF41';
-				if($serv_delay_facter>0.8){
-					$clf_color='#F80606';
-				}elseif($serv_delay_facter>0.5){
-					$clf_color='#FFF10F';
-				}
-				echo '<div style="width:'.($serv_delay_facter*100).'%;top:0;left:0;height:10px;background-color:'.$clf_color.';"></div>';
-			?></div>
-			<p>CPU負荷（<?=$load_avg_5min;?>%）</p>
-			<div style="width:300px;height:10px;border:1px #AAA solid;margin:5px 0 20px 0;"><?php
-				$cpu_load_facter=$load_avg_5min;
-				if($cpu_load_facter>100){
-					$cpu_load_facter=100;
-				}
-				$clf_color='#00FF41';
-				if($cpu_load_facter>80){
-					$clf_color='#F80606';
-				}elseif($cpu_load_facter>50){
-					$clf_color='#FFF10F';
-				}
-				echo '<div style="width:'.$cpu_load_facter.'%;top:0;left:0;height:10px;background-color:'.$clf_color.';"></div>';
-			?></div>
-			<h3>ルーム作成</h3>
-			<p><input type="button" onClick="open_cr_dialog();" value="ルームを作成する"></p>
+			<p style="text-align:right;font-weight:bold;margin-top:0.4em;"><a href="<?=($room_type=='pc'?LOBBY_URL_ROOT:LOBBY_URL_SP_ROOT);?>">ロビーサーバーに戻る</a></p>
+			<div class="section_block">
+				<h3>サーバー稼働状況</h3>
+				<p style="margin-bottom:0;">収容人数（<?=$serv_delay_facter.' / '.PLAYER_CAPACITY;?>人）</p>
+				<div class="progress_bar"><?php
+					$serv_delay_facter=($serv_delay_facter/PLAYER_CAPACITY);
+					if($serv_delay_facter>1){
+						$serv_delay_facter=1;
+					}
+					$clf_color='#00FF41';
+					if($serv_delay_facter>0.8){
+						$clf_color='#F80606';
+					}elseif($serv_delay_facter>0.5){
+						$clf_color='#FFF10F';
+					}
+					echo '<div style="width:'.($serv_delay_facter*100).'%;background-color:'.$clf_color.';"></div>';
+				?></div>
+				<p style="margin-bottom:0;">CPU負荷（<?=$load_avg_5min;?>%）</p>
+				<div class="progress_bar"><?php
+					$cpu_load_facter=$load_avg_5min;
+					if($cpu_load_facter>100){
+						$cpu_load_facter=100;
+					}
+					$clf_color='#00FF41';
+					if($cpu_load_facter>80){
+						$clf_color='#F80606';
+					}elseif($cpu_load_facter>50){
+						$clf_color='#FFF10F';
+					}
+					echo '<div style="width:'.$cpu_load_facter.'%;background-color:'.$clf_color.';"></div>';
+				?></div>
+			</div>
+			<div class="section_block">
+				<h3>ルーム作成</h3>
+				<p><button type="button" class="btn" onClick="open_cr_dialog();">ルームを作成する</button></p>
+			</div>
 			<h3>ルーム一覧</h3>
-			<table>
+			<table class="roomlist_table">
 				<tr>
-					<th>ルーム名</th>
-					<th>ダイスボット</th>
-					<th>見学</th>
-					<th>パス</th>
-					<th>人数</th>
-					<th>残り時間</th>
-					<th>作成日時</th>
+					<th class="col_name">ルーム名</th>
+					<th class="col_dice">ダイスボット</th>
+					<th class="col_obs">見学</th>
+					<th class="col_pass">パス</th>
+					<th class="col_mem">人数</th>
+					<th class="col_time">残り時間</th>
+					<th class="col_date">作成日時</th>
 				</tr>
 				<?php
 					$html_v='';
@@ -312,7 +386,7 @@ td{
 			</table>
 			<p style="text-align:right;font-weight:bold;"><a href="<?=($room_type=='pc'?LOBBY_URL_ROOT:LOBBY_URL_SP_ROOT);?>">ロビーサーバーに戻る</a></p>
 			<dialog id="in_dialog" class="or-dialog">
-				<h3 class="or-dialog-title">入場チェック</h3>
+				<h3 class="or-dialog-title">入場チェック<span class="or-dialog-close" onClick="document.getElementById('in_dialog').close();" title="閉じる">×</span></h3>
 				<form name="frm_roomin" action="<?=URL_ROOT;?>roomin.php" method="get">
 					<p style="font-weight:bold;">ルーム名：<br><span id="span_rn"></span></p>
 					<div><input type="radio" name="ro" id="input_obs_off" value="0" />参加する&nbsp;
@@ -326,12 +400,12 @@ td{
 					<input type="hidden" name="rt" value="<?=$room_type;?>" />
 					<input type="hidden" name="lu" value="<?=$lobby_url;?>" />
 					<div class="or-dialog-buttons">
-						<button type="button" onClick="document.frm_roomin.submit();">入場する</button>
+						<button type="button" class="btn" onClick="document.frm_roomin.submit();">入場する</button>
 					</div>
 				</form>
 			</dialog>
 			<dialog id="cr_dialog" class="or-dialog">
-				<h3 class="or-dialog-title">新しいルームを作る</h3>
+				<h3 class="or-dialog-title">新しいルームを作る<span class="or-dialog-close" onClick="document.getElementById('cr_dialog').close();" title="閉じる">×</span></h3>
 				<form name="frm_crroom" action="<?=URL_ROOT;?>index.php" method="post">
 					<p>ダイスボット：<br><select name="game_type" style="max-width:200px;padding:3px 0;"><?php
 						foreach((array)$bac_gamelist as $bacgl_key => $bacgl_value){
@@ -358,12 +432,12 @@ td{
 					<input type="hidden" name="lobby" value="<?=$lobby_url;?>" />
 					<input type="hidden" name="f_state" value="create_room" />
 					<div class="or-dialog-buttons">
-						<button type="button" onClick="document.frm_crroom.submit();">作成する</button>
+						<button type="button" class="btn" onClick="document.frm_crroom.submit();">作成する</button>
 					</div>
 				</form>
 			</dialog>
 			<dialog id="err_dialog" class="or-dialog">
-				<h3 class="or-dialog-title">エラー</h3>
+				<h3 class="or-dialog-title">エラー<span class="or-dialog-close" onClick="document.getElementById('err_dialog').close();" title="閉じる">×</span></h3>
 				<p style="text-align:center;color:red;"><?php
 					switch($err){
 						case 1:
@@ -420,7 +494,7 @@ td{
 					}
 				?></p>
 				<div class="or-dialog-buttons">
-					<button type="button" onClick="document.getElementById('err_dialog').close();">OK</button>
+					<button type="button" class="btn btn_secondary" onClick="document.getElementById('err_dialog').close();">OK</button>
 				</div>
 			</dialog>
 		</div>
@@ -436,6 +510,17 @@ td{
 </html>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
+	// <dialog> のバックドロップ (外側) クリックで閉じる挙動を追加
+	// (HTML5 の <dialog> は標準では閉じないため、全 or-dialog に click ハンドラを付与)
+	document.querySelectorAll('dialog.or-dialog').forEach(function(dlg){
+		dlg.addEventListener('click',function(e){
+			// dialog 要素自体 (= バックドロップ領域) をクリックした場合のみ閉じる
+			// 内部要素クリック時は e.target が子要素なので閉じない
+			if(e.target===dlg){
+				dlg.close();
+			}
+		});
+	});
 	<?=($err>0?"document.getElementById('err_dialog').showModal();":'');?>
 });
 function open_cr_dialog(){

@@ -119,6 +119,17 @@ if(isset($_COOKIE['bn_notdisplay'])){
 }else{
 	$bn_notdisplay=0;
 }
+// ウィンドウ背景色・透過度 (ユーザローカル設定)
+if(isset($_COOKIE['window_bg_color']) && preg_match('/^#[0-9A-Fa-f]{6}$/',$_COOKIE['window_bg_color'])){
+	$window_bg_color=$_COOKIE['window_bg_color'];
+}else{
+	$window_bg_color='#FFFFFF';
+}
+if(isset($_COOKIE['window_bg_alpha']) && is_numeric($_COOKIE['window_bg_alpha'])){
+	$window_bg_alpha=max(0,min(100,(int)$_COOKIE['window_bg_alpha']));
+}else{
+	$window_bg_alpha=97;
+}
 // 見学者書き込み不可フラグ
 $observer_write=0;
 if(isset($xml->head->tour)){

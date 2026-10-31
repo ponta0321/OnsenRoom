@@ -102,6 +102,8 @@ function makeDraggable(el, opt) {
         if (e.pointerId !== undefined && handleEl.hasPointerCapture && handleEl.hasPointerCapture(e.pointerId)) {
             handleEl.releasePointerCapture(e.pointerId);
         }
+        // ドラッグ終了時のコールバック (位置保存等に使う)
+        if (typeof opt.onEnd === 'function') opt.onEnd(target);
     }
 
     handleEl.addEventListener('pointerdown', onPointerDown);
@@ -201,6 +203,8 @@ function makeResizable(el, opt) {
         if (e.pointerId !== undefined && handle.hasPointerCapture && handle.hasPointerCapture(e.pointerId)) {
             handle.releasePointerCapture(e.pointerId);
         }
+        // リサイズ終了時のコールバック (サイズ保存等に使う)
+        if (typeof opt.onEnd === 'function') opt.onEnd(target);
     }
 
     handle.addEventListener('pointerdown', onPointerDown);

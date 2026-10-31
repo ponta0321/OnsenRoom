@@ -475,11 +475,18 @@ function setDefaultPositionPUW(boot_flag){
         document.getElementById('puw_20').style.left=(parseInt(document.getElementById('puw_20').style.left)+fixDefaultWidth)+'px';
         document.getElementById('puw_21').style.left=(parseInt(document.getElementById('puw_21').style.left)+fixDefaultWidth)+'px';
         document.getElementById('puw_22').style.left=(parseInt(document.getElementById('puw_22').style.left)+fixDefaultWidth)+'px';
-        <?php 
+        <?php
             if(file_exists(DIR_ROOT.'s/views/roomad.php')){
                 echo 'document.getElementById(\'puw_99\').style.left=(parseInt(document.getElementById(\'puw_99\').style.left)+fixDefaultWidth)+\'px\';';
             }
         ?>
+    }
+    // ★ 「初期位置に戻す」ボタン等でここが呼ばれた直後、
+    //    localStorage に保存された位置・サイズを一度クリアすることで、
+    //    F5 リロード時に初期位置から再構成される。
+    //    boot_flag=true (ページロード直後の初期化) では既存の保存状態を優先するためスキップ。
+    if(boot_flag!=true && typeof localStorage!=='undefined'){
+        try{ localStorage.removeItem('onsenroom_puw_state'); }catch(e){}
     }
 }
 function pushMainMenu(element_id){
@@ -506,6 +513,10 @@ function pushMainMenu(element_id){
 			mmElement.classList.remove('mm_ckd');
 		}
     }
+    // 開閉状態をローカル保存
+    if(typeof savePuwVisibility==='function'){
+        savePuwVisibility(puwElement,element_id);
+    }
 }
 function closePopupWindow(element_id){
     var puwElement=document.getElementById('puw_'+element_id);
@@ -520,6 +531,10 @@ function closePopupWindow(element_id){
 		mmElement.classList.add('mm_ck');
 		mmElement.classList.remove('mm_ckd');
 	}
+    // 閉じた状態をローカル保存
+    if(typeof savePuwVisibility==='function'){
+        savePuwVisibility(puwElement,element_id);
+    }
 }
 function chageMaxHeightPUW(fix_id,target_id){
     var fixElement=document.getElementById('puw_'+fix_id);
@@ -809,11 +824,55 @@ $(function(){
             echo 'document.getElementById(\'puw_99\').style.display=\'block\';';
         }
     ?>
-    pushMainMenu('07');
-    pushMainMenu('00');
-    pushMainMenu('09');
-    pushMainMenu('05');
-    pushMainMenu('06');
+    // デフォルト状態で開くポップアップ (保存状態がなければ適用)
+    var defaultOpenList=['07','00','09','05','06'];
+
+    // ★ ウィンドウ本体のどこを触っても最前面に来るように、
+    //   全ポップアップ (.popup_window) に pointerdown リスナーを付与。
+    //   既存の .puw_head の onMousedown と重複しても害はない (べき等)。
+    document.querySelectorAll('.popup_window').forEach(function(pw){
+        var puwNo=pw.id.replace(/^puw_/,'');
+        // 最前面化
+        pw.addEventListener('pointerdown',function(e){
+            if(typeof sortPUWzIndex==='function'){
+                sortPUWzIndex(puwNo);
+            }
+        });
+        // ★ 保存された位置・サイズを復元 (localStorage)
+        if(typeof applyPuwState==='function'){
+            applyPuwState(pw,puwNo);
+        }
+        // ★ ドラッグ/リサイズ終了時に位置とサイズを保存
+        //    (makeDraggable/makeResizable には既に onEnd が組み込まれている)
+        //    追加で pointerup を監視して保存 (既存の呼び出しに onEnd がない場合も拾える)
+        pw.addEventListener('pointerup',function(){
+            if(typeof savePuwPositionSize==='function'){
+                savePuwPositionSize(pw,puwNo);
+            }
+        });
+    });
+
+    // ★ 初期表示: 保存状態があればそれに従う、なければ defaultOpenList
+    var puwStateAll=(typeof loadPuwStateAll==='function')?loadPuwStateAll():{};
+    defaultOpenList.forEach(function(id){
+        // 保存状態がない場合のみ pushMainMenu (= デフォルト表示)
+        if(!puwStateAll[id] || typeof puwStateAll[id].visible==='undefined'){
+            pushMainMenu(id);
+        }else if(puwStateAll[id].visible===true){
+            // 保存状態で表示される予定なら、既に applyPuwState で display:block になっているので
+            // mm_ckd クラスだけ付けておく (pushMainMenu がトグルなので使えない)
+            var mm=document.getElementById('mm_'+id);
+            if(mm){ mm.classList.add('mm_ckd'); mm.classList.remove('mm_ck'); }
+        }
+    });
+    // defaultOpenList 以外も、保存状態で visible=true なら mm クラスを更新
+    Object.keys(puwStateAll).forEach(function(id){
+        if(defaultOpenList.indexOf(id)===-1 && puwStateAll[id].visible===true){
+            var mm=document.getElementById('mm_'+id);
+            if(mm){ mm.classList.add('mm_ckd'); mm.classList.remove('mm_ck'); }
+        }
+    });
+
     var sendCharDataTimer=setInterval("checkActiveInputCharData()",1000);
 });
 </script>

@@ -69,9 +69,20 @@ main-room
     border:1px solid #AAA;
     margin:-2px auto 4px auto;
     overflow:hidden;
+    /* 画像を縦横中央配置するため flex を使用 */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.3); /* 画像周辺の余白を薄く示す */
 }
 .g_memo_box img{
-    width:100%;
+    /* アスペクト比を保ったまま、縦横どちらも見切れないよう contain */
+    max-width:100%;
+    max-height:100%;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    display:block;
 }
 .ltabbody textarea.lt_ta{
     position:absolute;
@@ -871,7 +882,7 @@ popup_window
 }
 .puw_body{
     vertical-align:top;
-    padding:0 4px 4px 4px;
+    padding:4px 4px 0 4px;
 }
 #puw_07>.puw_body:hover>#stand_img_box{
     visibility:hidden;
@@ -881,13 +892,18 @@ popup_window
 	background-color:#FFF;
     overflow:auto;
 }
+/* ポップアップ右上ボタン: PNG 画像からインライン SVG (data URL) に置換
+   (2026-10-31: images/puw0{1,2,3}.png は廃止、依存ファイルを削減) */
 .puw_close{
     display:inline-block;
     width:16px;
     height:16px;
     background-color:#FFF;
-    background-image:url("../images/puw01.png");
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path d='M3.5 3.5 L12.5 12.5 M12.5 3.5 L3.5 12.5' stroke='%23555' stroke-width='2' stroke-linecap='round' fill='none'/></svg>");
+    background-repeat:no-repeat;
+    background-position:center;
     border:1px #FFF solid;
+    border-radius:2px;
 }
 .puw_close:hover{
     border:1px #777 solid;
@@ -897,8 +913,11 @@ popup_window
     width:16px;
     height:16px;
     background-color:#FFF;
-    background-image:url("../images/puw02.png");
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path d='M8 3 L8 13 M3 8 L13 8' stroke='%23555' stroke-width='2' stroke-linecap='round' fill='none'/></svg>");
+    background-repeat:no-repeat;
+    background-position:center;
     border:1px #FFF solid;
+    border-radius:2px;
 }
 .puw_maximum_size:hover{
     border:1px #777 solid;
@@ -908,8 +927,11 @@ popup_window
     width:16px;
     height:16px;
     background-color:#FFF;
-    background-image:url("../images/puw03.png");
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path d='M3 8 L13 8' stroke='%23555' stroke-width='2' stroke-linecap='round' fill='none'/></svg>");
+    background-repeat:no-repeat;
+    background-position:center;
     border:1px #FFF solid;
+    border-radius:2px;
 }
 .puw_standard_size:hover{
     border:1px #777 solid;
@@ -1122,3 +1144,631 @@ ss_scene_table
     width:98%;
     margin-bottom:3px;
 }
+/*////////////////////////////////////////////////////////////////
+2026-10-31 UI 刷新: ボタン・入力欄・タブの既定スタイル底上げ
+これ以降のルールは既存ルールを上書き (後勝ちで調整)
+////////////////////////////////////////////////////////////////*/
+/* 共通: input button / submit / button 要素のベーススタイル */
+input[type="button"],
+input[type="submit"],
+button:not(.or-dialog-close):not(.btn){
+    font-family:inherit;
+    font-size:12px;
+    padding:5px 12px;
+    color:#333;
+    background:linear-gradient(to bottom,#FFF 0%,#E8E8E8 100%);
+    border:1px solid #AAA;
+    border-radius:3px;
+    cursor:pointer;
+    line-height:1.2;
+    transition:background 0.15s ease,border-color 0.15s ease;
+}
+input[type="button"]:hover,
+input[type="submit"]:hover,
+button:not(.or-dialog-close):not(.btn):hover{
+    background:linear-gradient(to bottom,#FFF 0%,#D5D5D5 100%);
+    border-color:#888;
+}
+input[type="button"]:active,
+input[type="submit"]:active,
+button:not(.or-dialog-close):not(.btn):active{
+    background:linear-gradient(to bottom,#D5D5D5 0%,#E8E8E8 100%);
+}
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+button:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+    background:#EEE;
+}
+
+/* text / select / number 入力欄 */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+select,
+textarea{
+    font-family:inherit;
+    border:1px solid #BBB;
+    border-radius:3px;
+    padding:3px 6px;
+    background:#FFF;
+    box-sizing:border-box;
+    transition:border-color 0.15s ease,box-shadow 0.15s ease;
+}
+/* キャラ一覧 (character_list) 内の HP/MP input は原本の軽量デザイン (border-bottom:dotted)
+   を維持する。改修の padding/border 増加で高さが膨らみ下段と重なるため、元に戻す。 */
+.character_list input[type="text"],
+.character_list input[type="number"]{
+    border:0;
+    border-bottom:1px dotted #AAA;
+    border-radius:0;
+    padding:0 2px;
+    background:transparent;
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:#FE7F00;
+    box-shadow:0 0 0 2px rgba(254,127,0,0.2);
+}
+select{
+    padding:3px 4px;
+    cursor:pointer;
+}
+
+/* 既存の小さすぎた input (counter / lt_ta_update) の最低サイズ回復 */
+.counter_table input.t_t_w,
+.counter_table input.t_t_o{
+    font-size:11px;
+    padding:2px 4px;
+    border-radius:2px;
+}
+.lt_ta_update input[type="number"]{
+    padding:2px 4px;
+}
+.lt_ta_update input[type="button"]{
+    padding:2px 8px;
+}
+
+/* タブ (.lt_t_tab) の刷新: フラットでクリーンに */
+.lt_t_tab{
+    padding:0;
+    border-bottom:1px solid #BBB;
+    margin-bottom:0;
+    display:flex;
+    gap:2px;
+}
+.lt_t_tab span{
+    display:inline-block;
+    color:#555;
+    font-size:11px;
+    font-weight:bold;
+    background:#F0F0F0;
+    border:1px solid #BBB;
+    border-bottom:none;
+    border-radius:3px 3px 0 0;
+    padding:5px 12px;
+    margin:0;
+    cursor:pointer;
+    transition:background 0.15s ease,color 0.15s ease;
+    position:relative;
+    top:1px;
+}
+.lt_t_tab span:hover{
+    background:#E5E5E5;
+    color:#333;
+}
+.lt_t_tab span:active{
+    background:#D5D5D5;
+}
+.lt_t_tab span.lt_t_tab_actived{
+    background:#FFF;
+    color:#FE7F00;
+    border-color:#BBB;
+    border-bottom:1px solid #FFF;
+    box-shadow:0 -1px 2px rgba(0,0,0,0.05);
+}
+.lt_t_tab span.lt_t_tab_actived:active{
+    background:#FFF;
+}
+.tab_block{
+    border:1px solid #BBB;
+    border-top:none;
+    border-radius:0 0 3px 3px;
+    margin:0 4px 4px 4px;
+    padding:8px;
+    background:#FFF;
+}
+
+/* ポップアップウィンドウ (.popup_window) の見た目を少しモダン化 */
+.popup_window{
+    background-color:rgba(255,255,255,0.97);
+    border:1px solid #999;
+    border-radius:5px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+.puw_head{
+    height:22px;
+    font-size:11px;
+    font-weight:bold;
+    color:#7A3A00;
+    padding-left:10px;
+    padding-top:1px;
+    background:linear-gradient(to bottom,#FFE8CC 0%,#FFCC99 100%);
+    border-bottom:1px solid #FE7F00;
+    border-radius:4px 4px 0 0;
+}
+
+/* メインメニュー (#main_menu li.mm_l) の最小の調整 */
+#main_menu li a.mm_ck,
+#main_menu li span.mm_ck{
+    transition:color 0.15s ease,background 0.15s ease;
+}
+
+/* right_menu (右クリックメニュー) を少し柔らかく */
+.right_menu{
+    border:1px solid #999;
+    border-radius:3px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.25);
+}
+.right_menu .operate:hover{
+    background:#FFF4E0;
+    border-color:#FE7F00;
+}
+
+/* ラジオボタン・チェックボックスのカーソル */
+input[type="radio"],
+input[type="checkbox"]{
+    cursor:pointer;
+    vertical-align:middle;
+}
+label{
+    cursor:pointer;
+}
+
+/*////////////////////////////////////////////////////////////////
+2026-10-31 UI 細部調整 (タブ色統一、改行防止、ボード操作ボタン、×ボタン余白)
+////////////////////////////////////////////////////////////////*/
+/* .lt_t_tab span: タブを改行させない + 幅を控え目に */
+.lt_t_tab{
+    gap:0; /* 詰めて配置 (改行回避のため) */
+    flex-wrap:nowrap;
+    overflow-x:auto; /* 多すぎる場合は横スクロール */
+    overflow-y:hidden; /* 縦スクロールバーが暗黙的に出るのを防止 */
+}
+.lt_t_tab span{
+    font-size:11px;
+    padding:5px 10px;
+    white-space:nowrap; /* ★ 改行防止 (「メモ1」等が折り返されないように) */
+    flex:0 0 auto;
+}
+/* アクティブタブ: オレンジで統一・強調 */
+.lt_t_tab span.lt_t_tab_actived{
+    background:#FFF;
+    color:#FE7F00;
+    border-color:#FE7F00 #FE7F00 #FFF #FE7F00;
+    border-bottom:1px solid #FFF;
+    font-weight:bold;
+    box-shadow:0 -2px 4px rgba(254,127,0,0.15);
+    position:relative;
+    top:1px;
+}
+.tab_block{
+    border-color:#FE7F00;
+}
+
+/* ボードラベル (コマ操作/マッピング/保存/読込) を白〜灰のクリーンなボタン風に */
+#boardlabel{
+    padding:0 2px;
+    margin-bottom:-1px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:0;
+    border-bottom:1px solid #FE7F00;
+}
+#boardlabel .float_left,
+#boardlabel .float_right{
+    float:none; /* flex 利用のため既存の float を無効化 */
+    display:flex;
+    gap:4px;
+    align-items:flex-end;
+}
+#boardlabel .float_right{
+    margin-left:auto; /* 確実に右端に押し出す */
+}
+#boardlabel span,#boardlabel label{
+    display:inline-block;
+    font-size:11px;
+    font-weight:bold;
+    color:#555;
+    background:#F0F0F0;
+    border:1px solid #BBB;
+    border-bottom:none;
+    border-radius:3px 3px 0 0;
+    padding:5px 10px;
+    cursor:pointer;
+    transition:background 0.15s ease,color 0.15s ease;
+    white-space:nowrap;
+    position:relative;
+    top:1px;
+}
+#boardlabel span:hover,#boardlabel label:hover{
+    background:#E5E5E5;
+    color:#333;
+}
+#boardlabel span:active,#boardlabel label:active{
+    background:#D5D5D5;
+}
+/* アクティブ (コマ操作/マッピング の選択中) */
+#boardlabel span.bl_buttom_actived{
+    background:#FFF;
+    color:#FE7F00;
+    border-color:#FE7F00;
+    border-bottom:1px solid #FFF;
+    box-shadow:0 -2px 4px rgba(254,127,0,0.15);
+    cursor:default;
+}
+#boardlabel span.bl_buttom_actived:active{
+    background:#FFF;
+}
+/* 保存/読込 の <a> リンク装飾を抑制 */
+#boardlabel a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* popup_window 右上のボタン (+, 元サイズ, ×) 間のマージン */
+.puw_head .text_right{
+    padding-right:4px;
+}
+.puw_close,
+.puw_maximum_size,
+.puw_standard_size{
+    margin-left:3px;
+    margin-right:1px;
+    vertical-align:middle;
+}
+
+/* roommemo の tab 用: ltabbody 内の .lt_t_tab もサイズ圧縮 */
+.ltabbody .lt_t_tab span{
+    font-size:10px;
+    padding:4px 8px;
+}
+
+/*////////////////////////////////////////////////////////////////
+2026-10-31 微調整 (タイトルバー下余白、ボタン改行防止、スピン幅、マスク枠)
+////////////////////////////////////////////////////////////////*/
+
+/* 縦スクロールバー出入りで左右マージンがブレるのを防ぐため、
+   コンテンツがウィンドウ内側ピタリ想定のポップアップのみ、縦スクロールバー常時表示。
+   (キャラ一覧 #puw_inbody_09 のような固定幅コンテンツには適用しない) */
+div[id^="puw_inbody_memo_"],   /* 共有メモ ポップアップ */
+#puw_inbody_00,                 /* メモ編集ペイン */
+#puw_inbody_02{                 /* ダイス */
+    overflow-y:scroll;
+}
+
+/* 2. 小さいボタン類の改行防止 (「アップロード&セット&初期化」等) */
+input[type="button"],
+input[type="submit"],
+button:not(.or-dialog-close):not(.btn){
+    white-space:nowrap;      /* 1行表示を保証 */
+    min-height:26px;          /* つぶれ防止 */
+    line-height:1.2;
+    vertical-align:middle;
+}
+/* ファイル選択・アップロードする系の小ボタンもつぶれ防止 */
+input[type="file"]{
+    font-size:11px;
+    padding:2px 0;
+    vertical-align:middle;
+}
+
+/* 3. number 入力欄の最小幅 (スピン込みで 3〜4桁は見える) */
+input[type="number"]{
+    min-width:56px;
+    padding-right:2px;
+}
+/* カウンターテーブル内の小さい値セルは最小幅を上書き (compact) */
+.counter_table input[type="number"]{
+    min-width:46px;
+}
+/* lt_ta_update (メモの表示時間入力) もつぶれ防止 */
+.lt_ta_update input[type="number"]{
+    min-width:50px;
+}
+
+/* 4. マスク色のサムネイルに黒枠を強調 (明色の白・羊皮紙を見分けられるように) */
+.mappingtool_box img,.mappingtool_box canvas{
+    padding:2px;
+    border:1px solid #333;    /* 強めの濃色枠で白/明色も識別可能に */
+    background-color:#FFF;
+    margin:0 4px 4px 0;
+    border-radius:3px;
+    cursor:pointer;
+    transition:border-color 0.15s ease,box-shadow 0.15s ease;
+}
+.mappingtool_box img:hover,.mappingtool_box canvas:hover{
+    border-color:#FE7F00;
+    box-shadow:0 0 0 2px rgba(254,127,0,0.2);
+}
+.mappingtool_box .actived_mappingtool{
+    border:2px solid #FE7F00;
+    padding:1px;               /* 枠が太くなった分 padding を調整 */
+    background-color:#FFE8CC;  /* 既存の #FA2 からブランド薄オレンジに */
+    box-shadow:0 0 0 2px rgba(254,127,0,0.3);
+}
+
+/*////////////////////////////////////////////////////////////////
+2026-10-31 追加微調整 (カウンター/コマのボタン列を 1 行に収める)
+////////////////////////////////////////////////////////////////*/
+/* カウンター (タイマー) 上部のボタン列: カウントダウン/カウントアップ/更新 */
+#puw_inbody_20 > div:first-child,
+#puw_inbody_timer > div:first-child{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:4px;
+    align-items:center;
+    overflow-x:auto;
+}
+#puw_inbody_20 input[type="button"],
+#puw_inbody_timer input[type="button"]{
+    padding:4px 8px;
+    font-size:11px;
+    flex:0 0 auto;
+}
+
+/* コマウィンドウ上部: 全て消去 / コマ全消去 / マーキング全消去 */
+#puw_inbody_01 > div:first-child{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:4px;
+    justify-content:flex-end;
+    overflow-x:auto;
+}
+#all_reset,#chessman_reset,#marking_reset{
+    padding:4px 8px;
+    font-size:11px;
+    flex:0 0 auto;
+}
+
+/*////////////////////////////////////////////////////////////////
+2026-10-31 追加微調整 (カウンター内の 「リ」「消」小ボタン切れ対策)
+HTML 側に inline style="width:18px" + 親 td も width:18px なので
+!important で確実に小さいパディングを適用
+////////////////////////////////////////////////////////////////*/
+.counter_table input[type="button"]{
+    padding:0 !important;
+    min-height:0 !important;
+    height:20px !important;
+    width:20px !important;              /* inline の 18px を上書きし少し広げる */
+    font-size:10px !important;
+    line-height:1 !important;
+    text-align:center;
+    box-sizing:border-box;
+}
+.counter_table td{
+    padding:1px !important;             /* セル内の余白削減 */
+    min-width:0;
+}
+/* 「リ」「消」セルの td 自体を 22px に */
+.counter_table tr td:nth-last-child(1),
+.counter_table tr td:nth-last-child(2){
+    width:22px !important;
+}
+
+/* カウンター上部の「更新」ボタン: 文字切れ防止 */
+#puw_inbody_20 input[type="button"][value="更新"]{
+    min-width:52px !important;
+    padding:4px 8px !important;
+    flex-shrink:0;
+}
+/* カウンターの上部3ボタン全体は親の 98% だと縮むので幅を自動に */
+#puw_inbody_20 > div:first-child{
+    width:auto !important;              /* 元の width:98% を上書き */
+    min-width:0;
+}
+
+/* カウンター内の number 入力欄 (値/step) もセル幅に収める */
+.counter_table td input[type="number"]{
+    min-width:0 !important;              /* min-width:46px の既存設定を上書き */
+    width:100%;
+    box-sizing:border-box;
+    font-size:11px;
+    padding:2px 2px;
+}
+.counter_table td input[type="text"]{
+    min-width:0 !important;
+    width:100%;
+    box-sizing:border-box;
+    padding:2px 4px;
+}
+
+/*////////////////////////////////////////////////////////////////
+2026-10-31 カラー統一: メインメニューと同じオレンジでトーン統一
+パレット:
+    強オレンジ (グラデ上) #ffa443
+    強オレンジ (グラデ下) #ff7400
+    薄オレンジ (サブ)     #FFE8CC
+    さらに薄い            #FFF4E0
+    文字 (濃茶、オレンジ地上) #7A3A00
+    文字 (灰)             #555
+////////////////////////////////////////////////////////////////*/
+
+/* --- 1. タイトルバーをメインメニューと同じ強オレンジに --- */
+.puw_head{
+    color:#FFF;
+    text-shadow:0 -1px 1px rgba(0,0,0,0.4);
+    background:linear-gradient(to bottom,#ffa443 0%,#ff7400 100%);
+    border-bottom:1px solid #CC5A00;
+}
+/* タイトルバー内の +, -, × ボタンを白地のまま目立たせるため枠色を調整 */
+.puw_close,
+.puw_maximum_size,
+.puw_standard_size{
+    background-color:rgba(255,255,255,0.9);
+    border-color:rgba(255,255,255,0.5);
+}
+.puw_close:hover,
+.puw_maximum_size:hover,
+.puw_standard_size:hover{
+    background-color:#FFF;
+    border-color:#FFF;
+}
+
+/* --- 2. 非活性タブを薄オレンジ (#FFE8CC) に --- */
+.lt_t_tab span{
+    background:#FFE8CC;
+    color:#7A3A00;
+    border-color:#F5B983;
+}
+.lt_t_tab span:hover{
+    background:#FFD9A8;
+    color:#5A2A00;
+}
+.lt_t_tab span:active{
+    background:#FFCC99;
+}
+.lt_t_tab span.lt_t_tab_actived{
+    background:#FFF;
+    color:#FE7F00;
+    border-color:#FE7F00 #FE7F00 #FFF #FE7F00;
+    border-bottom:1px solid #FFF;
+}
+
+/* ボードラベル (コマ操作/マッピング/保存/読込) も同じトーン */
+#boardlabel span,#boardlabel label{
+    background:#FFE8CC;
+    color:#7A3A00;
+    border-color:#F5B983;
+}
+#boardlabel span:hover,#boardlabel label:hover{
+    background:#FFD9A8;
+    color:#5A2A00;
+}
+#boardlabel span:active,#boardlabel label:active{
+    background:#FFCC99;
+}
+#boardlabel span.bl_buttom_actived{
+    background:#FFF;
+    color:#FE7F00;
+    border-color:#FE7F00;
+    border-bottom:1px solid #FFF;
+}
+
+/* --- 3. 通常ボタンを薄オレンジ基調に --- */
+input[type="button"],
+input[type="submit"],
+button:not(.or-dialog-close):not(.btn){
+    color:#7A3A00;
+    background:linear-gradient(to bottom,#FFF4E0 0%,#FFE0B8 100%);
+    border:1px solid #F5B983;
+}
+input[type="button"]:hover,
+input[type="submit"]:hover,
+button:not(.or-dialog-close):not(.btn):hover{
+    background:linear-gradient(to bottom,#FFE8CC 0%,#FFCC99 100%);
+    border-color:#FE7F00;
+}
+input[type="button"]:active,
+input[type="submit"]:active,
+button:not(.or-dialog-close):not(.btn):active{
+    background:linear-gradient(to bottom,#FFCC99 0%,#FFE0B8 100%);
+}
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+button:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+    background:#F5F0E8;
+    color:#AAA;
+}
+
+/* --- 4. タブ下コンテンツ (.tab_block) の枠色も同系に --- */
+.tab_block{
+    border-color:#FE7F00;
+}
+
+/* --- 5. フォーカス色の統一 (既存だがここで再定義して確実に) --- */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:#FE7F00;
+    box-shadow:0 0 0 2px rgba(255,164,67,0.3);
+}
+
+/*////////////////////////////////////////////////////////////////
+2026-10-31 タイトルバー文字の統一: 白文字、12px、太字
+.puw_head 内の table/td/span に CSS 継承を強制
+////////////////////////////////////////////////////////////////*/
+.puw_head,
+.puw_head table,
+.puw_head tr,
+.puw_head td,
+.puw_head span:not(.puw_close):not(.puw_maximum_size):not(.puw_standard_size){
+    color:#FFF !important;
+    font-size:12px !important;
+    font-weight:bold !important;
+    text-shadow:0 -1px 1px rgba(0,0,0,0.4);
+    line-height:1.2;
+    vertical-align:middle;
+}
+/* タイトルバー内のリンクも白文字で揃える */
+.puw_head a{
+    color:#FFF !important;
+    text-decoration:none;
+}
+.puw_head a:hover{
+    color:#FFF4E0 !important;
+    text-decoration:underline;
+}
+/* +, -, × ボタンは文字ではなく背景SVGなので除外 (:not で指定済み) */
+
+/*////////////////////////////////////////////////////////////////
+2026-10-31 ウィンドウ背景色/透過度のユーザ設定が、
+ポップアップ全域に適用されるよう、内側コンテナを透明化
+(読みやすさのため入力欄・コードエリアは除外)
+////////////////////////////////////////////////////////////////*/
+/* 内側メインコンテナを透明に (親 .popup_window の色が透ける) */
+.puw_inbody,
+.puw_body,
+.ltabbody,
+.ctabbody,
+.tab_block,
+#comment_box,
+#comment_space{
+    background-color:transparent !important;
+}
+/* タブ下コンテンツ本体は親色が透けるように透明化 */
+.tab_block{
+    background:transparent !important;
+}
+/* 入力エリア (textarea / input) は読みやすさのため白地を維持
+   ただし、ユーザ設定が極端な場合でも視認性を確保するため半透明白にする */
+.ltabbody textarea.lt_ta,
+.ltabbody textarea.lt_tb{
+    background-color:rgba(255,255,255,0.65) !important;
+}
+/* カウンターテーブルの縞背景も、親色の上に透過白で載せる */
+.counter_table tr{
+    background:transparent !important;
+}
+.counter_table tr:nth-child(2n+1){
+    background:rgba(255,230,200,0.4) !important;
+}
+.counter_table input.t_t_w{
+    background:transparent !important;
+}
+.counter_table input.t_t_o{
+    background:rgba(255,238,208,0.6) !important;
+}
+
+

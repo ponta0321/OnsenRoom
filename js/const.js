@@ -1346,6 +1346,15 @@ function setCookieSettingData(){
     }else{
         document.cookie='bn_notdisplay=0; expires='+cookie_expire.toUTCString();
     }
+    // ウィンドウ背景色・透過度 (ユーザローカル設定)
+    var windowBgPicker=document.getElementById('window_bg_color_picker');
+    if(windowBgPicker){
+        document.cookie='window_bg_color='+windowBgPicker.value+'; expires='+cookie_expire.toUTCString()+'; path=/';
+    }
+    var windowBgAlpha=document.getElementById('window_bg_alpha');
+    if(windowBgAlpha){
+        document.cookie='window_bg_alpha='+windowBgAlpha.value+'; expires='+cookie_expire.toUTCString()+'; path=/';
+    }
 }
 function displayWTL(msg,cutl,first,fc_r,fc_g,fc_b){
     if(fc_r==null){
@@ -2007,7 +2016,7 @@ function createMemoPreview(id){
 				'</tr></table>'+
 			'</div>'+
 			'<div class="puw_body">'+
-				'<div id="puw_inbody_memo_'+id+'" class="puw_inbody ctabbody" style="height:302px;">'+
+				'<div id="puw_inbody_memo_'+id+'" class="puw_inbody ctabbody" style="height:312px;">'+
 					'<pre id="ex_space_memo_'+id+'" style="font-size:14px;white-space:pre-wrap;word-wrap:break-word;margin-top:10px;">'+
 				'</div>'+
 			'</div>';
@@ -2020,6 +2029,20 @@ function createMemoPreview(id){
 		// イベント付与
 		makeDraggable("#puw_memo_"+id,{handle:"div.puw_head",cancel:"span.puw_close"});
 		makeResizable("#puw_memo_"+id,{minHeight:120,minWidth:140,alsoResize:"#puw_inbody_memo_"+id});
+		// 動的生成後にユーザ設定のウィンドウ背景色を適用
+		if(typeof setWindowBgColor==='function') setWindowBgColor();
+		// ウィンドウ本体のどこを触っても最前面に来るように、
+		// また位置・サイズ・開閉状態をローカルに保存/復元
+		(function(targetEl,puwNo){
+			targetEl.addEventListener('pointerdown',function(){
+				if(typeof sortPUWzIndex==='function') sortPUWzIndex(puwNo);
+			});
+			targetEl.addEventListener('pointerup',function(){
+				if(typeof savePuwPositionSize==='function') savePuwPositionSize(targetEl,puwNo);
+			});
+			// 保存状態を復元 (位置・サイズ)
+			if(typeof applyPuwState==='function') applyPuwState(targetEl,puwNo);
+		})(new_element,'memo_'+id);
 		// リスト追加
 		listMemoData[id]['puw']=1;
 		var add_flag=true;

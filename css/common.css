@@ -233,41 +233,142 @@ color square buttom
  * ======================================================================== */
 .or-dialog {
     padding: 0;
-    border: 1px solid #AAA;
-    border-radius: 4px;
+    border: 1px solid #000;
+    border-radius: 3px;
     background: #FFF;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
     max-width: 90vw;
     max-height: 90vh;
-    overflow: auto;
+    overflow: hidden; /* ダイアログ自体はスクロールさせない (内側 form/p がスクロール) */
+    /* 画面中央に配置 (ブラウザによってネイティブ挙動が異なるため明示) */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/* open 時のみ flex 構造にする (<dialog> のデフォルト display:none を尊重) */
+.or-dialog[open] {
+    display: flex;
+    flex-direction: column;
 }
 .or-dialog::backdrop {
     background: rgba(170, 170, 170, 0.5);
 }
 .or-dialog-title {
     margin: 0;
-    padding: 8px 12px;
-    background: linear-gradient(to bottom, #F0F0F0 0%, #D5D5D5 100%);
-    border-bottom: 1px solid #AAA;
-    font-size: 14px;
+    padding: 10px 14px;
+    padding-right: 40px; /* ×ボタン分の余白 */
+    background: #FF8119; /* オンセンルームのアクセントカラー (ロゴ色) */
+    color: #FFF;
+    border-bottom: 1px solid #000;
+    font-size: 15px;
     font-weight: bold;
+    position: relative;
 }
+.or-dialog-close {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+    background: transparent;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFF;
+    user-select: none;
+    border-radius: 3px;
+}
+.or-dialog-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFE;
+}
+/* onclick 属性を持つ要素 (特に tr や span) にポインタカーソル */
+[onclick], [onClick] {
+    cursor: pointer;
+}
+/* ========================================================================
+ * ルーム一覧テーブル (トップページ)
+ * ======================================================================== */
+.roomlist_table {
+    width: 100%;
+    table-layout: fixed; /* 列幅指定を効かせる */
+}
+.roomlist_table .col_name {
+    width: auto; /* 残りすべてを割り当て (ルーム名列を広く) */
+    text-align: left;
+    padding-left: 10px;
+}
+.roomlist_table td.col_name,
+.roomlist_table tr td:first-child {
+    text-align: left;
+    padding-left: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.roomlist_table .col_dice { width: 110px; }
+.roomlist_table .col_obs  { width: 46px; }
+.roomlist_table .col_pass { width: 46px; }
+.roomlist_table .col_mem  { width: 60px; }
+.roomlist_table .col_time { width: 90px; }
+.roomlist_table .col_date { width: 150px; }
 .or-dialog > form,
 .or-dialog > p {
     padding: 12px;
     margin: 0;
+    overflow: auto; /* 中身が多い場合はこの部分だけスクロール */
+    flex: 1 1 auto;
 }
+/* ボタン領域: form 内では form 下部に、直下のときは dialog 下部に固定 */
 .or-dialog-buttons {
     text-align: right;
     padding: 8px 12px;
     border-top: 1px solid #DDD;
     background: #F6F6F6;
-    margin-top: 12px;
-    margin-left: -12px;
-    margin-right: -12px;
-    margin-bottom: -12px;
+    flex: 0 0 auto;
+}
+/* form 内のボタン領域は form の padding の分の調整 */
+.or-dialog > form > .or-dialog-buttons {
+    margin: 12px -12px -12px -12px;
 }
 .or-dialog-buttons button {
     padding: 4px 16px;
     cursor: pointer;
+}
+/* ダイアログ内のラベル (p) と入力欄の見た目を揃える */
+.or-dialog > form p {
+    margin: 0 0 10px 0;
+    line-height: 1.5;
+}
+.or-dialog > form input[type="text"],
+.or-dialog > form input[type="password"],
+.or-dialog > form select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    font-size: 14px;
+    border: 1px solid #BBB;
+    border-radius: 3px;
+    margin-top: 2px;
+}
+.or-dialog > form input[type="text"]:focus,
+.or-dialog > form input[type="password"]:focus,
+.or-dialog > form select:focus {
+    outline: 2px solid #FFC98A;
+    outline-offset: -1px;
+    border-color: #FE7F00;
+}
+.or-dialog > form input[type="radio"] {
+    margin-right: 2px;
+    cursor: pointer;
+}
+.or-dialog > form input[type="radio"] + label,
+.or-dialog > form label {
+    cursor: pointer;
+    margin-right: 10px;
 }

@@ -3,6 +3,16 @@
     <p style="margin-top:5px;">MIN&nbsp;<input id="game_music_volume" type="range" name="music_volume" value="<?=$music_volume;?>" min="0" max="99" step="1" style="width:120px;vertical-align:middle;" />&nbsp;MAX</p>
 </div>
 <div class="room_setting_box_wb">
+    <p>ウィンドウ背景色</p>
+    <p style="margin-top:5px;">
+        <input id="window_bg_color_picker" type="color" value="<?=$window_bg_color;?>" onChange="setWindowBgColor();setCookieSettingData();" style="vertical-align:middle;width:40px;height:28px;padding:0;cursor:pointer;" />&nbsp;
+        <input id="window_bg_color_text" type="text" value="<?=$window_bg_color;?>" onChange="syncWindowBgColorText();setCookieSettingData();" maxlength="7" style="width:80px;vertical-align:middle;font-family:monospace;" />&nbsp;
+        <input type="button" value="初期値" onClick="document.getElementById('window_bg_color_picker').value='#FFFFFF';document.getElementById('window_bg_color_text').value='#FFFFFF';setWindowBgColor();setCookieSettingData();" style="padding:3px 8px;" />
+    </p>
+    <p style="margin-top:5px;">ウィンドウ透過度</p>
+    <p style="margin-top:5px;">透明&nbsp;<input id="window_bg_alpha" type="range" value="<?=$window_bg_alpha;?>" min="0" max="100" step="1" onInput="setWindowBgColor();" onChange="setCookieSettingData();" style="width:120px;vertical-align:middle;" />&nbsp;不透明&nbsp;<span id="window_bg_alpha_value" style="font-family:monospace;"><?=$window_bg_alpha;?>%</span></p>
+</div>
+<div class="room_setting_box_wb">
     <p>座標の表示</p>
     <p style="margin-top:5px;"><input id="game_bn_display" type="checkbox" style="vertical-align:middle;" value="1" onClick="displayBoardNumber();setCookieSettingData();" <?=($bn_notdisplay!=0?'checked="checked"':'');?> />&nbsp;表示しない</p>
 </div>
@@ -23,6 +33,33 @@
     <p style="margin-top:5px;">MIN&nbsp;<input id="chat_sound_vol" type="range" name="chat_sound_vol" value="<?=$chat_sound_vol;?>" min="0" max="99" step="1" style="width:120px;vertical-align:middle;" />&nbsp;MAX</p>
 </div>
 <script>
+    // ウィンドウ背景色・透過度の適用 (全ポップアップに反映)
+    function setWindowBgColor(){
+        var hex=document.getElementById('window_bg_color_picker').value;
+        var alpha=parseInt(document.getElementById('window_bg_alpha').value,10)/100;
+        document.getElementById('window_bg_alpha_value').textContent=document.getElementById('window_bg_alpha').value+'%';
+        // text 入力欄も同期
+        document.getElementById('window_bg_color_text').value=hex.toUpperCase();
+        // HEX → RGB
+        var r=parseInt(hex.substr(1,2),16);
+        var g=parseInt(hex.substr(3,2),16);
+        var b=parseInt(hex.substr(5,2),16);
+        var rgba='rgba('+r+','+g+','+b+','+alpha+')';
+        // 全てのポップアップウィンドウに適用
+        var pws=document.getElementsByClassName('popup_window');
+        for(var i=0;i<pws.length;i++){
+            pws[i].style.backgroundColor=rgba;
+        }
+    }
+    // text 入力欄からの直接入力に対応
+    function syncWindowBgColorText(){
+        var val=document.getElementById('window_bg_color_text').value.trim();
+        if(!val.startsWith('#')) val='#'+val;
+        if(/^#[0-9A-Fa-f]{6}$/.test(val)){
+            document.getElementById('window_bg_color_picker').value=val.toLowerCase();
+            setWindowBgColor();
+        }
+    }
     function displayBoardNumber(){
         if(document.getElementById('game_bn_display').checked==true){
             document.getElementById('boardnumber').style.visibility='hidden';
@@ -94,5 +131,6 @@
         },false);
         displayBoardNumber();
         setCSfontSize();
+        setWindowBgColor(); // ウィンドウ背景色・透過度の初期適用
     });
 </script>
