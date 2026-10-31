@@ -64,6 +64,7 @@ $flag   :0=roomout 1=roomin
 -- 更新履歴 --
 2016.07.17 制作
 -------------------------------------------------------------------*/
+    debug_trace_enter(__FUNCTION__,array('flag'=>$flag,'playerid'=>$playerid,'str_base_lp'=>$str_base_lp,'observer_flag'=>$observer_flag,'time_limit'=>$time_limit));
     $str_result_lp='';
     $participant_array=array();
     $now_time=time();
@@ -119,6 +120,7 @@ $flag   :0=roomout 1=roomin
             }
         }
     }
+    debug_trace_exit(__FUNCTION__,array('return'=>$str_result_lp,'participant_array'=>$participant_array,'rewrite_flag'=>$rewrite_flag));
     return $str_result_lp;
 }
 function autoloadXmlFile($xml_file,$shadow_file='',$max_retry=1){
@@ -1361,6 +1363,7 @@ v1.00
 -- 更新履歴 --
 2017.09.12 制作
 -------------------------------------------------------------------*/
+    debug_trace_enter(__FUNCTION__,array('room_file'=>$room_file,'principal'=>$principal,'nick_name'=>$nick_name,'observer_flag'=>$observer_flag,'entry_flag'=>$entry_flag,'player_alive_time'=>$player_alive_time));
     // 100を超えたコメントを削除
     $overflow_comment=couting($obj_room->body->content)-100;
     if($overflow_comment>0){
@@ -1378,14 +1381,19 @@ v1.00
     $participant_update_flag=false;
     $now_time=time();
     if(isset($obj_room->body->participant)){
+        $existing_participant_ids=array();
+        foreach($obj_room->body->participant as $p){ $existing_participant_ids[]=(string)$p->participant_id; }
+        debug_trace_enter('saveRoomXmlFile.loop_begin',array('existing_participant_ids'=>$existing_participant_ids,'participant_array'=>$participant_array,'principal'=>$principal));
         for($i=0;$i<couting($obj_room->body->participant);$i++){
             $alive_participant_flag=false;
+            $this_pid=(string)$obj_room->body->participant[$i]->participant_id;
             foreach($participant_array as $p_value){
-                if((string)$obj_room->body->participant[$i]->participant_id==$p_value[0]){
+                if($this_pid==$p_value[0]){
                     $alive_participant_flag=true;
                     break;
                 }
             }
+            debug_trace_enter('saveRoomXmlFile.loop_iter',array('i'=>$i,'this_pid'=>$this_pid,'alive'=>$alive_participant_flag,'eq_principal'=>($this_pid==$principal)));
             if($alive_participant_flag==true){
                 if((string)$obj_room->body->participant[$i]->participant_id==$principal){
                     $obj_room->body->participant[$i]->participant_ut=$now_time;
@@ -1397,13 +1405,17 @@ v1.00
             }
         }
     }
+    debug_trace_enter('saveRoomXmlFile.before_add',array('participant_update_flag'=>$participant_update_flag,'observer_flag'=>$observer_flag,'entry_flag'=>$entry_flag));
     if(($participant_update_flag==false)&&($observer_flag==0)&&($entry_flag==1)){
         $nodeCharacter=$obj_room->body->addChild('participant');
         $nodeCharacter->addChild('participant_id',$principal);
         $nodeCharacter->addChild('participant_nm',htmlentities($nick_name,ENT_XML1));
         $nodeCharacter->addChild('participant_ut',$now_time);
+        debug_trace_enter('saveRoomXmlFile.added',array('principal'=>$principal,'nick_name'=>$nick_name));
     }
-    return $obj_room->asXML($room_file);
+    $ret=$obj_room->asXML($room_file);
+    debug_trace_exit(__FUNCTION__,$ret);
+    return $ret;
 }
 function initMappingData($borad_width=17,$borad_height=20){
 /*-------------------------------------------------------------------

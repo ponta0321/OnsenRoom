@@ -27,6 +27,58 @@ if(defined('DEBUG_MODE') && DEBUG_MODE){
 	});
 }
 /*========================================================================
+DEBUG TRACE (関数の引数・返り値をログに記録)
+=========================================================================
+使い方: 対象関数の冒頭と return 直前に以下を挿入
+    debug_trace_enter(__FUNCTION__, func_get_args());
+    ...
+    debug_trace_exit(__FUNCTION__, $return_value);
+    return $return_value;
+
+DEBUG_MODE=false 時は即座に return して何もしない (no-op)。
+本番にコードが残っても DEBUG_MODE=false なら性能影響ゼロ。
+
+log/debug.log に [TRACE ENTER] / [TRACE EXIT] タグ付きで出力される。
+========================================================================*/
+function debug_trace_enter($name,$args){
+	if(!(defined('DEBUG_MODE') && DEBUG_MODE)) return;
+	error_log(sprintf('[TRACE ENTER] %s(%s)',$name,debug_trace_dump($args)));
+}
+function debug_trace_exit($name,$retval){
+	if(!(defined('DEBUG_MODE') && DEBUG_MODE)) return;
+	error_log(sprintf('[TRACE EXIT ] %s = %s',$name,debug_trace_dump($retval)));
+}
+function debug_trace_dump($v,$depth=0){
+	if($depth>3) return '...';
+	if(is_null($v)) return 'null';
+	if(is_bool($v)) return $v?'true':'false';
+	if(is_int($v)||is_float($v)) return (string)$v;
+	if(is_string($v)){
+		if(strlen($v)>200) return var_export(substr($v,0,200).'...('.strlen($v).'bytes)',true);
+		return var_export($v,true);
+	}
+	if(is_array($v)){
+		$parts=array();
+		$i=0;
+		foreach($v as $k=>$x){
+			if($i++>=20){ $parts[]='...('.count($v).'items)'; break; }
+			$parts[]=var_export($k,true).'=>'.debug_trace_dump($x,$depth+1);
+		}
+		return '['.implode(',',$parts).']';
+	}
+	if(is_object($v)){
+		if($v instanceof SimpleXMLElement){
+			$name=$v->getName();
+			$str=(string)$v;
+			if(strlen($str)>80) $str=substr($str,0,80).'...';
+			return 'SimpleXML<'.$name.'>('.var_export($str,true).')';
+		}
+		return get_class($v).'@'.spl_object_id($v);
+	}
+	if(is_resource($v)) return 'resource('.get_resource_type($v).')';
+	return gettype($v);
+}
+/*========================================================================
 GLOBAL VARIABLE
 ========================================================================*/
 $global_page_url=URL_ROOT;
