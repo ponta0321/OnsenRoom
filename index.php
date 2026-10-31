@@ -187,6 +187,7 @@ list($load_avg_1min,$load_avg_5min,$load_avg_15min)=checkLoadAvg(CPU_CORE);
 	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script type="text/javascript" charset="UTF-8" src="//code.jquery.com/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" charset="UTF-8" src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="<?=URL_ROOT;?>js/dom.js?2026103101"></script>
 </head>
 <style>
 body{
