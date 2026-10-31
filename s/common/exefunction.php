@@ -448,7 +448,7 @@ v1.00
 					'verify_peer_name'=>false
 				)
 			);
-			if($image_data=file_get_contents((string)$obj_cardset->imagesheet,FILE_BINARY,stream_context_create($context))){
+			if($image_data=file_get_contents((string)$obj_cardset->imagesheet,false,stream_context_create($context))){
 				if($imagesize=getimagesizefromstring($image_data)){
 					$obj_room->head->{$tag_cardset}->imagesheet=(string)$obj_cardset->imagesheet;
 					$image_width=$imagesize[0];

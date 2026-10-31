@@ -557,7 +557,7 @@ class classCharacter{
 				'verify_peer_name'=>false
 			)
 		);
-        if($image_data=file_get_contents($target_image_url,FILE_BINARY,stream_context_create($context))){
+        if($image_data=file_get_contents($target_image_url,false,stream_context_create($context))){
             if($image_info=getimagesizefromstring($image_data)){
                 if(strpos($image_info['mime'],'image/')!==false){
                     $true_image_flag=true;
