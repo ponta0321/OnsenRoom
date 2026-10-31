@@ -102,10 +102,10 @@ $max_size　　　:0=画像加工しない 1~=画像の縦横最大値で加工
         return false;
     }
     if(!is_dir(dirname($dir_save))){
-        @mkdir(dirname($dir_save),0755,true);
+        mkdir(dirname($dir_save),0755,true);
     }
     if(file_exists($dir_save)){
-        @unlink($dir_save);
+        unlink($dir_save);
     }
     if($max_size_w==0){
         if(!move_uploaded_file($image_file['tmp_name'],$dir_save)){
@@ -210,10 +210,10 @@ $limit_size :アップロードファイルの最大サイズ
         return false;
     }
     if(!is_dir(dirname($dir_save))){
-        @mkdir(dirname($dir_save),0755,true);
+        mkdir(dirname($dir_save),0755,true);
     }
     if(file_exists($dir_save)){
-        @unlink($dir_save);
+        unlink($dir_save);
     }
     if(!move_uploaded_file($music_file['tmp_name'],$dir_save)){
         $err_msg='ファイル保存時にエラーが発生しました';
@@ -294,10 +294,10 @@ $limit_size :アップロードファイルの最大サイズ
         }
     }
     if(!is_dir(dirname($dir_save))){
-        @mkdir(dirname($dir_save),0755,true);
+        mkdir(dirname($dir_save),0755,true);
     }
     if(file_exists($dir_save)){
-        @unlink($dir_save);
+        unlink($dir_save);
     }
     if(!move_uploaded_file($cardset_file['tmp_name'],$dir_save)){
         $err_msg='ファイル保存時にエラーが発生しました';

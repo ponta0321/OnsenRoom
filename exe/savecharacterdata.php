@@ -174,7 +174,7 @@
             if(($after_img!=$before_img)&&
                (file_exists($room_dir.$after_img))&&
                (file_exists($room_dir.$before_img))){
-                   @unlink($room_dir.$before_img); 
+                   unlink($room_dir.$before_img);
             }
         }
         $c_list=$c_character->loadCharacterList($room_id,$principal_id);
@@ -212,7 +212,7 @@
             if(($after_img!=$before_img)&&
                (file_exists($room_dir.$after_img))&&
                (file_exists($room_dir.$before_img))){
-                   @unlink($room_dir.$after_img); 
+                   unlink($room_dir.$after_img);
             }
         }
         echo json_encode(array(

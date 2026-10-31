@@ -67,7 +67,7 @@
                     if(couting($delete_uploadfiles)>100){
                         if(sort($delete_uploadfiles)){
                             for($i=0;$i<(couting($delete_uploadfiles)-100);$i++){
-                                @unlink($delete_uploadfiles[$i]);
+                                if(file_exists($delete_uploadfiles[$i])) unlink($delete_uploadfiles[$i]);
                             }
                         }
                     }
@@ -103,7 +103,7 @@
 						$uploadsuccess_flag=true;
 					}
                     foreach($delete_uploadfiles as $value){
-                        @unlink($value);
+                        if(file_exists($value)) unlink($value);
                     }
                 }
             }else{
@@ -139,7 +139,7 @@
                     $room_xml->asXML($room_file);
                     $uploadsuccess_flag=true;
                     foreach($delete_uploadfiles as $value){
-                        @unlink($value);
+                        if(file_exists($value)) unlink($value);
                     }
                 }
             }else{
@@ -165,7 +165,7 @@
                         $upload_err_msg='アップロードしたファイルはカードセットデータではない又はデータが正しくありません。';
                     }
                     foreach($delete_uploadfiles as $value){
-                        @unlink($value);
+                        if(file_exists($value)) unlink($value);
                     }
                 }
             }else{
@@ -190,7 +190,7 @@
                         $upload_err_msg='アップロードしたファイルはボード情報データではない又はデータが正しくありません。';
                     }
                     foreach($delete_uploadfiles as $value){
-                        @unlink($value);
+                        if(file_exists($value)) unlink($value);
                     }
                 }
             }else{
@@ -213,7 +213,7 @@
                     if(couting($delete_uploadfiles)>100){
                         if(sort($delete_uploadfiles)){
                             for($i=0;$i<(couting($delete_uploadfiles)-100);$i++){
-                                @unlink($delete_uploadfiles[$i]);
+                                if(file_exists($delete_uploadfiles[$i])) unlink($delete_uploadfiles[$i]);
                             }
                         }
                     }

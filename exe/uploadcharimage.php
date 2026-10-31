@@ -138,7 +138,7 @@
         exit;
     }else{
         if(file_exists($room_dir.$image_save_file)){
-            @unlink($room_dir.$image_save_file);
+            unlink($room_dir.$image_save_file);
         }
     }
     echo json_encode(array(

@@ -24,6 +24,7 @@ class classFileLock{
 			if(!file_exists($dir)){
 				return false;
 			}
+	        // @ は意図的: 複数プロセス同時 lock 試行時、負けた側は rename が失敗する想定
 	        if(@rename($dir.$this->base_name,$dir.$this->current_name)){
 	            return true;
 	        }else{
@@ -907,7 +908,7 @@ class classCharacter{
         }
         $dir_save=$this->getCharDir();
         if(!is_dir($dir_save)){
-            @mkdir($dir_save,0755,true);
+            mkdir($dir_save,0755,true);
         }
         $filename=$dir_save.$this->id.'.xml';
         if(file_exists($filename)){
@@ -926,7 +927,7 @@ class classCharacter{
                 $ex_no=(int)$match_array[1];
                 // 追加
                 if($ex_no==0){
-                    if($img_info=@getimagesize($dir_root.$new_image)){
+                    if(file_exists($dir_root.$new_image) && ($img_info=getimagesize($dir_root.$new_image))){
                         if(($img_info[0]>0)&&($img_info[1]>0)){
                             $expression=$dom->addChild('expressions');
                             $expression->addChild('name',$img_name);
@@ -954,7 +955,7 @@ class classCharacter{
                         $this->stand[($ex_no-1)][0]=$img_name;
                     }
                     if($new_image!=''){
-                        if($img_info=@getimagesize($dir_root.$new_image)){
+                        if(file_exists($dir_root.$new_image) && ($img_info=getimagesize($dir_root.$new_image))){
                             if(($img_info[0]>0)&&($img_info[1]>0)){
                                 $changed_flag=true;
                                 $dom->expressions[($ex_no-1)]->eimg=$new_image;
@@ -989,7 +990,7 @@ class classCharacter{
                    ($changed_flag==true)&&
                    (file_exists($dir_root.$new_image))&&
                    (file_exists($dir_root.$before_img))){
-                       @unlink($dir_root.$before_img); 
+                       unlink($dir_root.$before_img);
                 }
                 unset($dom);
                 return true;
@@ -999,7 +1000,7 @@ class classCharacter{
                    ($changed_flag==true)&&
                    (file_exists($dir_root.$new_image))&&
                    (file_exists($dir_root.$before_img))){
-                       @unlink($dir_root.$new_image); 
+                       unlink($dir_root.$new_image);
                 }
                 unset($dom);
                 return false;

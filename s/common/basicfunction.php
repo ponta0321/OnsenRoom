@@ -83,7 +83,7 @@ v1.00
     $eval_data='';
     if(!empty($php_file)){
         if(file_exists($php_file)){
-            $eval_data=@file_get_contents($php_file);
+            $eval_data=file_get_contents($php_file);
             $eval_data=str_replace(array('<?php','?>'),'',$eval_data);
         }
     }
