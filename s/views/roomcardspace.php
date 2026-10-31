@@ -748,7 +748,7 @@ function createCard(int_left,int_top,int_zindex,id,nm,sx,sy,sw,sh,dw,dh,dt,l,d,v
     }else{
         canvasImageTrim(ui_id,cardback_image,0,0,100,150,100,150,d);
     }
-    $('#'+element_id).draggable({containment:"#cardboard"});
+    makeDraggable('#'+element_id,{containment:"#cardboard"});
     document.getElementById(ui_id).addEventListener("contextmenu",openCardRightMenu);
 }
 // 回転計算

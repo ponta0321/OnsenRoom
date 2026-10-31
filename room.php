@@ -766,43 +766,43 @@ $(function(){
     });
     // ポップアップウィンドウの初期設置
     setDefaultPositionPUW(true);
-    $("#puw_00").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_00").resizable({minHeight:510,minWidth:284,alsoResize:"#puw_inbody_00"});
-    $("#puw_01").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_01").resizable({minHeight:120,minWidth:284,alsoResize:"#puw_inbody_01"});
-    $("#puw_02").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_02").resizable({minHeight:120,minWidth:284,alsoResize:"#puw_inbody_02"});
-    $("#puw_04").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_04").resizable({minHeight:120,minWidth:284,alsoResize:"#puw_inbody_04"});
-    $("#puw_05").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_05").resizable({minHeight:120,minWidth:284,alsoResize:"#puw_inbody_05"});
-    $("#puw_06").draggable({handle:"div.puw_head",cancel:"span.puw_close,#puw_ms_06,#puw_ss_06"});
-    $("#puw_06").resizable({minHeight:120,minWidth:562,alsoResize:"#comment_space"});
-    $("#puw_07").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_07").resizable({minHeight:340,minWidth:562,alsoResize:"#puw_inbody_07"});
-    $("#puw_08").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_08").resizable({minHeight:340,minWidth:562,alsoResize:"#puw_inbody_08"});
-    $("#puw_09").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_09").resizable({minHeight:150,minWidth:220,alsoResize:"#puw_inbody_09"});
-    $("#puw_10").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_10").resizable({minHeight:88,minWidth:220,alsoResize:"#puw_inbody_10"});
-    $("#puw_11").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_11").resizable({minHeight:340,minWidth:562,alsoResize:"#puw_inbody_11"});
-    $("#puw_13").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_13").resizable({minHeight:120,minWidth:284,alsoResize:"#puw_inbody_13"});
-    $("#puw_19").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_19").resizable({minHeight:120,minWidth:284,alsoResize:"#puw_inbody_19"});
-    $("#puw_20").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_20").resizable({minHeight:120,minWidth:284,alsoResize:"#puw_inbody_20"});
-    $("#puw_21").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_21").resizable({minHeight:340,minWidth:340,alsoResize:"#puw_inbody_21"});
-    $("#puw_22").draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-    $("#puw_22").resizable({minHeight:120,minWidth:220,alsoResize:"#puw_inbody_22"});
-    <?php 
+    makeDraggable("#puw_00",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_00",{minHeight:510,minWidth:284,alsoResize:"#puw_inbody_00"});
+    makeDraggable("#puw_01",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_01",{minHeight:120,minWidth:284,alsoResize:"#puw_inbody_01"});
+    makeDraggable("#puw_02",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_02",{minHeight:120,minWidth:284,alsoResize:"#puw_inbody_02"});
+    makeDraggable("#puw_04",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_04",{minHeight:120,minWidth:284,alsoResize:"#puw_inbody_04"});
+    makeDraggable("#puw_05",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_05",{minHeight:120,minWidth:284,alsoResize:"#puw_inbody_05"});
+    makeDraggable("#puw_06",{handle:"div.puw_head",cancel:"span.puw_close,#puw_ms_06,#puw_ss_06"});
+    makeResizable("#puw_06",{minHeight:120,minWidth:562,alsoResize:"#comment_space"});
+    makeDraggable("#puw_07",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_07",{minHeight:340,minWidth:562,alsoResize:"#puw_inbody_07"});
+    makeDraggable("#puw_08",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_08",{minHeight:340,minWidth:562,alsoResize:"#puw_inbody_08"});
+    makeDraggable("#puw_09",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_09",{minHeight:150,minWidth:220,alsoResize:"#puw_inbody_09"});
+    makeDraggable("#puw_10",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_10",{minHeight:88,minWidth:220,alsoResize:"#puw_inbody_10"});
+    makeDraggable("#puw_11",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_11",{minHeight:340,minWidth:562,alsoResize:"#puw_inbody_11"});
+    makeDraggable("#puw_13",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_13",{minHeight:120,minWidth:284,alsoResize:"#puw_inbody_13"});
+    makeDraggable("#puw_19",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_19",{minHeight:120,minWidth:284,alsoResize:"#puw_inbody_19"});
+    makeDraggable("#puw_20",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_20",{minHeight:120,minWidth:284,alsoResize:"#puw_inbody_20"});
+    makeDraggable("#puw_21",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_21",{minHeight:340,minWidth:340,alsoResize:"#puw_inbody_21"});
+    makeDraggable("#puw_22",{handle:"div.puw_head",cancel:"span.puw_close"});
+    makeResizable("#puw_22",{minHeight:120,minWidth:220,alsoResize:"#puw_inbody_22"});
+    <?php
         if(file_exists(DIR_ROOT.'s/views/roomad.php')){
-            echo '$("#puw_99").draggable({handle:"div.puw_head"});';
+            echo 'makeDraggable("#puw_99",{handle:"div.puw_head"});';
             echo 'document.getElementById(\'puw_99\').style.display=\'block\';';
-        } 
+        }
     ?>
     pushMainMenu('07');
     pushMainMenu('00');

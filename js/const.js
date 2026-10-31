@@ -2018,8 +2018,8 @@ function createMemoPreview(id){
 		new_element.innerHTML=html_v;
 		document.getElementById('wdf').appendChild(new_element);
 		// イベント付与
-		$("#puw_memo_"+id).draggable({handle:"div.puw_head",cancel:"span.puw_close"});
-		$("#puw_memo_"+id).resizable({minHeight:120,minWidth:140,alsoResize:"#puw_inbody_memo_"+id});
+		makeDraggable("#puw_memo_"+id,{handle:"div.puw_head",cancel:"span.puw_close"});
+		makeResizable("#puw_memo_"+id,{minHeight:120,minWidth:140,alsoResize:"#puw_inbody_memo_"+id});
 		// リスト追加
 		listMemoData[id]['puw']=1;
 		var add_flag=true;
