@@ -311,7 +311,8 @@ td{
 				?>
 			</table>
 			<p style="text-align:right;font-weight:bold;"><a href="<?=($room_type=='pc'?LOBBY_URL_ROOT:LOBBY_URL_SP_ROOT);?>">ロビーサーバーに戻る</a></p>
-			<div id="in_dialog" title="入場チェック">
+			<dialog id="in_dialog" class="or-dialog">
+				<h3 class="or-dialog-title">入場チェック</h3>
 				<form name="frm_roomin" action="<?=URL_ROOT;?>roomin.php" method="get">
 					<p style="font-weight:bold;">ルーム名：<br><span id="span_rn"></span></p>
 					<div><input type="radio" name="ro" id="input_obs_off" value="0" />参加する&nbsp;
@@ -324,9 +325,13 @@ td{
 					<input type="hidden" name="rn" id="hidden_rn" value="" />
 					<input type="hidden" name="rt" value="<?=$room_type;?>" />
 					<input type="hidden" name="lu" value="<?=$lobby_url;?>" />
+					<div class="or-dialog-buttons">
+						<button type="button" onClick="document.frm_roomin.submit();">入場する</button>
+					</div>
 				</form>
-			</div>
-			<div id="cr_dialog" title="新しいルームを作る">
+			</dialog>
+			<dialog id="cr_dialog" class="or-dialog">
+				<h3 class="or-dialog-title">新しいルームを作る</h3>
 				<form name="frm_crroom" action="<?=URL_ROOT;?>index.php" method="post">
 					<p>ダイスボット：<br><select name="game_type" style="max-width:200px;padding:3px 0;"><?php
 						foreach((array)$bac_gamelist as $bacgl_key => $bacgl_value){
@@ -352,9 +357,13 @@ td{
 					<input type="hidden" name="room_type" value="<?=$room_type;?>" />
 					<input type="hidden" name="lobby" value="<?=$lobby_url;?>" />
 					<input type="hidden" name="f_state" value="create_room" />
+					<div class="or-dialog-buttons">
+						<button type="button" onClick="document.frm_crroom.submit();">作成する</button>
+					</div>
 				</form>
-			</div>
-			<div id="err_dialog" title="エラー">
+			</dialog>
+			<dialog id="err_dialog" class="or-dialog">
+				<h3 class="or-dialog-title">エラー</h3>
 				<p style="text-align:center;color:red;"><?php
 					switch($err){
 						case 1:
@@ -410,7 +419,10 @@ td{
 							break;
 					}
 				?></p>
-			</div>
+				<div class="or-dialog-buttons">
+					<button type="button" onClick="document.getElementById('err_dialog').close();">OK</button>
+				</div>
+			</dialog>
 		</div>
 		<div style="bottom:0;border-top:#000 1px solid;margin-top:2em;">
 			<div style="max-width:900px;min-width:160px;margin:0 auto;padding:10px;">
@@ -423,42 +435,12 @@ td{
 </body>
 </html>
 <script>
-$(function(){
-	$("#in_dialog").dialog({
-		resizable:false,
-		modal:true,
-		autoOpen:false,
-		buttons:{
-			"入場する":function(){
-				document.frm_roomin.submit();
-			}
-		}
-	});
-	$("#cr_dialog").dialog({
-		resizable:false,
-		modal:true,
-		autoOpen:false,
-		buttons:{
-			"作成する":function(){
-				document.frm_crroom.submit();
-			}
-		}
-	});
-	$("#err_dialog").dialog({
-		resizable:false,
-		modal:true,
-		autoOpen:false,
-		buttons:{
-			"OK":function(){
-				$("#err_dialog").dialog("close");
-			}
-		}
-	});
-	<?=($err>0?'$("#err_dialog").dialog("open");':'');?>
+document.addEventListener('DOMContentLoaded',function(){
+	<?=($err>0?"document.getElementById('err_dialog').showModal();":'');?>
 });
 function open_cr_dialog(){
 	document.getElementById('input_rp').value='';
-	$("#cr_dialog").dialog("open");
+	document.getElementById('cr_dialog').showModal();
 }
 function open_in_dialog(room_id,room_name,pass_flag,obs_flag){
 	document.getElementById('span_rn').innerHTML=room_name;
@@ -475,6 +457,6 @@ function open_in_dialog(room_id,room_name,pass_flag,obs_flag){
 	}else{
 		document.getElementById('div_password').style.display='none';
 	}
-	$("#in_dialog").dialog("open");
+	document.getElementById('in_dialog').showModal();
 }
 </script>

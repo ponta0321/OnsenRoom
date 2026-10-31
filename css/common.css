@@ -226,3 +226,48 @@ color square buttom
     background:
         linear-gradient(135deg, transparent 0%, transparent 50%, #333 50%, #333 60%, transparent 60%, transparent 70%, #333 70%, #333 80%, transparent 80%);
 }
+
+/* ========================================================================
+ * jQuery UI dialog 置換用: <dialog> 要素のスタイル
+ * (2026-10-31)
+ * ======================================================================== */
+.or-dialog {
+    padding: 0;
+    border: 1px solid #AAA;
+    border-radius: 4px;
+    background: #FFF;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+}
+.or-dialog::backdrop {
+    background: rgba(170, 170, 170, 0.5);
+}
+.or-dialog-title {
+    margin: 0;
+    padding: 8px 12px;
+    background: linear-gradient(to bottom, #F0F0F0 0%, #D5D5D5 100%);
+    border-bottom: 1px solid #AAA;
+    font-size: 14px;
+    font-weight: bold;
+}
+.or-dialog > form,
+.or-dialog > p {
+    padding: 12px;
+    margin: 0;
+}
+.or-dialog-buttons {
+    text-align: right;
+    padding: 8px 12px;
+    border-top: 1px solid #DDD;
+    background: #F6F6F6;
+    margin-top: 12px;
+    margin-left: -12px;
+    margin-right: -12px;
+    margin-bottom: -12px;
+}
+.or-dialog-buttons button {
+    padding: 4px 16px;
+    cursor: pointer;
+}
