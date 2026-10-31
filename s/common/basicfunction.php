@@ -7,19 +7,21 @@ function couting($target){
 /*-------------------------------------------------------------------
 -- 機能 --
 PHP7.1以前と同等の動作をするcount
+配列および Countable (SimpleXMLElement を含む) を正しくカウントする。
+PHP 8 では count() が非 Countable に対し TypeError を投げるため、
+ガードしつつ本来の count を呼ぶ。
 
 -- バージョン --
-v1.00
+v1.01
 
 -- 更新履歴 --
 2024.02.19 制作
+2026.10.31 SimpleXMLElement (Countable) を正しくカウントするよう修正
 -------------------------------------------------------------------*/
-	if(is_array($target)){
+	if(is_array($target) || ($target instanceof Countable)){
 		return count($target);
 	}
-	else{
-		return 0;
-	}
+	return 0;
 }
 function changeIDformRoomName($room_name){
 /*-------------------------------------------------------------------
