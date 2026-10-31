@@ -10,7 +10,7 @@
 
 - **言語**: PHP (サーバサイド) + JavaScript / jQuery (クライアント)
 - **git**: `origin: https://github.com/ponta0321/OnsenRoom.git` (branch: `main` / `master`)
-- **現行バージョン**: 1.04.08 (`s/common/const.php` の `APP_VERSION`)
+- **現行バージョン**: 1.05.00 (`s/common/const.php` の `APP_VERSION`)
 - **DB**: なし。ファイルベース (room 配下に xml/php で保存)
 
 ## 2. エントリポイント
@@ -148,7 +148,7 @@ OnsenRoom/
 
 | 定数 | 役割 | OSS 版初期値 |
 |---|---|---|
-| `APP_VERSION` | バージョン文字列 | `1.04.08` |
+| `APP_VERSION` | バージョン文字列 | `1.05.00` |
 | `SITE_TITLE` | サイト名 | `オンセンルーム` |
 | `AUTHENTICATION_CODE` | 本体 ↔ ルーム サーバ間認証コード (ハンドオーバー §3-1) | `12345678abcd` (**公式鯖では別値**) |
 | `ADMINISTRATOR_PASSWORD` | 管理者ページ用 | `1234` (**公式鯖では別値**) |

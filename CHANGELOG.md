@@ -1,3 +1,13 @@
+**2026/10/31：Ver.1.05.00**
+- UI 統合改修 (オレンジ系統色、ウィンドウ機能強化、SVG 置換)。
+- ポップアップウィンドウの位置・サイズ・開閉状態を localStorage に保存/復元。
+- ユーザ個別のウィンドウ背景色・透過度設定を追加。
+- jQuery / jQuery UI の完全脱却 (vanilla JS 化)。
+    - draggable / resizable / dialog / Ajax / selector 等を自前実装 (dom.js, draggable.js) に置換。
+    - jquery-3.1.0.min.js / jquery-ui.min.js / jquery-ui.min.css と関連 ui-icons 画像を削除。
+- PHP 8.3 対応 (前バージョンの PHP 7.4 でも動作可)。
+    - couting() が SimpleXMLElement を 0 とカウントする実装不備を修正、他 PHP 8 非互換 7 件修正。
+
 **2025/06/11：Ver.1.04.08**
 - 親サーバのドメインを変更。
 - BCDiceのダイスボットリスト一覧(BCDice v3.14.0)に対応。

@@ -3,7 +3,7 @@
   define('SITE_TITLE','オンセンルーム'); // サイト名 ※サイト名はデフォルト「オンセンルーム」から必ず変更する
   define('SITE_DESCRIPTION','ブラウザで遊べるTRPGオンラインセッションルームです。'); // サイト説明
   define('CPU_CORE',8); // サーバのCPUコア数を入力する
-  define('APP_VERSION','1.04.08'); // バージョン
+  define('APP_VERSION','1.05.00'); // バージョン
 /* debug */
   define('DEBUG_MODE',false); // true にすると log/debug.log に全エラー (@ 抑制分含む) を出力。本番運用時は false のまま
 /* password */
