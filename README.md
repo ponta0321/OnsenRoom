@@ -96,5 +96,5 @@
 
 ## 開発情報
 
-- 開発言語: PHP + JavaScript (vanilla、外部ライブラリ依存なし)
+- 開発言語: PHP + JavaScript
 - 開発者: ぽん太＠番頭 ([@ponta0321](https://github.com/ponta0321))
